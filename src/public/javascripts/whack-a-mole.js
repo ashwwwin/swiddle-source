@@ -22,7 +22,7 @@ function randomHole(holes) {
 }
 
 function peep() {
-  const time = randomTime(400, 800);
+  const time = randomTime(350, 600);
   const hole = randomHole(holes);
   hole.classList.add("up");
   setTimeout(() => {
@@ -63,7 +63,7 @@ function initWhackAMoleInventory(inventoryId) {
     if (pointer.button != 0) {
       $('#go-to-another-scene').siblings('.popup-menu').css({ 'top': pointer.event.y, 'left': pointer.event.x });
       $('#go-to-another-scene').dropdown('show');
-      $('#move-to-scene').text('Play Whack A Mole Game').off().click(function () {
+      $('#move-to-scene').text('Play Whack A Mole').off().click(function () {
         goToWhackAMoleTable(whackAMole.x + whackAMole.width / 2 - 30, whackAMole.y + whackAMole.height / 2);
       });
       return;
