@@ -1,5 +1,5 @@
-# OnlyFriends
-### A virtual world where you can meet people, play games & explore the world
+# Swiddle
+### A metaverse inspired by a generation of Flash games
 Built primarily with Node, Phaser, Socket.io, JS & TS
 
 ## Running in development mode
