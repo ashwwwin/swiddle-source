@@ -1,0 +1,31 @@
+extends ../webflow-layout.pug
+
+block content
+
+  include webflow/sign-in.html
+  div(id="snapkit-login-button-target" style="display: none;")
+
+block scripts
+  script.
+    autoLogin();
+
+    $(document).ready(function() {
+      var anchors = document.getElementsByTagName("a");
+
+    for (var i = 0; i < anchors.length; i++) {
+        anchors[i].href = (anchors[i].href).replace('.html','');
+        anchors[i].href = (anchors[i].href).replace('index','');
+    }
+    });
+
+    var siteUrl = "#{ siteUrl }";
+    var snapkitClientId = "#{ snapkitClientId }";
+    //- var activated = #{ activated };
+
+  
+  if isProd
+    script(src="/javascripts/landing-login-signup.js")
+  else
+    script(src="/javascripts/landing/index.js")
+    script(src="/javascripts/landing/login-signup.js")
+    script(src="/javascripts/snapkit-login.js")

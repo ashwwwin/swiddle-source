@@ -1,0 +1,13 @@
+block content
+  include webflow/milestones.html
+
+block scripts
+  script.
+    $(document).ready(function() {
+      var anchors = document.getElementsByTagName("a");
+
+    for (var i = 0; i < anchors.length; i++) {
+        anchors[i].href = (anchors[i].href).replace('.html','');
+        anchors[i].href = (anchors[i].href).replace('index','');
+    }
+    });

@@ -1,0 +1,39 @@
+block content
+  include webflow/index.html
+
+block scripts
+  script.
+    $(document).ready(function() {
+      var anchors = document.getElementsByTagName("a");
+
+      for (var i = 0; i < anchors.length; i++) {
+          anchors[i].href = (anchors[i].href).replace('.html','');
+          anchors[i].href = (anchors[i].href).replace('index','');
+      }
+      
+    });
+
+    var w = document.createElement("canvas").getContext("webgl");
+    var d = w.getExtension('WEBGL_debug_renderer_info');
+    var g = d && w.getParameter(d.UNMASKED_RENDERER_WEBGL) || "";
+
+    var userAgent = window.navigator.userAgent,
+        platform = window.navigator.platform,
+        macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+        windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+        os = null;
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+      os = 'Mac';
+      if (g.match(/Apple/) && !g.match(/Apple GPU/)) {
+        os = 'Mac (M1)';
+      }
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+      os = 'Windows';
+    } else if (!os && /Linux/.test(platform)) {
+      os = 'Linux';
+    }
+    
+   document.querySelector('#download-for-os-btn').innerText = 'Download for ' + os;
+
+    

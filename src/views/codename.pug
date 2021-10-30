@@ -1,0 +1,39 @@
+#codename-bg
+
+#codename-cameras-container.game-cameras-container
+  .blueTeam.pr-3
+  .redTeam.pl-3
+span.leave-game-button ×
+
+//- #codenameRedScore.scoreBox
+//-   .element
+//-   .score 0
+
+#wordsTable
+  #clue-display.px-3.py-2
+    div#clue-display-text(class="text-success" style="font-size: 16px;") 
+      i(class="fas fa-info-circle text-primary" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Give your team a clue that relates to <br><br> sddds")
+  #clue-input-container.p-2
+    div(class="text-success" style="font-size: 16px;") Give your team a clue &nbsp; 
+      i(class="fas fa-info-circle text-primary" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Give your team a word and the number of cards that relate to the word, the goal is to help your team pick the cards that are your team's color. <br><br><b>Black card </b>The other team wins <br><b>Yellow cards </b>Skips the turn")
+    .d-flex.align-items-center
+      input(type="text" class="form-control mr-1" style="height: 26px; width: 150px; border-radius: 20px;" id="clue-input")
+      input(type="number" class="form-control" style="height: 26px; border-radius: 20px;" min="0" id="clue-count-input")
+      i(class="fas fa-check-circle text-success ml-1" style="font-size: 20px; cursor: pointer;" id="submit-clue")
+  table(style="width: 100%; height: 100%;")
+    tbody
+      each row in [0, 1, 2, 3, 4]
+        tr()
+          each col in [0, 1, 2, 3, 4]
+            td()
+              .codename-card(data-pos=row * 5 + col)
+                figure.front
+                  //- .element
+
+                figure.back
+                  .element1
+                  .element2
+
+//- #codenameBlueScore.scoreBox
+//-   .element
+//-   .score 0

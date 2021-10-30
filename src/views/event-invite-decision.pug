@@ -1,0 +1,43 @@
+extends layout
+
+block vars
+  - var bodyClass = 'login';
+
+block content
+  div(class="header-title")
+    h1 
+      span(class="white") Only
+      span(class="white-blue") Friends
+      //- span(class="white-blue2") .io 
+
+  div(id="content" class="mt-4 d-flex align-items-center justify-content-center")
+    center
+      div(style="background-color: white; border-radius: 20px; width: 300px; padding: 25px;")
+        div#invite-event-reject-div(style="display: none")
+          h1#invite-action-heading-reject(style="margin-bottom: 0px; margin-top: 0px;") ❌ 🙅 ⛔
+          h3#invite-action-description-reject(style="margin-top: 0px; color: #757575;") You have declined the invite
+          a#event-invite-accept-btn(class="btn btn-success px-3 py-1 mt-3 mb-2" style="text-decoration: none; margin-top: 10px; margin-bottom: 5px; border-radius: 50px; border: 0; cursor: pointer; padding: 10px 15px; color: #fff; background-color: #00c954; font-weight: bold; font-family: Inter;") Accept it
+        div#invite-event-accept-div
+          h1#invite-action-heading-reject(style="margin-bottom: 0px; margin-top: 0px;") 🎉 🥳 🤠
+          h3#invite-action-description-reject(style="margin-top: 0px; color: #757575;") You have accepted the invite
+          a(class="btn btn-success px-3 py-1 mt-3 mb-2" href="https://onlyfriends.io" style="text-decoration: none; margin-top: 10px; margin-bottom: 5px; border-radius: 50px; border: 0; cursor: pointer; padding: 10px 15px; color: #fff; background-color: #00c954; font-weight: bold; font-family: Inter;") Home
+
+block scripts
+  script.
+    var decision = '#{ decision }';
+    var token = '#{ token }';
+
+    if (decision == 'false') {
+      $('#invite-event-reject-div').show();
+      $('#invite-event-accept-div').hide();
+    }
+
+    $('#event-invite-accept-btn').click(function (){
+      window.location.search = '?token=' + token + '&decision=' + true;
+    });
+
+  if isProd
+    script(src="/javascripts/reset-password.js")
+  else
+    script(src="/javascripts/index.js")
+    script(src="/javascripts/reset-password.js")

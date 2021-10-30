@@ -1,0 +1,241 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:900);
+
+.card {
+  width: 55px;
+  height: 90px;
+  float: left;
+  background: #fff;
+  color: white;
+  border-radius: 5px;
+  display: table;
+  box-sizing: border-box;
+  margin: 0 5px;
+  font-size: 50px;
+  font-weight: bold;
+  box-shadow: 0 0 10px #777777;
+  text-align: center;
+  position: relative;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+}
+
+.card.skip, .card.draw2, .card.reverse, .card.plus-4 {
+  font-size: 30px;
+}
+
+.card .inner {
+  display: table-cell;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.card .mark {
+  background: transparent;
+}
+
+.card.reverse .inner {
+  transform: rotate(-45deg);
+}
+
+.card.blue {
+  background-image: url(../images/blue.png);
+}
+
+.card.green {
+  background-image: url(../images/green.png);
+}
+
+.card.red {
+  background-image: url(../images/red.png);
+}
+
+.card.yellow {
+  background-image: url(../images/yellow.png);
+}
+
+.card.black {
+  background-image: url(../images/blank.png);
+}
+
+.drawDeckOnPlayfield.black .inner {
+  background-color: #000;
+}
+
+.cardsInInnerPlus4.black {
+  color: #000000;
+}
+
+.cardsInInnerPlus4.black .inner {
+  background-color: #000000;
+}
+
+.cardsInInnerPlus4.blue {
+  color: #0063b3;
+}
+
+.cardsInInnerPlus4.blue .inner {
+  background-color: #0063b3;
+}
+
+.cardsInInnerPlus2.blue {
+  color: #0063b3;
+}
+
+.cardsInInnerPlus2.blue .inner {
+  background-color: #0063b3;
+}
+
+.cardsInInnerPlus4.green {
+  color: #18a849;
+}
+
+.cardsInInnerPlus4.green .inner {
+  background-color: #18a849;
+}
+
+.cardsInInnerPlus4.red {
+  color: #c72a18;
+}
+
+.cardsInInnerPlus4.red .inner {
+  background-color: #c72a18;
+}
+
+.cardsInInnerPlus4.yellow {
+  color: #e6ca1e;
+}
+
+.cardsInInnerPlus4.yellow .inner {
+  background-color: #e6ca1e;
+}
+
+.cardsInInnerPlus4 {
+  width: 26px;
+  height: 44px;
+  float: left;
+  background: #000;
+  border-radius: 5px;
+  display: table;
+  box-sizing: border-box;
+  padding: 3px;
+  margin: 10px;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
+  position: relative;
+}
+
+.cardsInInnerPlus2 {
+  width: 26px;
+  height: 44px;
+  float: left;
+  background: #000;
+  border-radius: 5px;
+  display: table;
+  box-sizing: border-box;
+  padding: 3px;
+  margin: 10px;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
+  position: relative;
+}
+
+.cardsInInnerSkip {
+  width: 26px;
+  height: 44px;
+  float: left;
+  background: #000;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 3px;
+  margin: 10px;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
+  position: relative;
+}
+
+.card-plus4-green {
+  position: absolute;
+  left: 15px;
+  top: 90px;
+  z-index: 0.1;
+}
+
+.card-plus2-bottom-left {
+  position: absolute;
+  left: 30px;
+  top: 80px;
+  z-index: 0.1;
+}
+
+.card-plus4-blue {
+  position: absolute;
+  left: 30px;
+  top: 60px;
+  z-index: 0.2;
+}
+
+.card-plus2-top-right {
+  position: absolute;
+  left: 45px;
+  top: 50px;
+  z-index: 0.2;
+}
+
+.card-plus4-red {
+  position: absolute;
+  left: 45px;
+  top: 75px;
+  z-index: 0.3;
+}
+
+.card-plus4-yellow {
+  position: absolute;
+  left: 60px;
+  top: 45px;
+  z-index: 0.1;
+}
+
+/* Wild Card Circle */
+.circle-container {
+  width: 94px;
+  height: 130px;
+  float: left;
+  position: absolute;
+  left: 10px;
+  top: 24px;
+  z-index: 0.5;
+  transform: rotate(18deg);
+  transform: skew(-9deg, 0);
+}
+
+.quarter {
+  width: 47px;
+  height: 65px;
+}
+
+.top-left {
+  border-top-left-radius: 200px;
+  background: #c72a18;
+  float: left;
+}
+
+.top-right {
+  border-top-right-radius: 200px;
+  background: #0063b3;
+  float: right;
+}
+
+.bottom-left {
+  border-bottom-left-radius: 200px;
+  background: #e6ca1e;
+  float: left;
+}
+
+.bottom-right {
+  border-bottom-right-radius: 200px;
+  background: #18a849;
+  float: right;
+}

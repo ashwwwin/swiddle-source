@@ -1,0 +1,72 @@
+div(class="modal-body px-4")
+    span.btn-close(data-dismiss="modal" aria-label="Close" style="right: 15px; width: 25px; height: 25px; position: absolute;") ×
+    div
+        h3.font-weight-bold#explore-header(style="color:#34c8ed;")
+            i(class="fas fa-globe-americas")  
+            span()  Explore
+            div(style="float: right;")
+                a.mr-3(id="easy-lock-toggle" style="cursor: pointer; font-size: 21px;" onclick="toggleRoomLock()")
+                    if owner.lockedRoom
+                        i(class="fas fa-lock")
+                    else
+                        i(class="fas fa-unlock")
+                .btn.friends-button.btn-sm.mr-4#my-room-options(style="background-color: #edfff1; border: 0; border-radius: 20px;")
+                    a &nbsp; My room options &nbsp;
+
+        h3.font-weight-bold#my-room-options-header.d-none(style="color:#34c8ed;")
+            i(class="fas fa-cogs")  
+            span()  My room options
+            .btn.friends-button.btn-sm.mr-4#explore-all-btn(style="float: right; background-color: #edfff1; border: 0; border-radius: 20px;")
+                a &nbsp; Explore all rooms &nbsp;
+    #room-explore-panel.container
+        .row(style="min-height: 375px; max-height: 500px; overflow-y: auto;")
+            .col-sm-2.clone-public-room-item.d-none(style="padding: 8px; height: 250px; width: 55px;")
+                .justify-content-between(style="background-color: #FBFBFB; border-radius: 15px; padding: 0px;")
+                    img.card-img-top(class="room-image" src="" style="border-top-right-radius: 15px; border-top-left-radius: 15px; height: 120px; margin-bottom: 1px;")
+                    div(style="padding-left: 8px; padding-right: 8px; margin-top: 1px;")
+                        h5(class="pt-2 font-weight-bold" style="font-size: 16px;")
+                            span.room-name() 
+                            i.fa.fa-check-circle.ml-1.room-verified-badge.d-none(style="color: #2b95e9;" data-toggle="tooltip" title="Verified" data-placement="bottom")
+                        div(class="room-desc" style="word-wrap: break-word; font-size: 12px;") 
+                        div(class="pt-4 d-flex justify-content-between align-items-center" style="margin-bottom: 5px;")
+                            button(class="btn btn-sm btn-success enter-another-room" style="border-radius: 20px; font-weight: bold; margin-bottom: 5px;") Enter
+                            div(class="text-primary room-users-state font-weight-bold") 
+
+
+    #my-room-options-container.d-none
+        .container
+            .row
+                .col-sm 
+                    div.justify-content-between(style="box-shadow: 0px 0px 5px #e0e0e0; transform: scale(1.25); margin-top: 12.5%; margin-left: auto; margin-right: auto; width: 55px; background-color: #FBFBFB; border-radius: 15px; padding: 0px; height: 250px; width: 175px;")
+                        img.card-img-top(id="room-image-sample" src="/images/room-images/roomIcon.png" style="border-top-right-radius: 15px; border-top-left-radius: 15px; height: 120px; margin-bottom: 0px;")
+                        div(style="padding-left: 8px; padding-right: 8px; margin-top: 0px;")
+                            h5(class="pt-2 font-weight-bold" style="font-size: 16px;")
+                                span.room-name(id="sample-room-name") #{ owner.roomName }
+                                i.fa.fa-check-circle.ml-1.d-none(id="room-verified-badge-sample" style="color: #2b95e9;" data-toggle="tooltip" title="Verified" data-placement="bottom")
+                            div(id="sample-room-desc" class="room-desc" style="word-wrap: break-word; font-size: 12px;") #{ owner.roomDesc }
+                            div(class="mt-4 d-flex justify-content-between align-items-center" style="top: 80%;")
+                                button(class="btn btn-sm btn-success enter-another-room disabled" style="pointer-events: none; border-radius: 20px; font-weight: bold; margin-bottom: 5px;") Enter
+                                div(id="sample-room-max-users" class="text-primary room-users-state font-weight-bold") 1/10
+                .col-sm 
+                    div(class="form-group pt-3")
+                        .row
+                            .col-sm
+                                label.mb-0.font-weight-bold(class="w-100" style="color: #b8b8b8;") ROOM NAME
+                                input.mt-0(type="text" maxlength="15" onkeyup="liveDisplayRoomOptions()" id="room-name" class="form-control" style="border-radius: 30px; background-color: #F1F1F1;" placeholder="Leave it blank for home" value=owner.roomName)
+                            .col-sm 
+                                label.mb-0.font-weight-bold(class="w-100" style="color: #b8b8b8;") PNG/JPEG/GIF ONLY
+                                label.btn.btn-success(for="my-room-image-uploaded" style="border-radius: 20px; border: 0;")
+                                    span() Change room image
+                                input(type="file" name="filetoupload" id="my-room-image-uploaded" style="display: none;")
+                    div(class="form-group")
+                        label.mb-0.font-weight-bold(class="w-100" style="color: #b8b8b8;") ROOM DESCRIPTION
+                        textarea.mt-0(class="form-control" maxlength="50" onkeyup="liveDisplayRoomOptions()" id="room-desc" rows="5" style="border-radius: 20px; background-color: #F1F1F1;" placeholder="A 24 hour nyan cat watch party") #{ owner.roomDesc }
+                    div(class="form-group")
+                        label.mb-0.font-weight-bold(class="w-100" style="color: #b8b8b8;") MAX USERS
+                        input.mt-0(type="number" onkeyup="liveDisplayRoomOptions()" onchange="liveDisplayRoomOptions()" id="room-max-users" min="1" max="12" class="form-control" style="border-radius: 30px; background-color: #F1F1F1;" value=owner.maxUsers)
+                    div(class="d-flex justify-content-between "+owner.lockedRoom style="float: right;")
+                        if owner.lockedRoom
+                            button(id="change-lock-room" onclick="toggleRoomLock()" class="btn btn-sm btn-success px-4 font-weight-bold" style="border-radius: 20px;") Unlock
+                        else 
+                            button(id="change-lock-room" onclick="toggleRoomLock()" class="btn btn-sm btn-danger px-4 font-weight-bold" style="border-radius: 20px;") Lock
+                        button(id="save-room-settings" class="btn btn-sm btn-primary ml-4 px-4 font-weight-bold" style="border-radius: 20px;") Save

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "strict": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@uwo/*": [
+        "src/uwo/*"
+      ],
+      "@humanity/*": [
+        "src/humanity/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "spec/**/*.ts"
+  ],
+  "exclude": [
+    "src/public/"
+  ]
+}

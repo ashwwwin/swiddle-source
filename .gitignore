@@ -1,0 +1,21 @@
+# Built code
+dist
+
+# Libs
+node_modules
+
+# Environmental variables
+env
+
+# Client build
+build
+
+jet-logger.log
+
+logs/
+
+
+src/public/images/room-images/*
+
+!src/public/images/room-images/roomIcon.png
+

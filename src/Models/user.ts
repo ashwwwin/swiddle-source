@@ -1,0 +1,41 @@
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema
+
+const userSchema = new Schema({
+  name: String,
+  avatar: String,
+  welcomeAvatar: String,
+  bunnyAvatar: String,
+  sleepAvatar: String,
+  address: { type: String, unique: true },
+  email: { type: String, unique: true },
+  password: String,
+  emailActivated: Boolean,
+  access: Boolean,
+  invitedBy: String,
+  token: String,
+  shareAccessCount: { type: Number, default: 3 },
+  accessSentCount: { type: Number, default: 0 },
+  activatedAt: Date,
+  userLastActive: Date,
+  birthday: String,
+  guideState: String,
+  furnitureList: JSON,
+  inventories: JSON,
+  coins: { type: Number, default: 500 },
+  verified: Boolean,
+  bio: String,
+  msgEmailNotify: Boolean,
+  dailyRewardLastClaimed: { type: Date, default: Date.now() },
+  dailyRewardStreak: { type: Number, default: 0 },
+  dailyRewardTotal: { type: Number, default: 0 },
+  roomName: String,
+  roomDesc: String,
+  roomImage: String,
+  maxUsers: { type: Number, default: 10 },
+  lockedRoom: { type: Boolean, default: true },
+  timeZone: String,
+  remindedWelcomeGuide: { type: Boolean, default: false },
+}, { timestamps: true })
+
+module.exports = mongoose.model('users', userSchema)

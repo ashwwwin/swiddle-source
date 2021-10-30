@@ -1,0 +1,102 @@
+.d-flex.flex-column(style="width: 200px; background-color:#FBFBFB; padding: 80px 0 0;")
+  div.d-flex.flex-column.w-100
+    .btn.friends-button.btn-sm#show-add-friend-container
+      i(class="fas fa-user-plus") &nbsp;
+      a Add Friends
+    br
+    .btn.btn-sm.friends-button#show-friend-list
+      i(class="fas fa-user-friends")
+      a &nbsp; All Friends
+  span#notify-pending-request
+  #right-my-friends-list.d-flex.flex-column.mt-3.w-100(style="overflow-y: auto; flex-direction: column; display: flex; position: relative;")
+    .right-friend-item-clone.d-none.justify-content-between.py-2.px-3
+      .d-flex.align-items-center
+        .position-relative.friend-avatar
+          span.network-state.off-line
+        b.ml-2.player-name(style="vertical-align: top;") Philip
+div(style="width: 400px; padding: 80px 30px 20px; overflow: auto;")
+  span.btn-close ×
+  .align-items-center#friend-list-container(style="flex-direction: row; flex-wrap: wrap;")
+    #my-friends-list.row(style="flex-direction: row;")
+      div
+        h3.font-weight-bold(style="color:#34c8ed;") My Friends
+        
+      div.w-100.mt-3
+        div(style="overflow-y: auto; flex-direction: column; display: flex; position: relative;")
+          .col-6.friend-item-clone.d-none.mb-4
+            .d-flex.flex-column.align-items-center.p-3(style="background: #FAFAFA; border-radius: 20px; margin: auto;")
+              .position-relative.friend-avatar
+                span.network-state.off-line
+              h5.mt-2.mb-3.font-weight-bold.player-name(style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; font-size: 18px;") Philip
+              .d-flex.align-items-center.justify-content-around.w-100
+                span.ring-friend(data-toggle="tooltip", title="Ring", data-placement="bottom")
+                  i.fa.fa-home
+                span.chat-friend(data-toggle="tooltip", title="Chat", data-placement="bottom")
+                  i.fa.fa-comment-alt
+                span.invite-friend(data-toggle="tooltip", title="Invite home", data-placement="bottom")
+                  i.fa.fa-angle-double-left
+                span.remove-friend(data-toggle="tooltip", title="Remove friend", data-placement="bottom")
+                  i.fa.fa-ban
+
+    #add-friend-request-container.d-none
+      h3.font-weight-bold(style="color:#34c8ed;") Add Friends
+      .d-flex
+        div(class="d-flex flex-column align-items-center")
+          div.input-group.align-items-center
+            input(type="text" autocomplete="off" class="form-control text-center my-2 mr-2" placeholder="Username" style="height: 30px; border-radius: 15px; width: 200px; border: none; background: #F4F4F4;" id="add-friend-username")
+            button(class="btn btn-success btn-sm px-4" style="height: 30px; border-radius: 15px;" id="add-friend-by-name") Add
+          div#no-friends-add-text.d-none.mt-2
+            a(style="color: #000;") Add friends to chat, play games & invite them home!
+          div.d-none(id="pending-requests-count" class="font-weight-bold text-primary text-center mt-4") Pending friend requests (
+            span(id="pending-request-count") 0
+            span() )
+          div(id="pending-requests-list" class="d-flex flex-column w-100 mt-2")
+            div(class="pending-request-item-clone d-none justify-content-between mb-2")
+              div(class="d-flex align-items-center")
+                div(class="position-relative friend-avatar")
+                  //- span(class="network-state on-line")
+                span(class="ml-2 font-weight-bold player-name") Philip
+              div(class="d-flex align-items-center mr-3")
+                span(class="text-success accept-friend")
+                  i(class="fa fa-check")
+                span(class="text-danger ml-1 ignore-friend")
+                  i(class="fa fa-ban")
+          div(id="friend-suggestions-title-text" class="font-weight-bold text-primary text-center mt-4 mb-2 d-none") People you might know
+          div(id="mutual-friends-list" class="d-flex flex-column w-100 mt-2")
+ 
+  #friend-chat-list-container.h-100(style="display: none;")
+    .d-flex.justify-content-between.align-items-center.mb-4
+      .d-flex
+        span.ring-friend#ring-friend(data-toggle="tooltip", title="Ring", data-placement="bottom", style="color: #03adfc;")
+          i.fa.fa-home
+        span.invite-friend.ml-2#invite-friend(data-toggle="tooltip", title="Invite", data-placement="bottom", style="color: #03adfc;")
+          i.fa.fa-angle-double-left
+      h5.font-weight-bold.mb-0.text-dark#selected-friend-name Jeff
+      span(style="width: 58px;")
+    #friend-chat-list(style="overflow-y: auto; flex-direction: column; display: flex; position: relative;")
+    input#friend-msg.form-control.mt-3(placeholder="Press enter to send a message", style="border-radius: 20px; width: 100%; padding-left: 20px; padding-right: 20px; border: none; background: #F4F4F4;")
+  
+  //- #room-explore-panel.h-100(style="display: none;")
+  //-   div
+  //-     h3.font-weight-bold(style="color:#34c8ed;") Explore
+    //- .row 
+    //-   .col-md-6.clone-public-room-item.d-none.h-100.flex-column(style="padding: 8px;")
+    //-     .justify-content-between(style="background-color: #FBFBFB; border-radius: 15px; padding: 0px;")
+    //-       img.card-img-top(src="/images/icons/roomIcon.png" style="border-top-right-radius: 15px; border-top-left-radius: 15px; height: 120px;")
+    //-       div(style="padding-left: 8px; padding-right: 8px;")
+    //-         div()
+    //-           h5(class="room-name pt-2 font-weight-bold") 
+    //-           div(class="room-desc") 
+    //-         div(class="pt-4 d-flex justify-content-between align-items-center" style="margin-bottom: 5px;")
+    //-           button(class="btn btn-sm btn-success enter-another-room" style="border-radius: 20px; font-weight: bold; margin-bottom: 5px;") &nbsp; Enter &nbsp;
+    //-           div(class="text-primary room-users-state font-weight-bold") 
+    //- div#explore-be-the-first-message.justify-content-center.mt-5
+    //-   center.mt-5
+    //-       h5() Be the first!
+    //-       a(style="font-weight: bold; font-size: 12px;") Put your room on the explore page
+    //-       br
+    //-       br
+    //-       .btn.friends-button.btn-sm#show-create-event-container(style="transform: scale(1.25); background-color: #edfff1; border: 0; border-radius: 20px;" onclick="openEventCreator()")
+    //-           a &nbsp; UNLOCK &nbsp;
+
+

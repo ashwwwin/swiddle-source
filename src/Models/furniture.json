@@ -1,0 +1,464 @@
+{
+  "woodpanel": {
+    "type": "tv",
+    "imageUrl": "woodpanel.png",
+    "title": "Wood Panel",
+    "description": " ",
+    "price": 350,
+    "visible": true
+  },
+  "tv": {
+    "type": "tv",
+    "imageUrl": "tv.png",
+    "title": "TV",
+    "description": " ",
+    "price": 1000,
+    "visible": true
+  },
+  "tvtable": {
+    "type": "tv",
+    "imageUrl": "tvtable.png",
+    "title": "TV Table",
+    "description": " ",
+    "price": 350,
+    "visible": true
+  },
+  "speakerb": {
+    "type": "tv",
+    "imageUrl": "speakerb.png",
+    "title": "Left Speaker",
+    "description": "Baaaaby you'r",
+    "price": 500,
+    "visible": true
+  },
+  "speakera": {
+    "type": "tv",
+    "imageUrl": "speakera.png",
+    "title": "Right Speaker",
+    "description": "e a firework!",
+    "price": 500,
+    "visible": true
+  },
+  "diningtable": {
+    "type": "chair",
+    "imageUrl": "diningtable.png",
+    "title": "Dining Table",
+    "description": " ",
+    "price": 1250,
+    "seatWidth": 95,
+    "chairHeight": 80,
+    "deskHeight": 115,
+    "count": 10,
+    "firstPosX": 80,
+    "firstPosY": 80,
+    "visible": true
+  },
+  "windowtable": {
+    "type": "table",
+    "imageUrl": "windowtable.png",
+    "title": "Window Table",
+    "description": " ",
+    "price": 250,
+    "visible": true
+  },
+  "window": {
+    "type": "window",
+    "imageUrl": "window.png",
+    "title": "Window",
+    "description": " ",
+    "price": 200,
+    "visible": true
+  },
+  "clothingstand": {
+    "type": "deco",
+    "imageUrl": "clothingstand.png",
+    "title": "Clothing Stand",
+    "description": " ",
+    "price": 150,
+    "visible": true
+  },
+  "yuccapot": {
+    "type": "deco",
+    "imageUrl": "yuccapot.png",
+    "title": "Yucca Pot",
+    "description": "It's yucca cool!",
+    "price": 500,
+    "visible": true
+  },
+  "shelfsmall": {
+    "type": "deco",
+    "imageUrl": "shelfsmall.png",
+    "title": "Wall shelf",
+    "description": "Picture perfect memories",
+    "price": 150,
+    "visible": true
+  },
+  "windowplant": {
+    "type": "deco",
+    "imageUrl": "windowplant.png",
+    "title": "Window Plant",
+    "description": " ",
+    "price": 150,
+    "visible": false
+  },
+  "umbrellas": {
+    "type": "deco",
+    "imageUrl": "umbrellas.png",
+    "title": "Umbrella Stand",
+    "description": " ",
+    "price": 200,
+    "visible": true
+  },
+  "firewood": {
+    "type": "deco",
+    "imageUrl": "firewood.png",
+    "title": "Fire Wood",
+    "description": " ",
+    "price": 300,
+    "visible": true
+  },
+  "lamp": {
+    "type": "deco",
+    "imageUrl": "lamp.png",
+    "title": "Lamp",
+    "description": " ",
+    "price": 200,
+    "visible": true
+  },
+  "bookcorner": {
+    "type": "deco",
+    "imageUrl": "bookcorner.png",
+    "title": "Bookcorner",
+    "description": " ",
+    "price": 200,
+    "visible": false
+  },
+  "fireplace": {
+    "type": "deco",
+    "imageUrl": "fireplace.png",
+    "title": "Fireplace",
+    "description": "The perfect way to set the mood",
+    "price": 500,
+    "visible": true
+  },
+  "door": {
+    "type": "door",
+    "imageUrl": "door.png",
+    "title": "Door",
+    "description": " ",
+    "price": 300,
+    "visible": true
+  },
+  "candlesmall": {
+    "type": "deco",
+    "imageUrl": "candlesmall.png",
+    "title": "Candle Small",
+    "description": "",
+    "price": 200,
+    "visible": true
+  },
+  "cctv": {
+    "type": "deco",
+    "imageUrl": "cctv.png",
+    "title": "Camera",
+    "description": "Protect your home with this decorative camera!",
+    "price": 200,
+    "visible": true
+  },
+  "coffee_table": {
+    "type": "table",
+    "imageUrl": "coffee_table.png",
+    "title": "Coffee Table",
+    "description": "",
+    "price": 350,
+    "visible": true
+  },
+  "door_2": {
+    "type": "door",
+    "imageUrl": "door_2.png",
+    "title": "Door",
+    "description": "",
+    "price": 300,
+    "visible": true
+  },
+  "dresser": {
+    "type": "table",
+    "imageUrl": "dresser.png",
+    "title": "Dresser",
+    "description": "",
+    "price": 350,
+    "visible": true
+  },
+  "flowerpainting": {
+    "type": "deco",
+    "imageUrl": "flowerpainting.png",
+    "title": "Flower Painting",
+    "description": "",
+    "price": 10000,
+    "visible": true
+  },
+  "frogposter": {
+    "type": "deco",
+    "imageUrl": "frogposter.png",
+    "title": "Frog Poster",
+    "description": "This may be a portrait of the frog in The Princess & the Frog.",
+    "price": 100,
+    "visible": true
+  },
+  "grandfatherclock": {
+    "type": "deco",
+    "imageUrl": "grandfatherclock.png",
+    "title": "Grandfather Clock",
+    "description": "Batteries not included.",
+    "price": 2000,
+    "visible": true
+  },
+  "lavalamp": {
+    "type": "deco",
+    "imageUrl": "lavalamp.png",
+    "title": "Lavalamp",
+    "description": "",
+    "price": 100,
+    "visible": true
+  },
+  "modernstove": {
+    "type": "deco",
+    "imageUrl": "modernstove.png",
+    "title": "Stove",
+    "description": "The perfect stove to cook your favorite vegetables.",
+    "price": 300,
+    "visible": true
+  },
+  "plant_1": {
+    "type": "deco",
+    "imageUrl": "plant_1.png",
+    "title": "Plant",
+    "description": "",
+    "price": 100,
+    "visible": true
+  },
+  "plantsmall": {
+    "type": "deco",
+    "imageUrl": "plantsmall.png",
+    "title": "Plant",
+    "description": "",
+    "price": 100,
+    "visible": true
+  },
+  "pond_w_fish": {
+    "type": "deco",
+    "imageUrl": "pond_w_fish.png",
+    "title": "Pond Fish",
+    "description": "",
+    "price": 2000,
+    "visible": true
+  },
+  "tv_2": {
+    "type": "tv",
+    "imageUrl": "tv_2.png",
+    "title": "TV",
+    "description": "",
+    "price": 350,
+    "visible": true
+  },
+  "claw_machine": {
+    "type": "deco",
+    "imageUrl": "claw_machine.png",
+    "title": "Claw Machine",
+    "description": "This may be a replica of the claw machine that Buzz Lightyear got stuck in!",
+    "price": 5000,
+    "visible": true
+  },
+  "closed_cabinet_1": {
+    "type": "table",
+    "imageUrl": "tv_cabinet_black.png",
+    "title": "Black TV cabinet",
+    "description": "It costs more because, it's in space grey",
+    "price": 750,
+    "visible": true
+  },
+  "closed_cabinet_2": {
+    "type": "table",
+    "imageUrl": "tv_cabinet.png",
+    "title": "Brown TV cabinet",
+    "description": "",
+    "price": 500,
+    "visible": true
+  },
+  "fishtank": {
+    "type": "deco",
+    "imageUrl": "fishtank.png",
+    "title": "Aquarium",
+    "description": "Nemo may have once lived here",
+    "price": 1000,
+    "visible": true
+  },
+  "dresser_2": {
+    "type": "table",
+    "imageUrl": "dresser_2.png",
+    "title": "Cream dresser",
+    "description": "",
+    "price": 500,
+    "visible": true
+  },
+  "door_1": {
+    "type": "door",
+    "imageUrl": "door_1.png",
+    "title": "Urban door",
+    "description": "",
+    "price": 750,
+    "visible": true
+  },
+  "door_3": {
+    "type": "door",
+    "imageUrl": "door_3.png",
+    "title": "Classic door",
+    "description": "",
+    "price": 500,
+    "visible": true
+  },
+  "lava_lamp_1": {
+    "type": "deco",
+    "imageUrl": "lava_lamp_1.png",
+    "title": "Lava Lamp",
+    "description": "Much Lomp Lava",
+    "price": 2750,
+    "visible": true
+  },
+  "lava_lamp_2": {
+    "type": "deco",
+    "imageUrl": "lava_lamp_2.png",
+    "title": "Lava Lamp",
+    "description": "Such Lovo Lomp",
+    "price": 2750,
+    "visible": true
+  },
+  "lava_lamp_3": {
+    "type": "deco",
+    "imageUrl": "lava_lamp_3.png",
+    "title": "Lava Lamp",
+    "description": "Many Lamp",
+    "price": 2750,
+    "visible": true
+  },
+  "pool_table": {
+    "type": "table",
+    "imageUrl": "pool_table.png",
+    "title": "Pool Table",
+    "description": "",
+    "price": 3000,
+    "visible": true
+  },
+  "telescope": {
+    "type": "deco",
+    "imageUrl": "telescope.png",
+    "title": "Telescope",
+    "description": "It's rumored that you can see Elon Musk driving a Tesla in space!",
+    "price": 3000,
+    "visible": true
+  },
+  "trash_bin": {
+    "type": "deco",
+    "imageUrl": "trash_bin.png",
+    "title": "Trash Bin",
+    "description": "teamtrees.org",
+    "price": 1000,
+    "visible": true
+  },
+  "rugblue": {
+    "type": "deco",
+    "imageUrl": "rugblue.png",
+    "title": "Blue Rug",
+    "description": " ",
+    "price": 100,
+    "visible": false
+  },
+  "shelfkitchen": {
+    "type": "deco",
+    "imageUrl": "shelf_kitchen.png",
+    "title": "Kitchen Shelf",
+    "description": " ",
+    "price": 300,
+    "visible": true
+  },
+  "shelfkitchenempty": {
+    "type": "deco",
+    "imageUrl": "shelf_blank.png",
+    "title": "Shelf",
+    "description": " ",
+    "price": 175,
+    "visible": true
+  },
+  "fridge": {
+    "type": "deco",
+    "imageUrl": "fridge_1.png",
+    "title": "Commercial fridge",
+    "description": "We took this from Gordon Ramsay's kitchen a few years ago.",
+    "price": 1500,
+    "visible": true
+  },
+  "commercialstove": {
+    "type": "deco",
+    "imageUrl": "stove_pro.png",
+    "title": "Commercial stove",
+    "description": "Part of the Gordon Ramsay 'gifted' us collection.",
+    "price": 750,
+    "visible": true
+  },
+  "microwave": {
+    "type": "deco",
+    "imageUrl": "microwave.png",
+    "title": "Microwave",
+    "description": "Do not put a spoon inside the microwave",
+    "price": 500,
+    "visible": false
+  },
+  "whack-a-mole_machine": {
+    "type": "deco",
+    "imageUrl": "whack-a-mole_machine.png",
+    "title": "WHACK A MOLE",
+    "description": "It's a playable whack a mole machine!",
+    "price": 1250,
+    "visible": true
+  },
+  "everlastingballoons": {
+    "type": "deco",
+    "imageUrl": "balloons.png",
+    "title": "Balloons",
+    "description": "Comes in a pack of 3 generic colors!",
+    "price": 500,
+    "visible": false
+  },
+  "partydecoflags": {
+    "type": "deco",
+    "imageUrl": "party_deco.png",
+    "title": "Party flags?",
+    "description": "Not sure what they're called lol",
+    "price": 500,
+    "visible": false
+  },
+  "arcadeneon_red": {
+    "type": "deco",
+    "imageUrl": "arcadeneon_1.png",
+    "title": "Arcade Neon",
+    "description": "It's in red",
+    "price": 300,
+    "visible": false
+  },
+  "arcadeneon_green": {
+    "type": "deco",
+    "imageUrl": "arcadeneon_2.png",
+    "title": "Arcade Neon",
+    "description": "It's in green",
+    "price": 300,
+    "visible": false
+  },
+  "arcadeneon_cyan": {
+    "type": "deco",
+    "imageUrl": "arcadeneon_3.png",
+    "title": "Arcade Neon",
+    "description": "It's in blue",
+    "price": 300,
+    "visible": false
+  }
+}

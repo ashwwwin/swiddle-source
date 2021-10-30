@@ -1,0 +1,108 @@
+div(style="height: 345px;")
+    h3#create-event-header.d-none(style="color: #62b7fc; font-weight: bold;") &nbsp; 
+        span Create an event
+        .btn.friends-button.btn-sm#show-all-event-container(style="background-color: #edfff1; border: 0; border-radius: 20px; float: right;" onclick="openAllEvents()")
+            a &nbsp; Upcoming events &nbsp;
+    h3#all-events-header(style="color: #62b7fc; font-weight: bold;") &nbsp; 
+        span Upcoming events
+        .btn.friends-button.btn-sm#show-create-event-container(style="background-color: #edfff1; border: 0; border-radius: 20px; float: right;" onclick="openEventCreator()")
+            a &nbsp; Create event &nbsp;
+    h3#event-details-header.d-none() &nbsp;
+        span(style="color: #62b7fc; font-weight: bold;") Event name
+        b(style="font-size: 11px; font-weight: bold;") BY
+        .btn.friends-button.btn-sm#show-all-event-container(style="background-color: #edfff1; border: 0; border-radius: 20px; float: right;" onclick="openAllEvents()")
+            a &nbsp; Upcoming events &nbsp;
+    div#create-event-container.d-none
+        .container 
+            .row 
+                .col-sm
+                    span.font-weight-bold(style="font-size: 12px;") EVENT NAME
+                    br
+                    input#events-name-input.signup-input.form-control.form-rounded(type="text", style="font-family: Nunito; font-weight: 500; max-width: 250px; height: 38px; border-radius: 19px;", placeholder="Game night")
+                    br
+                    span.font-weight-bold(style="font-size: 12px;") DATE
+                    br
+                    div#events-date-picker()
+                    div(style="display: inline-flex; margin-top: 0px; justify-content: center;")
+                        input.signup-input.form-control.form-rounded(class="text-center" type="text" placeholder="28" id="create-event-date" style="width: 50px;")
+                        select.signup-input.form-control.form-rounded(class="mx-2" id="create-event-month" style="width: 150px;")
+                            option(value="0") January
+                            option(value="1") February
+                            option(value="2") March
+                            option(value="3") April
+                            option(value="4") May
+                            option(value="5") June
+                            option(value="6") July
+                            option(value="7") August
+                            option(value="8") September
+                            option(value="9") October
+                            option(value="10") November
+                            option(value="11") December
+                        input.signup-input.form-control.form-rounded(class="text-center" type="text" placeholder="2001" id="create-event-year" style="width: 70px;")
+
+                    br
+                    br
+                    span.font-weight-bold(style="font-size: 12px;") TIME
+                    br
+                    div#events-time-picker()
+                    div(style="display: inline-flex; margin-top: 0px; ")
+                        input#events-time-input.signup-input.form-control.form-rounded(type="text", style="font-family: Nunito; font-weight: 500; max-width: 250px; height: 38px; border-radius: 19px 0px 0px 19px;", placeholder="Time")
+                        button.btn.btn-success#events-time-toggle(style="height: 38px; border-radius: 0px 19px 19px 0px; vertical-align: middle; padding: 0px 7px; outline: none;")
+                            i(class="far fa-clock" style="vertical-align: middle; font-size: 20px;")
+                .col-sm
+                    span.font-weight-bold(style="font-size: 12px;") INVITE YOUR FRIENDS
+                    div#events-friend-list(style="height: 208px; overflow-y: auto; flex-direction: column; display: flex; position: relative; margin-bottom: 5px;")
+                        p.mt-3.font-weight-bold#events-no-friends-text(style="color: #bababa; font-size: 12px;") ADD FRIENDS TO GET STARTED
+
+            center
+                a.btn.btn-success.border-0#create-event-button(style="border-radius: 20px;" onclick="createScheduledEvent()") &nbsp; Create event &nbsp; 
+                br
+                br
+                span(style="font-weight: bold; font-size: 12px; color: #c3c3c3; top: 50%;") YOUR FRIENDS WILL BE NOTIFIED WHEN YOU CREATE THE EVENT
+
+    div#upcoming-events-container
+        .container 
+            div#upcoming-events-list(style="height: 300px; overflow-y: auto; flex-direction: column; display: flex; position: relative;")
+                div#no-upcoming-events-message.justify-content-center.mt-5
+                    center.mt-5
+                        h5() No upcoming events
+                        br
+                        .btn.friends-button.btn-sm#show-create-event-container(style="transform: scale(1.25); background-color: #edfff1; border: 0; border-radius: 20px;" onclick="openEventCreator()")
+                            a &nbsp; Create event &nbsp;
+
+    div#event-details-container.d-none
+        .container
+            .row 
+                .col-sm
+                    nav
+                        ul(class="nav nav-tabs" id="nav-tab" role="tablist")
+                            li.nav-item(role="presentation")
+                                a.font-weight-bold(class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home") Coming
+                            li.nav-item(role="presentation")
+                                a.font-weight-bold(class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile") Maybe
+                            li.nav-item(role="presentation")
+                                a.font-weight-bold(class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact") Nope
+                        div(class="tab-content" id="nav-tabContent") 
+                            div(class="justify-content-center tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab")
+                            div(class="justify-content-center tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab") 
+                            div(class="justify-content-center tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab") 
+                .col-sm.d-flex.justify-content-center
+                    div#event-response-selection(style="margin-top: 33%; margin-right: auto; margin-left: auto;")
+                        div(style="padding: 15px; background-color: #fafafa; border-radius: 15px;")
+                            h5.font-weight-bold() Are you going?
+                            .d-flex.justify-content-center
+                                a#event-response-yes.text-success.event-response-yes.font-weight-bold.mr-3(style="font-size: 17px; text-decoration: none; cursor: pointer;" onclick="eventResponseUpdate(true)") &nbsp;Yes&nbsp;
+                                a#event-response-no.text-danger.event-response-no.font-weight-bold(style="font-size: 17px; text-decoration: none; cursor: pointer;" onclick="eventResponseUpdate(false)") &nbsp;No&nbsp;
+
+
+
+
+block scripts
+    script.
+        const events_time_picker = new WindowDatePicker({
+            el: '#events-time-picker',
+            toggleEl: '#events-time-toggle',
+            inputEl: '#events-time-input',
+            type: 'HOUR'
+        });
+    

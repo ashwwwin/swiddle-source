@@ -1,0 +1,21 @@
+div(class="d-flex justify-content-between")
+  nav(class="nav nav-tabs")
+    each type, index in furnitureTypes
+      a(href="#i-tab-"+type class="nav-item nav-link"+(index==0?" active":"") data-toggle="tab")
+        img(src="/images/icons/"+type+".svg" width="20")
+  div(class="d-flex align-items-center")
+    span(class="save-inventory-box mr-2") SAVE
+    span(class="mr-2" id="hide-inventory-box") HIDE
+    span(id="cancel-home-design") &times;
+div(class="tab-content")
+  each type, index in furnitureTypes
+    div(class="tab-pane fade"+(index==0?" show active":"") id="i-tab-"+type role="tabpanel")
+      each furniture, name in furnitureList
+        if furniture.type == type
+          div(class="item-container")
+            div(class="w-100 d-flex justify-content-end flex-shrink-0")
+              span(class="badge badge-pill badge-danger invisible") 1
+              span(class="badge badge-pill badge-danger remaining-cnt")
+            div(class="flex-grow-1 d-flex justify-content-center align-items-center")
+              img(src="/images/home-assets/"+furniture.imageUrl class="inventory-item" data-inventory=name)
+            div(class="flex-shrink-0" style="height: 15px;")

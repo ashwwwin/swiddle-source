@@ -1,0 +1,698 @@
+extends layout
+
+block vars
+  - var bodyClass = 'game-play';
+
+block styles
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous")
+  link(rel="stylesheet" href="/uwo/stylesheets/styles.css")
+  link(rel="stylesheet" href="/uwo/stylesheets/cards.css")
+  link(rel="stylesheet" href="/uwo/stylesheets/animations.css")
+  link(rel="stylesheet" href="/stylesheets/window-date-picker.css")
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous")
+  script(src="https://cdn.jsdelivr.net/npm/window-date-picker@1.0.1/dist/js/window-date-picker.min.js")
+  
+  
+block content
+  div(class="header")
+    div(id="navbar" class="d-none")
+      a(data-toggle="tooltip" data-placement="bottom" title="Friends" id="friend-list")
+        i(class="fas fa-user-friends fa-2x header-icon")
+        span#circle-notify-friend(class="position-absolute d-none" style="width: 10px; height: 10px; border-radius: 50%; bottom: 16px; right: 7px; background-color: #F43930;")
+      a(data-toggle="tooltip" data-placement="bottom" title="Mic")
+        i(class="fas fa-microphone-slash fa-2x header-icon" id="switch-audio")
+      a(data-toggle="tooltip" data-placement="bottom" title="Camera")
+        i(class="fas fa-video-slash fa-2x header-icon" id="switch-video" style="display: none")
+
+    div(class="header-title")
+      h1(id="site-title" class="my-1")
+        span(class="light-blue" style="font-size: 35px;") Swiddle
+        //- span(class="heavy-blue") .io
+        sup(style="font-size:8.0pt; vertical-align: super; font-family: Nunito;") BETA
+
+    div(id="right-nav" class="d-none")
+      a(data-toggle="tooltip" data-placement="bottom" title="Youtube")
+        i(class="fab fa-youtube fa-2x header-icon" id="ytVideoToggle")
+
+      //- div(class="dropdown")
+      //-   a(href="#" class="d-inline-block" data-toggle="dropdown" role="button")
+      //-     i(class="fas fa-video fa-2x header-icon" data-toggle="tooltip" data-placement="bottom" title="Video" id="volume-icon" style="display: none;")
+      //-   div(class="dropdown-menu dropdown-menu-right text-center")
+      //-     div(class="p-3" style="width: 200px;")
+      //-       label(class="text-primary font-weight-bold") Video Volume
+      //-       input(type="range" class="form-control-range volume-input" min="0" max="100" value="20")
+
+      div(class="dropdown")
+        a(class="d-inline-block" data-toggle="dropdown" role="button")
+          i(id="invite-icon" class="fas fa-user-plus fa-2x header-icon" data-toggle="tooltip" data-placement="bottom" title="Invite" style="display: none;")
+
+        div(id="invite-dialog" class="dropdown-menu dropdown-menu-right")
+          div(class="d-flex flex-column align-items-center")
+            div(class="light-blue w-100 font-weight-bold mb-1") Invite
+            div(class="input-container")
+              input(id="owner-address" pattern="[a-zA-Z0-9]+" readonly)
+              i(id="edit-address" class="light-blue fa fa-pencil-square-o") &nbsp; &nbsp; &nbsp;
+              i(id="copy-address" class="light-blue far fa-clipboard")
+            p(class="mt-1 mb-2") You can invite family and friends without an account
+            div(class="input-container")
+              input(id="owner-password" readonly)
+              i(id="change-password" class="light-blue fas fa-redo-alt" data-toggle="tooltip" data-placement="bottom" title="New password") &nbsp; &nbsp; &nbsp;
+              i(id="copy-password" class="light-blue far fa-clipboard")
+            p(class="mt-1 mb-3") Password for others to ring the bell
+            div
+              div(class="custom-control custom-checkbox")
+                input(type="checkbox" class="custom-control-input" id="require-password")
+                label(class="custom-control-label" for="require-password") Require password to ring 
+
+      a(data-toggle="tooltip" data-placement="bottom" title="Settings" id="show-settings-button")
+        i(class="fa fa-ellipsis-v fa-2x header-icon")
+      //- div(id="show-settings-button" class="dropdown")
+      //-   a(href="#" class="d-inline-block" data-toggle="dropdown" role="button")
+      //-     i(class="fa fa-ellipsis-v fa-2x header-icon" data-toggle="tooltip" data-placement="bottom" title="More")
+      //-   div(class="dropdown-menu dropdown-menu-right text-center")
+      //-     a(class="dropdown-item text-primary" href="#" id="change-snapkit") Bitmoji
+      //-     if owner.shareAccessCount > 0
+      //-       a(class="dropdown-item text-primary" id="share-access" href="#") Share access
+      //-     a(class="dropdown-item text-danger" href="#" id="logout") Sign out
+      //- div(class="dropdown")
+      //-   a(href="#" class="d-inline-block" data-toggle="dropdown" role="button" id="share-access-dropdown" style="height: 65px;")
+      //-   div(class="dropdown-menu dropdown-menu-right text-center")
+      //-     div(class="p-3")
+      //-       div(class="text-primary font-weight-bold")
+      //-         span() Share access (
+      //-         span(id="remaining-access")
+      //-       div(class="d-flex mt-2" style="border-radius: 20px; background-color: #DFDFDF; width: 250px;")
+      //-         input(type="text" id="invite-email" placeholder="Your friend's email goes here" autocomplete="off")
+      //-         button(class="btn btn-sm btn-success" id="btn-invite")
+      //-           i(class="fas fa-paper-plane")
+
+  div(id="knock-screen" class="pt-5")
+    div(class="header-title")
+      h1(class="text-white")
+        span() #{ owner.name }'s Home
+
+    div(id="knock-container")
+      input(type="text" id="guest-name" class="dark-input-box mt-5" autocomplete="off" placeholder="Your name goes here")
+      button(class="btn btn-success btn-sm mt-2 px-3" id="btn-knock") Ring
+
+    div(id="login-container")
+      h5(class="text-center text-primary mb-2 font-weight-bold") If you have an account
+      div(class="bg-white px-4 py-3 d-flex flex-column align-items-center" style="border-top-right-radius: 16px; border-top-left-radius: 16px;")
+        input(type="text" id="email" class="dark-input-box" placeholder="Your email goes here")
+        div(class="position-relative password-container w-100 mt-2")
+          input(type="password" id="password" class="dark-input-box" placeholder="and password here" class="w-100")
+          i(class="fa fa-eye-slash toggle-password-display")
+        button(class="btn btn-sm btn-primary mt-2 px-4" id="btn-login") Log in
+
+    div(id="empty-home" class="d-none flex-column align-items-center")
+      script.
+        //- //Redirects user to their home if they see the empy-home page
+        //- if (window.todesktop) {
+        //-   window.location.href = "https://onlyfriends.io/" + userInfo.address;
+        //- }
+      div(class="owner-message") I'm not home right now
+      if owner.sleepAvatar
+        img(src=owner.sleepAvatar id="sleep-avatar")
+      else
+        img(src="/images/default_avatar_not_home.png" id="sleep-avatar")
+
+    div(id="password-container" class="mt-5 flex-column align-items-center d-none")
+      h5(class="text-white mb-3") What's the super top secret password to enter?
+      input(id="password-input" autocomplete="off" placeholder="Enter password")
+      button(class="btn btn-success btn-sm mt-3 px-4" id="enter-password") Unlock
+
+    div(class="owner-message" id="welcome-msg") Welcome to my crib!
+
+    if owner.welcomeAvatar
+      img(src=owner.welcomeAvatar id="welcome-avatar")
+    else
+      img(src="/images/default_avatar_welcome.png" id="welcome-avatar")
+
+    if owner.bunnyAvatar
+      img(src=owner.bunnyAvatar id="bunny-avatar" style="display: none;")
+    else
+      img(src="/images/default_avatar_welcome.png" id="bunny-avatar" style="display: none;")
+
+  div(id="container" class="d-none")
+
+  div(id="message-box-container" class="justify-content-center d-none")
+    div
+      input(id="message-box" style="display: none;" placeholder="Press enter to send a message" maxlength="70" autocomplete="off")
+      //- span(id="type-hint") Press enter to send a message
+
+  div(id="full-cameras-container" class="justify-content-center align-items-center flex-column")
+    div(class="d-flex")
+    div(class="d-flex")
+    div(class="d-none enable-your-video") Camera is off
+
+  div(id="choose-game-container" class="justify-content-center d-none")
+    div(class="d-flex")
+      div(id="choose-game-button" data-toggle="tooltip" title="Games")
+        img(src="/images/game.png")
+      div(id="fullscreen-video-button" data-toggle="tooltip" title="Video call" class="ml-2")
+        img(src="/images/extend.svg")
+
+  div(id="waiting-game-container" class="justify-content-center d-flex")
+    div(id="waiting-game-msg")
+
+  div(id="choose-game-panel")
+    div(id="choose-game-cameras-container" class="game-cameras-container")
+    div()
+      span(class="title text-primary") Games
+      span(id="choose-game-panel-close") &times;
+
+    div(id="choose-game-list")
+      each gameData, gameId in gameList
+        div(class="choose-game-item position-relative" + (gameId == "who-is" ? " selected" : "") data-game=gameId)
+          div(class="choose-game-item-image " + gameId + "-logo" data-toggle="tooltip" title="Needs " + gameData.minPlayers + " players" data-placement="top")
+          div(class="mt-2") #{ gameData.title }
+          if gameData.getCoin
+            img.position-absolute(src="/images/icons/coin.png" style="width: 30px; height: 30px; top: -10px; right: -10px;")
+
+    div(class="d-flex jusitify-content-between align-items-center px-4 py-3 absolute-bottom border-top bg-white")
+      button(id="btn-play-game" class="btn btn-success px-5 py-1 flex-shrink-0") Play
+      //- button(class="btn btn-primary px-3 py-1 flex-shrink-0 mb-0" href="#suggest-game-modal" data-toggle="modal" style="border-radius: 50px;") Suggest a game
+      h5(id="choose-game-description" class="text-center w-100 mb-0") #{ gameList["who-is"].desc }
+
+  div(id="continue-game-panel" class="flex-column")
+    div(id="continue-game-cameras-container" class="game-cameras-container")
+    div(id="continue-game-box")
+      div(id="continue-game-result" class="light-blue")
+        div(class="mb-4 normal-blue") Leaderboard
+      button(id="btn-exit-game" class="btn btn-danger btn-sm mt-2 px-3") Close
+
+  div(id="who-is-game-scene" class="game-scene")
+    div(id="question")
+    span(class="leave-game-button") &times;
+    div(class="d-flex justify-content-center")
+      div(class="d-flex flex-column who-is-camera-container-1")
+        div(class="who-is-camera-1")
+        div(class="who-is-camera-2")
+      div(class="d-flex flex-column who-is-camera-container-2")
+        div(class="who-is-camera-3")
+        div(class="who-is-camera-4")
+      div(class="d-flex flex-column who-is-camera-container-3 align-items-center")
+        div(class="who-is-camera-5 winner-pos position-relative" style="overflow: hidden;")
+          canvas(id="winnerConfettiCanvas" style="position:absolute;top:0;left:0;display:none;z-index:99;")
+        div(class="who-is-camera-6")
+      div(class="d-flex flex-column who-is-camera-container-4")
+        div(class="who-is-camera-7")
+        div(class="who-is-camera-8")
+      div(class="d-flex flex-column who-is-camera-container-5")
+        div(class="who-is-camera-9")
+        div(class="who-is-camera-10")
+    div(class="absolute-bottom d-flex flex-column align-items-center" style="bottom: 15px")
+      div(id="choose-name-panel")
+        a(class="choose-name-clone d-none")
+      div(id="question-state") Question 1 of 10
+    div(class="game-timer") 10s
+    h3(class="wating-next-round text-white text-center w-100 font-weight-bold") Waiting for next round
+
+  div(id="doodly-game-scene" class="game-scene")
+    div(id="doodly-cameras-container" class="game-cameras-container")
+    span(class="leave-game-button") &times;
+    div(class="d-flex justify-content-center align-items-center flex-column mt-2")
+      div(id="doodly-game-container" class="bg-white d-flex justify-content-center align-items-center")
+        div(id="selected-word") Word: Parachute
+        //- div(class="d-flex position-relative justify-content-center font-weight-bold text-center bg-white flex-column align-items-center" style="font-size: 20px;")
+        div(id="choose-word-container")
+          div(class="mb-2 font-weight-bold") Select a word!
+          div(class="d-flex justiy-content-center mt-4")
+            span(class="choose-word mx-1") Parachute
+            span(class="choose-word mx-1") Parachute
+            span(class="choose-word mx-1") Parachute
+        div(id="doodly-canvas-container")
+        div(class="position-absolute px-4" style="bottom: 0; left: 0; right: 0; padding-top: 15px; padding-bottom: 15px;")
+          div(class="progress")
+            div(class="progress-bar progress-bar-animated bg-success" role="progressbar" style="width: 25%" id="doodly-time-bar")
+
+        div(class="d-flex text-center mx-4" id="doodly-answer-container")
+          div(class="px-5 py-3 shadow")
+            div(class="text-primary mb-3 font-weight-bold") Scores
+            div(id="doodly-result")
+          div(class="d-flex flex-column ml-4")
+            div(class="px-5 py-3 shadow")
+              div() The word was
+              b(id="doodly-answer" class="text-success") Parachute
+            div(class="px-5 py-3 shadow mt-3")
+              b(id="doodly-painer-name") Jill
+              | &nbsp;is picking a word
+      div(class="bg-white mt-3" id="choose-color-guess-input-container")
+        div(id="choose-color-container" class="d-flex justify-content-center align-items-center mx-4 my-2 font-weight-bold")
+          span(class="choose-color mx-1 selected")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color mx-1")
+          span(class="choose-color ml-1 mr-2")
+          span(class="choose-tool mx-2 selected" data-tool="pencil")
+            a(class="fa fa-pencil fa-lg")
+          span(class="choose-tool mx-2" data-tool="erase")
+            a(class="fa fa-eraser fa-lg")
+          span(class="choose-tool mx-2" data-tool="trash")
+            a(class="fa fa-trash fa-lg")
+          //- span(class="choose-tool ml-3" data-tool="finish") FINISH
+        input(id="guess-word-input" maxlength="70" autocomplete="off")
+        //- div(class="game-timer") 80s
+        //- h3(class="wating-next-round text-dark text-center w-100 font-weight-bold") Waiting for next round
+
+  div(id="uwo-game-scene" class="game-scene")
+    include uwo.html
+
+  div(id="humanity-game-scene" class="game-scene")
+    include humanity.html
+
+  div(id="love-hate-game-scene" class="game-scene")
+    include love-hate.html
+
+  div(id="guess-who-game-scene" class="game-scene")
+    include guess-who.html
+
+  div(id="codename-game-scene" class="game-scene")
+    include codename.pug
+
+  div(id="lipoker-game-scene" class="game-scene")
+    include lipoker.pug
+
+  div(id="air-hockey-game-scene" class="game-scene")
+    include air-hockey.pug
+
+  div(id="richup-game-scene" class="game-scene")
+    include richup.pug
+
+  canvas(id="globalConfettiCanvas")
+
+  div(class="fixed-top d-flex flex-column" style="top: 60px; pointer-events: none; z-index: auto;")
+    div(id="cameras-container")
+      div(class="camera-clone-item d-none")
+        div(class="camera-container")
+          video(class="camera" muted autoplay)
+          audio(autoplay hidden)
+          img(src="/images/default_avatar.png")
+        span(class="badge badge-light p-2 peer-name")
+
+    div(id="notify-location") Welcome home
+
+  div(id="knock-group-container" style="z-index: 1;")
+    div(class="knock-notify-container-clone")
+      div
+        span() &#128682;
+        span(class="player-name") Linda
+      div
+        span(class="accept-knock text-success") Let in
+        span(class="ignore-knock text-danger ml-3") Ignore
+
+    div(class="invitation-container-clone")
+      div
+        span(class="player-name font-weight-bold")
+        span() &nbsp;has invited you over
+      div(class="font-weight-light d-flex align-items-center ml-3")
+        span(class="accept-invitation text-success") Go
+        span(class="ignore-invitation text-danger ml-2") &times;
+
+    div(class="add-friend-container-clone")
+      div
+        span(class="player-name font-weight-bold")
+        span() &nbsp;added you as a friend
+      div(class="font-weight-light d-flex align-items-center ml-3")
+        span(class="accept-friend text-success") Add
+        span(class="ignore-friend text-danger ml-2") &times;
+
+    div(class="update-friend-status-clone d-none")
+      div(class="mx-3")
+        b(class="friend-name")
+        span() &nbsp;is online
+
+    div(class="friend-message-clone d-none")
+      div(class="mx-2")
+        b(class="friend-name")
+        span() &nbsp;
+        span(class="friend-message") Hello there!
+
+  div(class="dropdown" style="height: 0;")
+    a(class="d-none" data-toggle="dropdown" role="button" id="show-player-settings")
+    #right-menu.div(class="dropdown-menu popup-menu" style="background: linear-gradient(#bbefff 50px, #fff 0%); border-radius: 15px; width: 180px;")
+      .d-flex.flex-column.align-items-center.mt-3
+        .position-relative.friend-avatar(style="border: 5px; border-color: #fff; width:65px; height:65px; background-position: center -15px; border-style: solid; border-color: white; border-width: medium;")
+      div.mb-3
+        div
+          span.mt-1.mb-0.player-name(style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; font-size: 16px; font-weight: 600;") Philip 
+          span() &nbsp;
+          #right-menu-verified-badge.i.fa.fa-check-circle.d-none(style="color: #2b95e9;", data-toggle="tooltip", title="Verified", data-placement="bottom")
+        #right-menu-friends-number.span.mt-0(style="font-size: 12px;") 0 Friends
+        #right-menu-friends-bio.span.mt-1.d-none(style="font-size: 14px;") I like rainbows 
+      #right-menu-buttons.d-flex.align-items-center.justify-content-around.w-100.my-2
+        a#add-friend.text-center(href="#" data-toggle="tooltip", title="Add friend", data-placement="bottom", style="padding-top: 2px; cursor: pointer; width: 25px; height:25px; background-color: #c8ffbd; border-radius: 50%;")
+          i.fa.fa-plus(style="color: #00A807;")
+        a#chat-friend.text-center(href="#" data-toggle="tooltip", title="Chat", data-placement="bottom", style="padding-top: 2px; cursor: pointer; width: 25px; height:25px; background-color: #abfcff; border-radius: 50%;")
+          i.fa.fa-comment-alt(style="color: #26aeed;")
+        a#invite-player.text-center(href="#" data-toggle="tooltip", title="Invite home", data-placement="bottom", style="padding-top: 2px; cursor: pointer; width: 25px; height:25px; background-color: #ffedb3; border-radius: 50%;")
+          i.fa.fa-angle-double-left(style="color: #e09419;")
+        a#remove-friend.text-center(href="#" data-toggle="tooltip", title="Remove friend", data-placement="bottom", style="padding-top: 2px; cursor: pointer; width: 25px; height:25px; background-color: #ffbdbd; border-radius: 50%;")
+          i.fa.fa-ban(style="color: #de0000;")
+        a#eject-player.text-center(href="#" data-toggle="tooltip", title="Eject", data-placement="bottom", style="padding-top: 2px; cursor: pointer; width: 25px; height:25px; background-color: #ffbdbd; border-radius: 50%;")
+          i.fa.fa-eject(style="color: #e32441;")
+      //- #right-menu-volume.my-2.form-group.text-center
+      //-   label(class="w-100") User volume
+      //-   input(type="range" class="form-control-range w-75 volume-input mx-auto" min="0" max="100" value="99")
+
+  div(class="dropdown" style="height: 0;")
+    a(class="d-none" data-toggle="dropdown" role="button" id="show-sit-down")
+    div(class="dropdown-menu popup-menu")
+      a(class="dropdown-item" href="#" id="sit-down") Sit down
+
+  div(class="dropdown" style="height: 0;")
+    a(class="d-none" data-toggle="dropdown" role="button" id="go-to-another-scene")
+    div(class="dropdown-menu popup-menu")
+      a(class="dropdown-item" href="#" id="move-to-scene") Go to Plaza
+
+  div(id="whack-a-mole-game-modal" class="modal fade" data-backdrop="static" data-keyboard="false")
+    div(class="modal-dialog modal-dialog-centered" style="width: 600px; max-width: 600px; top: 20px;")
+      div(class="modal-content")
+        div(class="modal-body")
+          button(type="button" class="btn close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+          div
+            include whack-a-mole.pug
+
+  div(id="play-game-modal" class="modal fade" data-backdrop="static" data-keyboard="false")
+    div(class="modal-dialog modal-dialog-centered")
+      div(class="modal-content")
+        div(class="modal-body")
+          div(class="modal-top")
+            img(src="/images/favicon.png" width="25")
+            span(class="player-name") Philp
+            span()  wants to play
+            span(class="game-title") Who Is
+            span(class="float-right")
+              span(id="accept-play-game" class="text-success") Play
+              span(id="reject-play-game" class="text-danger ml-2") Pass
+          div(class="choose-game-item mx-4 my-5" data-game="who-is")
+            div(class="choose-game-item-image")
+            div(class="ml-3")
+              h1(class="my-1 game-title") Who Is
+              div(class="game-description") Description
+
+  div(class="modal fade" id="warning-guest-mode")
+    div(class="modal-dialog modal-dialog-centered custom-modal")
+      div(class="modal-content")
+        div(class="modal-body px-5")
+          button(type="button" class="btn close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+          div(class="text-center text-primary font-weight-bold") Uh oh!
+          div(class="mt-4") To go outside, adventure the world and meet new people, you need to have an account.
+          div(class="d-flex justify-content-between mt-4")
+            a(class="btn btn-primary btn-rounded" href="/") Sign up
+            button(class="btn btn-danger btn-rounded" data-dismiss="modal") Cancel
+
+  div(class="modal fade" id="feedback-modal")
+    div(class="modal-dialog modal-dialog-centered custom-modal")
+      div(class="modal-content")
+        div(class="modal-body px-4")
+          button(type="button" class="btn close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+          div(class="text-center mb-2 text-primary font-weight-bold") What can we do better?
+          textarea(id="feedback-text" class="form-control" rows="6" placeholder="Tell us all about what updates you'd like to see or if something went wrong - what happened and how did it happen.")
+          div(class="text-center mt-2")
+            button(class="btn btn-primary btn-rounded" id="send-feedback") Send
+
+  div(class="modal fade" id="suggest-game-modal")
+    div(class="modal-dialog modal-dialog-centered custom-modal")
+      div(class="modal-content")
+        div(class="modal-body px-4")
+          button(type="button" class="btn close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+          div(class="text-center mb-2 text-primary font-weight-bold") Suggest a game
+          textarea(id="suggest-game-text" class="form-control" rows="6" placeholder="We love to hear what games you'd like to see. The more details, the better.")
+          div(class="text-center mt-2")
+            button(class="btn btn-primary btn-rounded" id="send-suggest-game") Request
+
+  div(class="modal fade" id="welcome-guide-modal" data-backdrop="static" data-keyboard="false")
+    div(class="modal-dialog modal-dialog-centered" style="width: 400px;")
+      div(class="modal-content")
+        div(class="modal-body px-4")
+          div(class="d-flex flex-column justify-content-center align-items-center guide-step" data-step="address")
+            h4(class="normal-blue font-weight-bold" style="font-size: 26px;") Welcome!
+            h5(class="light-blue mt-4 font-weight-bold" style="font-size: 18px;") Pick a username
+            div(class="d-flex align-items-center")
+              span(class="font-weight-bold") https://onlyfriends.io/
+              input(type="text" placeholder="jeff" class="ml-1" id="your-address" pattern="[a-zA-Z0-9]+" style="width: 120px;")
+            small(class="mt-5 mb-2 font-weight-bold text-center") Share this link with others to invite them home.
+            button(class="btn btn-sm btn-primary btn-rounded mt-1 btn-next") Next
+
+          div(class="d-none flex-column justify-content-center align-items-center guide-step" data-step="birthday")
+            h4(class="normal-blue font-weight-bold" style="font-size: 26px;") When's your birthday?
+            div(class="d-flex align-items-center my-5")
+              input(class="text-center" type="text" placeholder="28" id="birthday-date" style="width: 50px;")
+              select(class="mx-2" id="birthday-month" style="width: 100px;")
+                option(value="0") January
+                option(value="1") February
+                option(value="2") March
+                option(value="3") April
+                option(value="4") May
+                option(value="5") June
+                option(value="6") July
+                option(value="7") August
+                option(value="8") September
+                option(value="9") October
+                option(value="10") November
+                option(value="11") December
+              input(class="text-center" type="text" placeholder="2001" id="birthday-year" style="width: 70px;")
+            button(class="btn btn-sm btn-primary btn-rounded mt-1 btn-next") Next
+
+          div(class="d-none flex-column justify-content-center align-items-center guide-step" data-step="enable-video-mic")
+            h4(class="normal-blue font-weight-bold" style="font-size: 26px;") Talk to others!
+            div(class="mt-3 mb-5 font-weight-bold text-center") Enable your mic & video to talk to friends, you can’t use your video outside homes to create a safe environment.
+            span(class="light-blue font-weight-bold mb-2" id="enable-video-mic" style="cursor: pointer") Enable your video & mic
+            button(class="btn btn-sm btn-primary btn-rounded mt-1 btn-next d-none") Next
+
+          div(class="d-none flex-column justify-content-center align-items-center guide-step" data-step="got-it")
+            h4(class="normal-blue font-weight-bold mt-2" style="font-size: 20px;") Sit down to play games
+            img(class="mt-3 mb-4" width="200" src="/images/playGamesExample.png" style="border-radius: 10px;")
+            button(class="btn btn-sm btn-primary btn-rounded mt-1 btn-next") Let's go
+
+  div(class="modal fade" id="video-play-modal")
+    div(class="modal-dialog modal-dialog-centered" style="width: 900px; height: 375px; max-height: 375px; max-width: 900px; top: 75px;")
+      div(class="modal-content")
+        div(class="modal-body px-2")
+          div(class="d-flex justify-content-center")
+            div(class="flex-column mx-4" id="video-control-container")
+              h3(class="text-primary text-center font-weight-bold mb-3") Youtube
+              div(class="d-flex mb-3" style="border-radius: 20px; background-color: #DFDFDF;")
+                input(type="text" id="search-video-input" placeholder="Search")
+                button(class="btn btn-primary btn-sm" id="search-video")
+                  i(class="fa fa-search")
+              div(class="d-flex mb-3 text-primary justify-content-center")
+                i(class="fa fa-play-circle fa-2x cursor-pointer" id="play-pause-video")
+              div(id="video-list" class="mb-4" style="width: 225px; height: 90px;")
+              div(class="form-group text-center")
+                label(class="w-100") Volume
+                input(type="range" class="form-control-range w-75 volume-input mx-auto" onchange="ytChangeVolume(value);" min="0" max="100" value="100")
+              div(class="custom-control custom-checkbox text-center" id="allow-guest-play-container")
+                input(type="checkbox" class="custom-control-input" id="allow-guest-play")
+                label(class="custom-control-label" for="allow-guest-play" style="line-height: 1.8") Allow guests to control
+            div.video-container(id="ytvideo" style="pointer-events: none;")
+              iframe(width="768" height="345" src="" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+
+  div(class="modal fade" id="daily-rewards-modal")
+    div(class="modal-dialog modal-dialog-centered" style="width: 350px; max-width: 970px;")
+      div(class="modal-content")
+        div(class="modal-body px-2")
+          div(class="d-flex justify-content-center")
+            div(class="flex-column mx-4" id="video-control-container")
+              h5(id="daily-rewards-welcome-text" class="text-center" style="font-weight: bold; color: #3399ff; white-space:nowrap;")
+              h3(class="font-weight-bold text-center" style="font-size: 15px;") Here's your daily reward!
+              center
+                div.container(style="position: relative;")
+                  img(id="claim-daily-reward" class="dailyRewardsGiftAnimate mt-3 mb-3 text-center" width="200px" src="/images/gift.png")
+                  //Don't forget to add d-none lol
+                  div.d-none(id="claim-gift-section" style="position: absolute; top: 55%; left: 50%;  transform: translate(-50%, -50%);") 
+                    div(style="box-shadow: 0px 0px 5px #ffc7c7; background-color: #fff5cf; border-radius: 10px; padding: 10px; font-weight: bold; font-size: 17px;")
+                      span(id="daily-rewards-win-number") 500
+                      span()  coins
+                    div.mt-2.d-none(id="daily-rewards-multiplier-number" style="color: #ffd12b; font-weight: 900; text-shadow: 0px 0px 5px #ff9898; font-size: 17px; animation: increaseDecrease 0.5s alternate infinite ease-in;") 1.5x
+                button.btn.btn-success.d-none(id="daily-rewards-continue" style="border-radius: 30px;") Continue
+                h5(id="daily-rewards-instructions" class="text-center" style="font-weight: bold; color: #3399ff; white-space:nowrap; font-size: 15px;") Click on the gift to claim it
+                h5.text-center.mt-2.d-none(id="daily-rewards-tommorrow-multiplier" style="font-weight: bold; color: #2bbcff; white-space:nowrap; font-size: 15px;") Come back tomorrow for a 1.5x multiplier
+
+  div(class="modal fade" id="purchase-coins-modal")
+    div(class="modal-dialog modal-dialog-centered" style="width: 680px; max-width: 970px;") 
+      div(class="modal-content")
+        div(class="modal-body px-2 justify-content-center")
+          div(id="purchase-coins-selection")
+            div(id="purchase-coins-item" class="d-none")
+              a(id="purchase-coins-item-name") 
+              //- div(class="card-img-top") 
+              //- div(class="card-body") 
+              //-   div(class="card-title") dfsaad
+              //-   div(class="card-text")
+              //-   div(class="card-text")
+          div#send-friend-gifts
+              div.container
+                div.row
+                  div.col
+                    center
+                      h5.font-weight-bold.mb-0(style="color: #34c8ed;") Send gifts
+                      p.mb-2 You can send gifts every 24 hours
+                      div#send-gifts-list(style="flex-direction: column; flex-wrap: wrap; overflow-y: auto; height: 175px;")
+                        center
+                          br
+                          p.mt-3.font-weight-bold#no-send-gifts-text(style="color: #bababa; font-size: 12px;") EMPTY
+                  div.col
+                    center
+                      h5.font-weight-bold.mb-0(style="color: #34c8ed;") Your gifts
+                      p.mb-2 Ask your friends to send you a gift
+                      div#receive-gifts-list(style="flex-direction: column; flex-wrap: wrap; overflow-y: auto; height: 175px;")
+                        center
+                          br
+                          p.mt-3.font-weight-bold#no-receive-gifts-text(style="color: #bababa; font-size: 12px;") EMPTY
+
+          div.d-none(id="purchase-coins-payment")
+            form(id="purchase-coins-payment-form")
+              div(id="purchase-coins-card-element")
+              button.stripe-button(id="purchase-coins-pay-button")
+                div.d-none(id="purchase-coins-pay-spinner" class="stripe-spinner hidden")
+                span(id="purchase-coins-pay-text") Pay now
+              p(id="purchase-coins-error-msg" role="alert")
+              p(id="purchase-coins-result-msg" class="result-message hidden") Payment succeeded, see the result in your
+                a(href="" target="_blank") Stripe dashboard.
+
+  div(class="modal fade" id="events-modal")
+    div(class="modal-dialog modal-dialog-centered" style="width: 600px; max-width: 970px;")
+       div(class="modal-content")
+        div(class="modal-body px-2 justify-content-center")
+          include events.pug
+  
+  div(class="modal fade" id="setting-room-modal")
+    div(class="modal-dialog modal-dialog-centered" style="min-width: 80%; max-width: 80%; min-height: 80%; max-height: 80%; top: 50px;")
+      div(class="modal-content")
+        include explore.pug
+
+  div(id="snapkit-login-button-target" class="d-none")
+
+  div(id="bottom-game-chat" class="game-chat-container")
+    div(href="#" class="game-chat-show-button" data-toggle="tooltip" data-placement="top" title="Open chat")
+    div(class="game-chat")
+      div(class="pb-2 font-weight-bold d-flex justify-content-between algin-items-center")
+        div(class="text-primary") Game Chat
+        span(class="close-game-chat") &times;
+      div(class="msg-box")
+        div(class="msg-container-clone")
+          span(class="name") You:
+          span(class="msg") Cheese belongs on pizza not pineapples :(
+      input(class="msg-input" placeholder="Press enter to send a message")
+
+  div(id="left-game-chat" class="game-chat-container")
+    div(href="#" class="game-chat-show-button" data-toggle="tooltip" data-placement="right" title="Open chat")
+    div(class="game-chat")
+      div(class="pb-2 font-weight-bold d-flex justify-content-between algin-items-center")
+        div(class="text-primary") Game Chat
+        span(class="close-game-chat") &times;
+      div(class="msg-box")
+      input(class="msg-input" placeholder="Press enter to send a message")
+
+  div(id="coins-container")
+    span(style="-ms-transform: translateY(-50%); transform: translateY(-50%); margin: 0; top: 50%;")
+      span(id="coins" class="ml-2 mr-1") 0
+      span.font-weight-bold.mr-2() coins
+    button.mr-0.btn.btn-success(id="add-coins-button" style="border-radius: 20px; padding: 0px; width: 24px; height: 24px;")
+      i(class="fa fa-plus")
+      
+
+  div(id="my-friends-container" class="d-flex")
+    include friends.pug
+    
+  div(id="user-settings-container" class="d-none")
+    include user-settings.pug
+
+  div(class="fixed-bottom d-none justify-content-center" id="show-designer-container")
+    span(id="show-inventory-box" class="mr-2 py-2 px-4") SHOW DESIGNER
+    span(class="save-inventory-box py-2 px-4") SAVE
+
+  div(id="inventory-box" class="fixed-bottom bg-white p-3" style="display: none;")
+
+  div(id="furniture-shop")
+
+  include loading.pug
+
+block scripts
+  script.
+    var siteUrl = "#{ siteUrl }";
+    var isProd = #{ isProd };
+    var roomId = "#{ roomId }";
+    var serverId = "#{ serverId }";
+    var gameList = !{ JSON.stringify(gameList) };
+    var snapkitClientId = "#{ snapkitClientId }";
+    var homeOwner = !{ JSON.stringify(owner) };
+    var intercomAppId = "#{ intercomAppId }";
+    var furnitureList = !{ JSON.stringify(furnitureList) };
+
+    //Change slider color
+    $(function() {
+      var rangePercent = $('[type="range"]').val();
+      $('[type="range"]').on('change input', function() {
+        rangePercent = $('[type="range"]').val();
+        $('[type="range"], h4>span').css('filter', 'hue-rotate(-' + rangePercent + 'deg)');
+      });
+    });
+
+  script(src="/libs/intercom.js")
+  script(src="/socket.io/socket.io.js")
+  script(src="//sdk.twilio.com/js/video/releases/2.15.1/twilio-video.min.js")
+  script(src="/libs/phaser-arcade-physics.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js" async defer)
+  script(src="/libs/hark.bundle.js")
+  script(src="/libs/easystar-0.4.4.min.js")
+  //script(src="/libs/emoji-picker/js/config.js")
+  //script(src="/libs/emoji-picker/js/util.js")
+  //script(src="/libs/emoji-picker/js/jquery.emojiarea.js")
+  //script(src="/libs/emoji-picker/js/emoji-picker.js")
+
+  if isProd
+    script(src="/uwo/javascripts/index.js")
+    script(src="/javascripts/play.js")
+  else
+    script(src="/uwo/javascripts/deck.js")
+    script(src="/uwo/javascripts/cards.js")
+    script(src="/uwo/javascripts/special-cards.js")
+    script(src="/uwo/javascripts/addCSSToCards.js")
+    script(src="/uwo/javascripts/animations.js")
+    script(src="/uwo/javascripts/players.js")
+    script(src="/javascripts/landing/index.js")
+    script(src="/javascripts/landing/login-signup.js")
+    script(src="/javascripts/snapkit-login.js")
+    script(src="/javascripts/confetti.js")
+    script(src="/javascripts/check-media-device.js")
+    script(src="/javascripts/twilio.js")
+    script(src="/javascripts/game.js")
+    script(src="/javascripts/who-is.js")
+    script(src="/javascripts/doodly.js")
+    script(src="/javascripts/against-humanity.js")
+    script(src="/javascripts/love-hate.js")
+    script(src="/javascripts/guess-who.js")
+    script(src="/javascripts/codename.js")
+    script(src="/javascripts/lipoker.js")
+    script(src="/javascripts/air-hockey.js")
+    script(src="/javascripts/richup.js")
+    script(src="/javascripts/whack-a-mole.js")
+    script(src="/javascripts/socket.js")
+    script(src="/javascripts/home-designer.js")
+    script(src="/javascripts/play.js")
+    script(src="/javascripts/events.js")
+    script(src="/javascripts/script.js")
+    script(src="/javascripts/welcome-guide.js")
+    script(src="/javascripts/ytvideo.js")
+    script(src="/javascripts/events.js")
+    script(src="/javascripts/rewards.js")
+    script(src="/javascripts/friends.js")
+    script(src="/javascripts/room-explore.js")
+    script(src="/javascripts/user-settings.js")
+    script(src="/javascripts/coin.js")
+    script(src="/javascripts/coin-gifts.js")
+    script(src="/javascripts/payments.js")
+    script(src="/javascripts/pathfind.js")
+    script(src="/javascripts/loading.js")

@@ -1,0 +1,69 @@
+div.justify-content-md-center(id="user-settings-screen")
+  div.container(style="width: 750px;")
+    h1(style="left: 0px; font-family: Nunito; font-weight: bold; color: #0FB0EC;") Settings
+    center
+      div.row
+        div.col.col-lg-2
+          h5.mr-3(class="user-settings-screen-nav-button selected" id="user-settings-screen-nav-profile") Profile 
+        div.col.col-lg-3
+          h5.mr-3(class="user-settings-screen-nav-button" id="user-settings-screen-nav-share-access") Share access
+        //- div.col.col-lg-2
+        //-   h5.mr-3(class="user-settings-screen-nav-button" id="user-settings-screen-nav-share-access") Misc
+        div.col.col-lg-2
+          h5.mr-3.text-danger(class="user-settings-screen-nav-button" id="logout") Sign out
+        div.col.col-lg-0
+          span.btn-close(style="bottom: 10px; right: 0px;") &times;
+    #user-settings-screen-menu
+      div#user-settings-profile-screen.container
+        center
+        div.row
+          center
+          div.col
+            //- h4.mt-3(style="font-family: Nunito; font-weight: bold; color: #0FB0EC;") Profile
+            div.row
+              div.col.col-lg-3.ml-3.mt-4
+                .d-flex.flex-column.align-items-center
+                  #user-settings-profile-circle-photo.position-relative.friend-avatar(style="border: 5px; border-color: #fff; width:75px; height:75px; background-position: center -17px;")
+              div.col.col-lg-1
+                div.mt-4
+                  span.font-weight-bold(style="font-size: 12px;") NAME
+                  input#user-settings-profile-name.signup-input.form-rounded.form-control(style="font-size: 15px; width: 250px;" aria-describedby="inputGroup-sizing-sm")
+                div.mt-2
+                  span.font-weight-bold(style="font-size: 12px;") USERNAME
+                  input#user-settings-profile-username.signup-input.form-rounded.form-control(pattern="[a-zA-Z0-9]+" style="font-size: 15px; width: 250px;" type="input" aria-describedby="inputGroup-sizing-sm")
+                  div.center
+                    span#user-settings-profile-input-example-username.font-weight-bold(style="font-size: 10px; color: rgb(170, 170, 170);") ONLYFRIENDS.IO/USERNAME
+                div.mt-2
+                  span.font-weight-bold(style="font-size: 12px;") BIO
+                  textarea#user-settings-profile-bio.signup-input.form-rounded.form-control(maxlength="70" rows="3" style="font-size: 15px; width: 250px;" placeholder="Be a cupcake in a world of muffins" aria-describedby="inputGroup-sizing-sm")
+                div.mt-2#user-settings-profile-controls
+                  div.row(style="width: 300px; right:0px;")
+                    .col
+                      a.mt-3(class="btn btn-success" href="#" id="user-settings-profile-save" style="border-radius:25px;") Save          
+          div.col
+            center
+              div.mt-3(style="width: 300px;")
+                //- h4.mt-4(style="font-family: Nunito; font-weight: bold; color: #0FB0EC;") Bitmoji
+                #user-settings-avatar-section
+                  img(id="user-settings-avatar-image" src="/images/default_avatar.png" style="height: 250px;")
+                  a.mt-3(class="btn btn-success" href="#" id="change-snapkit" style="border-radius:25px;") Update Bitmoji
+
+
+
+
+      div#user-settings-share-access-screen.container.d-none
+        center
+          div
+            center
+            div.col
+              h4(style="font-family: Nunito; font-weight: bold; color: #0FB0EC; padding-top: 30px;") Spread the joy
+              h5.font-weight-bold(style="font-family: Nunito; color: #000; font-size: 12px;") INVITE A FRIEND & EARN 500 COINS WHEN THEY JOIN
+              div(class="p-3")
+                div(class="text-primary font-weight-bold")
+                div(class="d-flex" style="border-radius: 20px; background-color: #DFDFDF; width: 250px;")
+                  input(type="text" style="font-size: 16px; background-color: #fff;" id="invite-email" placeholder="Your friend's email" autocomplete="off")
+                  button(class="btn btn-sm btn-success" id="btn-invite")
+                    i(class="fas fa-paper-plane") &nbsp;
+                div(style="padding-top: 1px;")
+                  span(id="remaining-access") 0
+                  span()  invites left
