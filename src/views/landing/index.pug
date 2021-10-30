@@ -21,19 +21,26 @@ block scripts
         platform = window.navigator.platform,
         macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
         windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
-        os = null;
+        os = null,
+        osDownloadUrl = null;
 
     if (macosPlatforms.indexOf(platform) !== -1) {
-      os = 'Mac';
       if (g.match(/Apple/) && !g.match(/Apple GPU/)) {
         os = 'Mac (M1)';
+        osDownloadUrl = '/downloads/mac-arm/swiddle.dmg'
+      } else {
+        os = 'Mac';
+        osDownloadUrl = '/downloads/mac/swiddle.dmg'
       }
     } else if (windowsPlatforms.indexOf(platform) !== -1) {
       os = 'Windows';
+      osDownloadUrl = '/downloads/windows/swiddle.dmg'
     } else if (!os && /Linux/.test(platform)) {
       os = 'Linux';
+      osDownloadUrl = '/downloads/linux/swiddle.appImg'
     }
     
    document.querySelector('#download-for-os-btn').innerText = 'Download for ' + os;
+   document.querySelector('#download-for-os-btn').href = osDownloadUrl;
 
     
