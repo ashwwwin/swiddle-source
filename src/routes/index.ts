@@ -609,6 +609,16 @@ router.post('/auto-login', async function (req, res) {
   }
 })
 
+/* Auto login */
+router.post('/metamask-login', async function (req, res) {
+  console.log(req.body.ethId)
+  res.json({
+    success: false
+  })
+})
+
+
+
 router.post('/login', async function (req, res) {
   const user = await userModel.findOne({
     email: new RegExp(`^${req.body.email}$`, 'i'),

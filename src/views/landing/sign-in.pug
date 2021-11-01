@@ -7,15 +7,15 @@ block content
 
 block scripts
   script.
-    autoLogin();
-
     $(document).ready(function() {
+      autoLogin();
+
       var anchors = document.getElementsByTagName("a");
 
-    for (var i = 0; i < anchors.length; i++) {
-        anchors[i].href = (anchors[i].href).replace('.html','');
-        anchors[i].href = (anchors[i].href).replace('index','');
-    }
+      for (var i = 0; i < anchors.length; i++) {
+          anchors[i].href = (anchors[i].href).replace('.html','');
+          anchors[i].href = (anchors[i].href).replace('index','');
+      }
     });
 
     var siteUrl = "#{ siteUrl }";
