@@ -1,25 +1,31 @@
 # Swiddle
-### A metaverse inspired by a generation of Flash games
+### A Web3 metaverse inspired by a generation of Flash games
 Built primarily with Node, Phaser, Socket.io, JS & TS
 
-## Running in development mode
+## Setting it up
 
-First, install node packages:
 
+##### Install the dependancies
 ```bash
 npm i -g google-closure-compiler
-
 npm install
+
+npm install --global yarn
+yarn install
+
 ```
+##### Set up the .env files
+src/pre-start/env/production.env
+src/pre-start/env/development.env
 
-Then, if you'd like to run the server locally use:
 
+## Running in development mode
 ```bash
 npm run dev
 ```
 
 ## Running in production mode
-Don't forget to install the node packages, next you'd need to build by using:
+Build the app by running:
 
 ```bash
 npm run build
@@ -32,8 +38,3 @@ Finally, to start the server use:
 ```bash
 npm start
 ```
-
-## In both modes, update the .env files ##
-src/pre-start/env/production.env
-
-src/pre-start/env/development.env
