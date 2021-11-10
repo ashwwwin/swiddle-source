@@ -1,6 +1,9 @@
+extends ../webflow-layout.pug
+
 block content
   include webflow/mint.html
 
+  #metamask-signin(style="display: none;")
 block scripts
   script.
     $(document).ready(function() {
@@ -11,3 +14,5 @@ block scripts
         anchors[i].href = (anchors[i].href).replace('index','');
     }
     });
+
+  script(src="/javascripts/crypto.js")

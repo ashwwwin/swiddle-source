@@ -167,29 +167,6 @@ $('#forgot-password').click(function () {
   return false;
 });
 
-$('#metamask-signin').click(async function() {
-  if (typeof window.ethereum !== 'undefined') {
-    console.log('MetaMask is detected');
-    $.ajax({
-      url: 'metamask-login',
-      type: 'post',
-      dataType: 'json',
-      data: {
-        ethId: (await ethereum.request({ method: 'eth_requestAccounts' }))[0]
-      },
-      success: function (data) {
-        if (data.success) {
-          $.notify('Check your email', {
-            type: 'success'
-          });
-        }
-      }
-    });
-  } else {
-    console.log('MetaMask could not be detected');
-  }
-})
-
 // Simple login
 $('#btn-signin').click(function () {
   email = $('#email').val();
