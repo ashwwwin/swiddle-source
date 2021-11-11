@@ -53,7 +53,7 @@ $('#mint-og-flat').click(async function () {
 
   //Checking if user is logged in 
   accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  var CONTRACT_ADDRESS = '0x35e6c00FBbfC9B16d2c6DF8E3f3369729Ad04332';
+  var CONTRACT_ADDRESS = '0xA4B0E4C3b92D298aa39229d318523A3F05000666';
   if (metamaskDetected && accounts[0]) {
     // $.ajax({
     //   url: 'mint-nft',
@@ -70,7 +70,7 @@ $('#mint-og-flat').click(async function () {
       const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsNFT.abi, signer);
 
       $('#mint-og-flat').text('Waiting for ether');
-      let nftTxn = await connectedContract.mint('0', accounts[0]);
+      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.175") } );
 
       $('#mint-og-flat').text('Minting...');
       await nftTxn.wait();
