@@ -67,7 +67,6 @@ if (window.location.pathname == 'sign-in') {
   });
 }
 
-
 function autoLogin() {
   // Check cookie and auto login
   var email = Cookies.get('swiddle_email');

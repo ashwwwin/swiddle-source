@@ -4,6 +4,8 @@ block content
   include webflow/sign-up.html
 
 block scripts
+  script(src="/javascripts/notifications.js")
+  
   script.
     $(document).ready(function() {
       var anchors = document.getElementsByTagName("a");
@@ -13,3 +15,13 @@ block scripts
         anchors[i].href = (anchors[i].href).replace('index','');
     }
     });
+
+  if isProd
+    script(src="/javascripts/landing-login-signup.js")
+    script(src="/javascripts/notifications.js")
+  else
+    script(src="/javascripts/landing/index.js")
+    script(src="/javascripts/landing/login-signup.js")
+    script(src="/javascripts/crypto.js")
+    script(src="/javascripts/snapkit-login.js")
+    script(src="/javascripts/notifications.js")

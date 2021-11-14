@@ -73,15 +73,11 @@ $('#continue-step').click(function () {
             // Security issue, anyone can get all the information of any user with just an email
             // console.log(data.user);
             $('#signin-email').val(email);
-            $.notify('Email is taken', {
-              type: 'danger'
-            })
+            showNotification('error', 'Email is taken');
           } else {
             //Checks if passwords match
             if ($('#password').val() != $('#password-confirmation').val()){
-              $.notify('Passwords do not match', {
-                type: 'danger'
-              })
+              showNotification('error','Incorrect password');
             } else {
               //If passwords match
               $('#waitlistBody').addClass('d-none');
@@ -92,9 +88,7 @@ $('#continue-step').click(function () {
       });
     } else {
       //If email doesn't exist
-      $.notify('Invalid email', {
-        type: 'danger'
-      })
+      showNotification('error','Email not found');
     }
   }
 });
@@ -172,9 +166,7 @@ $('#btn-signin').click(function () {
   email = $('#email').val();
   password = $('#password').val();
   if (!email || !password) {
-    // $.notify('Incorrect email or password', {
-    //   type: 'danger'
-    // });
+    showNotification('error','Incorrect email or password');
     return;
   }
   if (emailValidator.test(email)) {
@@ -215,14 +207,11 @@ $('#btn-signin').click(function () {
           $('#name-input-step').addClass('d-flex').removeClass('d-none');
         }
       } else if (data.fail_email || data.fail_password) {
-        // $.notify('Incorrect email or password', {
-        //   type: 'danger'
-        // })
+        showNotification('error','Incorrect email or password');
       }
-      // else if (data.fail_password) {
-      //   $('#invalid-password-msg').removeClass('d-none');
-      //   $('#wrong-password-emoji').show();
-      // }
+      else if (data.fail_password) {
+        showNotification('error','Incorrect email');
+      }
     }
   });
 });
@@ -235,56 +224,45 @@ $('#go-to-signup').click(function () {
   $('#waitlistBody h5').text('Create an account');
 });
 
-$('#btn-signup').click(function () {
-  email = $('#email').val();
-  password = $('#password').val();
-  if (!email || !password) {
-    $.notify('Invalid email or password', {
-      type: 'danger'
-    });
-    return;
-  }
-  if (emailValidator.test(email)) {
-    $('#invalid-email-msg').addClass('d-none');
-  } else {
-    $('#invalid-email-msg').removeClass('d-none');
-    return;
-  }
-  if (!password || password != $('#password-confirmation').val()) {
-    $('#invalid-confirmation-msg').removeClass('d-none');
-    return;
-  } else {
-    $('#invalid-confirmation-msg').addClass('d-none');
-  }
-  $.ajax({
-    url: 'sign-up',
-    type: 'post',
-    dataType: 'json',
-    data: {
-      email: email,
-      password: password,
-    },
-    success: function (data) {
-      if (data.exist) {
-        $('#account-exist-msg').removeClass('d-none');
-      } else {
-        mixpanel.alias(data.email);
-        userInfo = data;
-        Cookies.set('swiddle_email', data.email, { expires: 5 });
-        Cookies.set('swiddle_token', data.token, { expires: 5 });
-        $('#waitlistBody').addClass('d-none').removeClass('d-flex');
-        $('#snap-login-step').addClass('d-flex').removeClass('d-none');
-      }
-    }
-  });
-});
+// $('#btn-signup').click(function () {
+//   console.log('owow');
+//   email = $('#email').val();
+//   password = $('#password').val();
+//   if (!email || !password) {
+//     showNotification('error','Invalid email or password');
+//     return;
+//   }
+//   if (emailValidator.test(email)) {
+//     showNotification('error','Invalid email');
+//     return;
+//   } 
+//   if (!password || password != $('#password-confirmation').val()) {
+//     showNotification('error','Passwords do not match');
+//     return;
+//   }
+//   $.ajax({
+//     url: 'sign-up',
+//     type: 'post',
+//     dataType: 'json',
+//     data: {
+//       email: email,
+//       password: password,
+//     },
+//     success: function (data) {
+//       if (data.exist) {
+//         $('#account-exist-msg').removeClass('d-none');
+//       } else {
+//         mixpanel.alias(data.email);
+//         userInfo = data;
+//         Cookies.set('swiddle_email', data.email, { expires: 5 });
+//         Cookies.set('swiddle_token', data.token, { expires: 5 });
+//         $('#waitlistBody').addClass('d-none').removeClass('d-flex');
+//         $('#snap-login-step').addClass('d-flex').removeClass('d-none');
+//       }
+//     }
+//   });
+// });
 
-//Continue button
-$('#signup-submit').click(function() {
-  // $('#signup-form').submit();
-  $('#snap-login-step').removeClass('d-none');
-  $('#waitlistBody').addClass('d-none');
-});
 
 $('#signin-submit').click(function() {
   $('#signin-form').submit();
@@ -292,24 +270,19 @@ $('#signin-submit').click(function() {
 
 $('#signup-form').submit(function() {
   displayName = $('#signup-name').val();
+  displayName = 'Subito';
   email = $('#signup-email').val();
   password = $('#signup-password').val();
   if (!displayName || !email || !password) {
-    $.notify('All the fields are required', {
-      type: 'danger'
-    });
+    showNotification('error','All the fields are required');
     return false;
   }
   if (!emailValidator.test(email)) {
-    $.notify("Invalid email", {
-      type: 'danger'
-    });
+    showNotification('error','Invalid email');
     return false;
   }
   if (!password || password != $('#signup-password-confirmation').val()) {
-    $.notify("Passwords do not match", {
-      type: 'danger'
-    });
+    showNotification('error','Passwords do not match');
   }
   $.ajax({
     url: 'new-sign-up',
@@ -319,20 +292,13 @@ $('#signup-form').submit(function() {
       name: displayName,
       email: email,
       password: password,
-      avatar: avatar,
       timeZone: timeZone,
-      path: window.location.pathname
     },
     success: function (data) {
       if (data.exist) {
-        $.notify('Email is taken', {
-          type: 'danger'
-        });
+        showNotification('error','Email is taken');
       } else {
         userInfo = data;
-        $.notify('Welcome to Only Friends!', {
-          type: 'success'
-        });
         mixpanel.alias(data.email);
         Cookies.set('swiddle_email', data.email, { expires: 5 });
         Cookies.set('swiddle_token', data.token, { expires: 5 });
@@ -347,15 +313,11 @@ $('#signin-form').submit(function() {
   email = $('#email').val();
   password = $('#password').val();
   if (!email || !password) {
-    // $.notify('Incorrect email or password', {
-    //   type: 'danger'
-    // });
+    showNotification('error','Incorrect email or password');
     return false;
   }
   if (!emailValidator.test(email)) {
-    // $.notify("Invalid email", {
-    //   type: 'danger'
-    // });
+    showNotification('error','Invalid email');
     return false;
   }
   $.ajax({
@@ -391,14 +353,10 @@ $('#signin-form').submit(function() {
           $('#name-input-step').addClass('d-flex').removeClass('d-none');
         }
       } else if (data.fail_email) {
-        // $.notify('Incorrect email', {
-        //   type: 'danger'
-        // })
+        showNotification('error','Incorrect email');
       }
       else if (data.fail_password) {
-        // $.notify('Incorrect password', {
-        //   type: 'danger'
-        // })
+        showNotification('error','Incorrect password');
       }
     }
   });

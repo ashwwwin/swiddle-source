@@ -871,11 +871,11 @@ router.post('/new-sign-up', async function (req, res) {
     return
   }
 
-  const bitmoji = req.body.avatar || ''
-  const avatar = generate_libmoji(bitmoji, '10214650')
-  const welcomeAvatar = generate_libmoji(bitmoji, '10214354')
-  const bunnyAvatar = generate_libmoji(bitmoji, '20018934')
-  const sleepAvatar = generate_libmoji(bitmoji, '20045113')
+  // const bitmoji = req.body.avatar || ''
+  // const avatar = generate_libmoji(bitmoji, '10214650')
+  // const welcomeAvatar = generate_libmoji(bitmoji, '10214354')
+  // const bunnyAvatar = generate_libmoji(bitmoji, '20018934')
+  // const sleepAvatar = generate_libmoji(bitmoji, '20045113')
 
   const access = await shareAccessModel.findOne({
     email: new RegExp(`^${req.body.email}$`, 'i')
@@ -897,10 +897,10 @@ router.post('/new-sign-up', async function (req, res) {
   const user = new userModel({
     name: req.body.name,
     email: (req.body.email).toLowerCase(),
-    avatar,
-    welcomeAvatar,
-    bunnyAvatar,
-    sleepAvatar,
+    // avatar,
+    // welcomeAvatar,
+    // bunnyAvatar,
+    // sleepAvatar,
     password: await passwordHash.hash(req.body.password),
     invitedBy: (access ? access.userId : ''),
     token: uuidv4(),
