@@ -1,7 +1,6 @@
-if (window.todesktop) {
+if (window.location.pathname == 'sign-in') {
   autoLogin();
 }
-
 
 var emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -57,16 +56,6 @@ $('#change-snapkit').click(function () {
   return false;
 });
 
-if (window.location.pathname == 'sign-in') {
-  $(function () {
-    // //Added tooltip
-    // $('body').tooltip({
-    //   selector: '[data-toggle="tooltip"]'
-    // });
-    autoLogin();
-  });
-}
-
 function autoLogin() {
   // Check cookie and auto login
   var email = Cookies.get('swiddle_email');
@@ -92,6 +81,7 @@ function autoLogin() {
           mixpanel.identify(data.user.email);
           if (data.user.access || data.user.invitedBy) {
             // sessionStorage.setItem('loggedIn', true);
+            console.log(data.user);
             sessionStorage.setItem('id', data.user._id);
             sessionStorage.setItem('name', data.user.name);
             sessionStorage.setItem('avatar', data.user.avatar || '');
@@ -104,11 +94,11 @@ function autoLogin() {
               personData.name = sessionStorage.getItem('name');
               personData.avatar = sessionStorage.getItem('avatar');
               ownId = personData.id;
-              isHomeOwner = (homeOwner._id == ownId);
-
-              if (data.user.address == roomId) {
-                enterHomeAction();
-              }
+              // isHomeOwner = (homeOwner._id == ownId);
+              window.location.href = '/' + data.user.address;
+              // if (data.user.address == ownId) {
+              //   enterHomeAction();
+              // }
             }
           } else if (data.user.name) {
             $('#waitlistBody').addClass('d-none').removeClass('d-flex');

@@ -1,146 +1,13 @@
 var email;
 var displayName;
 var userInfo = {};
+var personData = {};
 var avatar;
+var homeOwner;
 
 var emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 var addressValidator = /^[a-zA-Z0-9]+$/i;
-
 var timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone);
-
-var queryString = window.location.search;
-var urlParams = new URLSearchParams(queryString);
-
-
-
-if (urlParams.has('login')) {
-  //Showing the login page
-  waitlistClick();
-  loginShow();
-S
-  if (urlParams.has('email')) {
-    //Getting email if it exists
-    const paramEmail = urlParams.get('email');
-    
-    //Inputting email
-    $('#signin-email').val(paramEmail);
-  }
-
-  if (urlParams.has('token')) {
-    //Getting pass if it exists
-    const paramPass = urlParams.get('token');
-
-    //Inputting pass
-    $('#signin-password').val(paramPass);
-  }
-
-  //Submitting the form if user has email and password
-  if (urlParams.has('email') && urlParams.has('token')) {
-    $(document).ready(function() { 
-      $('#signin-form').submit();
-    });
-  }
-} else if (urlParams.has('register')) {
-  waitlistClick();
-} 
-
-
-//Makes the body visible
-$(function() {
-  $('body').css('opacity', 1);
-});
-
-$('#continue-step').click(function () {
-  var $button = $(this);
-  var step = $button.data('step');
-  if (step == 1) {
-    email = $('#email').val();
-    //Checks if email is taken
-    if (emailValidator.test(email)) {
-      $('#invalid-email-msg').addClass('d-none');
-      $.ajax({
-        url: 'check-email',
-        type: 'post',
-        dataType: 'json',
-        data: {
-          email: email
-        },
-        success: function (data) {
-          if (data.user) {
-            //If user data is found, email is already used
-            userInfo = data.user;
-            // Security issue, anyone can get all the information of any user with just an email
-            // console.log(data.user);
-            $('#signin-email').val(email);
-            showNotification('error', 'Email is taken');
-          } else {
-            //Checks if passwords match
-            if ($('#password').val() != $('#password-confirmation').val()){
-              showNotification('error','Incorrect password');
-            } else {
-              //If passwords match
-              $('#waitlistBody').addClass('d-none');
-              $('#snap-login-step').removeClass('d-none');
-            }
-          }
-        }
-      });
-    } else {
-      //If email doesn't exist
-      showNotification('error','Email not found');
-    }
-  }
-});
-
-
-$('#btn-no-snap').click(function () {
-  $('#snap-login-step').addClass('d-none').removeClass('d-flex');
-  $('#name-input-step').removeClass('d-none').addClass('d-flex');
-});
-
-$('#back-snap-login').click(function () {
-  $('#name-input-step').addClass('d-none').removeClass('d-flex');
-  $('#snap-login-step').removeClass('d-none').addClass('d-flex');
-});
-
-$('#btn-finish-step').click(function () {
-  if (!$('#name').val()) {
-    $('#invalid-name-msg').removeClass('d-none');
-    return;
-  }
-  $('#invalid-name-msg').addClass('d-none');
-  $.ajax({
-    url: 'finish-signup',
-    type: 'post',
-    dataType: 'json',
-    data: {
-      id: userInfo._id,
-      name: $('#name').val(),
-      email: $('#email').val(),
-      timeZone: timeZone,
-      path: window.location.pathname
-    },
-    success: function (data) {
-      $('#name-input-step').addClass('d-none').removeClass('d-flex');
-      $('#waitlist-step').removeClass('d-none').addClass('d-flex');
-      Cookies.set('swiddle_email', data.email, { expires: 5 });
-      Cookies.set('swiddle_token', data.token, { expires: 5 });
-      if (data.access || data.invitedBy) {
-        // sessionStorage.setItem('loggedIn', true);
-        sessionStorage.setItem('id', data._id);
-        sessionStorage.setItem('name', data.name);
-        sessionStorage.setItem('avatar', data.avatar);
-        sessionStorage.setItem('address', data.address);
-        sessionStorage.setItem('coins', data.coins);
-        window.location.href = '/' + data.address;
-      } else if (data.emailActivated) {
-        $('#email-validation-msg').text('Your spot has been reserved.');
-      }
-      autoLogin();
-    }
-  });
-});
 
 $('#forgot-password').click(function () {
   $.ajax({
@@ -161,12 +28,11 @@ $('#forgot-password').click(function () {
   return false;
 });
 
-// Simple login
 $('#btn-signin').click(function () {
   email = $('#email').val();
   password = $('#password').val();
   if (!email || !password) {
-    showNotification('error','Incorrect email or password');
+    showNotification('error','Please fill in all the fields');
     return;
   }
   if (emailValidator.test(email)) {
@@ -210,63 +76,16 @@ $('#btn-signin').click(function () {
         showNotification('error','Incorrect email or password');
       }
       else if (data.fail_password) {
-        showNotification('error','Incorrect email');
+        showNotification('error','Incorrect password');
       }
     }
   });
 });
 
-$('#go-to-signup').click(function () {
-  $('#btn-signin').hide();
-  $('#go-to-signup').hide();
-  $('#btn-signup').show();
-  $('#password-confirmation').parent().removeClass('d-none').addClass('d-flex');
-  $('#waitlistBody h5').text('Create an account');
-});
 
-// $('#btn-signup').click(function () {
-//   console.log('owow');
-//   email = $('#email').val();
-//   password = $('#password').val();
-//   if (!email || !password) {
-//     showNotification('error','Invalid email or password');
-//     return;
-//   }
-//   if (emailValidator.test(email)) {
-//     showNotification('error','Invalid email');
-//     return;
-//   } 
-//   if (!password || password != $('#password-confirmation').val()) {
-//     showNotification('error','Passwords do not match');
-//     return;
-//   }
-//   $.ajax({
-//     url: 'sign-up',
-//     type: 'post',
-//     dataType: 'json',
-//     data: {
-//       email: email,
-//       password: password,
-//     },
-//     success: function (data) {
-//       if (data.exist) {
-//         $('#account-exist-msg').removeClass('d-none');
-//       } else {
-//         mixpanel.alias(data.email);
-//         userInfo = data;
-//         Cookies.set('swiddle_email', data.email, { expires: 5 });
-//         Cookies.set('swiddle_token', data.token, { expires: 5 });
-//         $('#waitlistBody').addClass('d-none').removeClass('d-flex');
-//         $('#snap-login-step').addClass('d-flex').removeClass('d-none');
-//       }
-//     }
-//   });
+// $('#signin-submit').click(function() {
+//   $('#signin-form').submit();
 // });
-
-
-$('#signin-submit').click(function() {
-  $('#signin-form').submit();
-});
 
 $('#signup-form').submit(function() {
   displayName = $('#signup-name').val();
@@ -309,56 +128,56 @@ $('#signup-form').submit(function() {
   return false;
 });
 
-$('#signin-form').submit(function() {
-  email = $('#email').val();
-  password = $('#password').val();
-  if (!email || !password) {
-    showNotification('error','Incorrect email or password');
-    return false;
-  }
-  if (!emailValidator.test(email)) {
-    showNotification('error','Invalid email');
-    return false;
-  }
-  $.ajax({
-    url: '/login',
-    type: 'post',
-    dataType: 'json',
-    data: {
-      email: email,
-      password: password,
-      timeZone: timeZone
-    },
-    success: function (data) {
-      if (data.success) {
-        Cookies.set('swiddle_email', data.user.email, { expires: 5 });
-        Cookies.set('swiddle_token', data.user.token, { expires: 5 });
-        mixpanel.identify(data.user.email);
-        if (data.user.access || data.user.invitedBy) {
-          // sessionStorage.setItem('loggedIn', true);
-          sessionStorage.setItem('id', data.user._id);
-          sessionStorage.setItem('name', data.user.name);
-          sessionStorage.setItem('avatar', data.user.avatar);
-          sessionStorage.setItem('address', data.user.address);
-          sessionStorage.setItem('coins', data.user.coins);
-          console.log(sessionStorage);
-          window.location.href = '/' + data.user.address;
-        } else if (data.user.name) {
-          if (data.user.emailActivated) {
-            $('#email-validation-msg').text('Your spot has been reserved.');
-          }
-          window.location.reload();
-          $('#waitlist-step').addClass('d-flex').removeClass('d-none');
-        } else {
-          $('#name-input-step').addClass('d-flex').removeClass('d-none');
-        }
-      } else if (data.fail_email) {
-        showNotification('error','Incorrect email');
-      }
-      else if (data.fail_password) {
-        showNotification('error','Incorrect password');
-      }
-    }
-  });
-  return false;
-});
+// $('#signin-form').submit(function() {
+//   email = $('#email').val();
+//   password = $('#password').val();
+//   if (!email || !password) {
+//     showNotification('error','Please fill in all the fields');
+//     return false;
+//   }
+//   if (!emailValidator.test(email)) {
+//     showNotification('error','Invalid email');
+//     return false;
+//   }
+//   $.ajax({
+//     url: '/login',
+//     type: 'post',
+//     dataType: 'json',
+//     data: {
+//       email: email,
+//       password: password,
+//       timeZone: timeZone
+//     },
+//     success: function (data) {
+//       if (data.success) {
+//         Cookies.set('swiddle_email', data.user.email, { expires: 5 });
+//         Cookies.set('swiddle_token', data.user.token, { expires: 5 });
+//         mixpanel.identify(data.user.email);
+//         if (data.user.access || data.user.invitedBy) {
+//           // sessionStorage.setItem('loggedIn', true);
+//           sessionStorage.setItem('id', data.user._id);
+//           sessionStorage.setItem('name', data.user.name);
+//           sessionStorage.setItem('avatar', data.user.avatar);
+//           sessionStorage.setItem('address', data.user.address);
+//           sessionStorage.setItem('coins', data.user.coins);
+//           console.log(sessionStorage);
+//           window.location.href = '/' + data.user.address;
+//         } else if (data.user.name) {
+//           if (data.user.emailActivated) {
+//             $('#email-validation-msg').text('Your spot has been reserved.');
+//           }
+//           window.location.reload();
+//           $('#waitlist-step').addClass('d-flex').removeClass('d-none');
+//         } else {
+//           $('#name-input-step').addClass('d-flex').removeClass('d-none');
+//         }
+//       } else if (data.fail_email) {
+//         showNotification('error','Incorrect email');
+//       }
+//       else if (data.fail_password) {
+//         showNotification('error','Incorrect password');
+//       }
+//     }
+//   });
+//   return false;
+// });

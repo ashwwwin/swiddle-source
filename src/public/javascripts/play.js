@@ -6,6 +6,8 @@ document.addEventListener('contextmenu', event => {
   }
 });
 
+console.log('Play.js line 9', userInfo);
+
 // Body width, it's for resize window event
 var bodyWidth;
 

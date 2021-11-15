@@ -1,6 +1,6 @@
 var notifyLocationTimer;
 var userInfo; 
-
+console.log('Socket.js start', userInfo);
 // Emoji text
 var emojiTexts = {
   "o\\.o": "👀",
@@ -30,6 +30,9 @@ var disableAction = false;
 enterHomeAction = function () {
   startLoading();
 
+  console.log('UserInfo is', userInfo);
+
+
   var password = generateRandomString(passwordLength);
   $('#owner-address').val(siteUrl + '/' + roomId);
   $('#owner-password').val(password);
@@ -41,11 +44,14 @@ enterHomeAction = function () {
     }
   });
 
+  sendMessage({
+    type: 'my-info'
+  });
+
   if (userInfo == undefined | null) {
     //window.location.replace('sign-in');
     console.log(userInfo);
   }
-
   // window.intercomSettings = {
   //   app_id: intercomAppId,
   //   user_id: ownId,
@@ -151,6 +157,11 @@ setupSocket = function () {
 
   socket.on('sign-out', function () {
     logout();
+  });
+
+  // Require password for knock
+  socket.on('my-info', function (data) {
+    userInfo = data;
   });
 
   // Receive knock

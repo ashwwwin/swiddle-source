@@ -430,6 +430,17 @@ class ListenerService {
         }
       })
 
+      socket.on('my-info', async () => {
+        const ownId = client.playerId;
+        var playerInfo = await userModel.findOne({ 
+          _id: ownId
+        }, { 
+          name: 1, address: 1, avatar: 1, email: 1, bio: 1
+        })
+
+        socket.emit('my-info', playerInfo)
+      });
+
       socket.on('visit-home', async (roomId: string) => {
         try {
           client = {

@@ -70,7 +70,7 @@ $('#mint-og-flat').click(async function () {
       const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsNFT.abi, signer);
 
       $('#mint-og-flat').text('Waiting for ether');
-      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("10") } );
+      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.75") });
 
       $('#mint-og-flat').text('Minting...');
       await nftTxn.wait();

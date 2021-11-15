@@ -21,24 +21,24 @@ if (window.location.pathname == '/' || window.location.pathname == '/simple') {
   });
 }
 
-window.snapKitInit = () => {
-  snap.loginkit.mountButton("snapkit-login-button-target", {
-    clientId: snapkitClientId,
-    redirectURI: siteUrl,
-    scopeList: [
-      "user.display_name",
-      "user.bitmoji.avatar",
-    ],
-    handleResponseCallback: () => {
-      snap.loginkit.fetchUserInfo().then(data => {
-        snapkitLogin(data),
-        function (err) {
-          console.log(err); // Error
-        }
-      })
-    },
-  })
-}
+// window.snapKitInit = () => {
+//   snap.loginkit.mountButton("snapkit-login-button-target", {
+//     clientId: snapkitClientId,
+//     redirectURI: siteUrl,
+//     scopeList: [
+//       "user.display_name",
+//       "user.bitmoji.avatar",
+//     ],
+//     handleResponseCallback: () => {
+//       snap.loginkit.fetchUserInfo().then(data => {
+//         snapkitLogin(data),
+//         function (err) {
+//           console.log(err); // Error
+//         }
+//       })
+//     },
+//   })
+// }
 
 // window.snapKitInit = function () {
 //   // Mount Login Button
