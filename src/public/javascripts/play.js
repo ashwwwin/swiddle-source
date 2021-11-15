@@ -961,10 +961,15 @@ $(function () {
   });
 
   $('#btn-knock').click(function () {
-    if (!personData.name) {
-      personData.name = $('#guest-name').val();
+    //If the person is a guest
+    //Checks if user is logged in based on whether they have a username
+    if (personData.name == null) {
+      if ($('#guest-name').val() == '') {
+        personData.name = 'Guest';
+      } else {
+        personData.name = $('#guest-name').val();
+      }
       personData.guest = true;
-      userInfo = {};
       $('#change-snapkit').remove();
       $('#share-access').remove();
       $('#add-friend').remove();
@@ -972,14 +977,23 @@ $(function () {
       $('#coins-container').remove();
       $('#allow-guest-play-container').remove();
       $('#show-settings-button').remove();
-    }
-    if (personData.name && !sentKnock) {
+
       sentKnock = true;
       sendMessage({
         type: 'knock-on',
         data: personData
       });
-      // //// spiner.spin(document.body);
+
+      ring.play();
+
+    } else if (personData.name) {
+
+      sentKnock = true;
+      sendMessage({
+        type: 'knock-on',
+        data: personData
+      });
+
       ring.play();
     }
   });

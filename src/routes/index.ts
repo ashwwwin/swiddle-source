@@ -759,19 +759,19 @@ router.post('/feedback', async function (req, res) {
   res.json('success')
 })
 
-/* Check email if it's exist */
-router.post('/check-email', async function (req, res) {
-  const user = await userModel.findOne({
-    email: new RegExp(`^${req.body.email}$`, 'i'),
-  })
+// /* Check email if it's exist */
+// router.post('/check-email', async function (req, res) {
+//   const user = await userModel.findOne({
+//     email: new RegExp(`^${req.body.email}$`, 'i'),
+//   })
 
 
-  //This is a big security flaw, I can get all user data with just an email
+//   //This is a big security flaw, I can get all user data with just an email
 
-  res.json({
-    user
-  })
-})
+//   res.json({
+//     user
+//   })
+// })
 
 router.post('/check-password', async function (req, res) {
   const user = await userModel.findOne({

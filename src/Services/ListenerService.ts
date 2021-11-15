@@ -475,12 +475,13 @@ class ListenerService {
         }
       })
 
-      socket.on('knock-on', (playerInfo: Player) => {
+      socket.on('knock-on', (playerInfo: any) => {
         try {
           if (playerInfo.guest) {
             playerInfo.id = uuidv4()
             socket.emit('set-playerId', playerInfo.id)
           }
+          console.log(playerInfo)
           client = {
             socket,
             playerId: playerInfo.id,

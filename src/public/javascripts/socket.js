@@ -86,16 +86,16 @@ enterHomeAction = function () {
 visitHomeAction = function () {
   startLoading();
 
-  if (!userInfo || !userInfo.name) {
-    // // Clear loggedIn session
-    // sessionStorage.setItem('loggedIn', '');
-    try {
-      console.log(userInfo);
-    } finally {
-      window.location.reload();
-    }
-    return;
-  }
+  // if (!userInfo || !userInfo.name) {
+  //   // // Clear loggedIn session
+  //   // sessionStorage.setItem('loggedIn', '');
+  //   try {
+  //     console.log(userInfo);
+  //   } finally {
+  //     window.location.reload();
+  //   }
+  //   return;
+  // }
   $('#guest-name')
     .add('#login-container')
     .hide();
@@ -161,7 +161,9 @@ setupSocket = function () {
 
   // Require password for knock
   socket.on('my-info', function (data) {
+
     userInfo = data;
+
   });
 
   // Receive knock
@@ -281,6 +283,7 @@ setupSocket = function () {
 
   // Get available player list and store it
   socket.on('player-list', function (data) {
+    console.log(data);
     // spiner.stop();
     // changeLoadingValue(50);
     // Can't rerender scene while rendering scene
@@ -1160,6 +1163,7 @@ setupSocket = function () {
 
   socket.on('set-playerId', function (playerId) {
     ownId = personData.id = playerId;
+    console.log(playerId);
   });
 
   socket.on('twilio-token', function (token) {
