@@ -28,10 +28,6 @@ var renderedScene = true;
 var disableAction = false;
 
 enterHomeAction = function () {
-  sendMessage({
-    type: 'my-info'
-  });
-
   startLoading();
 
   console.log('UserInfo is', userInfo);
@@ -102,6 +98,10 @@ setupSocket = function () {
         visitHomeAction();
       // }
     }
+    
+    sendMessage({
+      type: 'my-info'
+    });
   });
 
   socket.on('disconnect', function () {

@@ -76,7 +76,7 @@ $('#mint-og-flat').click(async function () {
       await nftTxn.wait();
 
       $('#mint-og-flat').text('Mint again');
-      
+
       $('#success-address').show();
       $('#success-address').text(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
       $('#success-address').click(function() {
