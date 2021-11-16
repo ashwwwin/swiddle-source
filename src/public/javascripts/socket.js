@@ -28,6 +28,10 @@ var renderedScene = true;
 var disableAction = false;
 
 enterHomeAction = function () {
+  sendMessage({
+    type: 'my-info'
+  });
+
   startLoading();
 
   console.log('UserInfo is', userInfo);
@@ -36,6 +40,7 @@ enterHomeAction = function () {
   var password = generateRandomString(passwordLength);
   $('#owner-address').val(siteUrl + '/' + roomId);
   $('#owner-password').val(password);
+
   sendMessage({
     type: 'enter-home',
     data: {
@@ -44,30 +49,6 @@ enterHomeAction = function () {
     }
   });
 
-  sendMessage({
-    type: 'my-info'
-  });
-
-  if (userInfo == undefined | null) {
-    //window.location.replace('sign-in');
-    console.log(userInfo);
-  }
-  // window.intercomSettings = {
-  //   app_id: intercomAppId,
-  //   user_id: ownId,
-  //   name: userInfo.name,
-  //   email: userInfo.email,
-  //   "username": userInfo.address,
-  //   "coins": userInfo.coins,
-  //   "birthday": userInfo.birthday,
-  //   "desktopApp": desktopApp,
-  //   created_at: userInfo.createdAt
-  // };
-  // if (typeof window.Intercom === 'function') {
-  //   window.Intercom('reattach_activator');
-  //   window.Intercom('update', window.intercomSettings);
-  // }
-  
   $('#coins').text(sessionStorage.getItem('coins'));
   
 
@@ -85,55 +66,27 @@ enterHomeAction = function () {
 
     //Loads events
     loadMyEvents();
+
+    setTimeout(function () {
+      stopLoading();
+    }, 1000);
   });
 }
 
 visitHomeAction = function () {
   startLoading();
 
-  // if (!userInfo || !userInfo.name) {
-  //   // // Clear loggedIn session
-  //   // sessionStorage.setItem('loggedIn', '');
-  //   try {
-  //     console.log(userInfo);
-  //   } finally {
-  //     window.location.reload();
-  //   }
-  //   return;
-  // }
   $('#guest-name')
     .add('#login-container')
     .hide();
 
-  // if (!personData.guest) {
-  //   window.intercomSettings = {
-  //     app_id: intercomAppId,
-  //     name: userInfo.name,
-  //     email: userInfo.email,
-  //     created_at: userInfo.createdAt
-  //   };
-  //   if (typeof window.Intercom === 'function') {
-  //     window.Intercom('reattach_activator');
-  //     window.Intercom('update', window.intercomSettings);
-  //   }
-  // }
-
   $('#coins').text(sessionStorage.getItem('coins'));
-
 }
 
 setupSocket = function () {
   socket.on('connect', function () {
-    stopLoading();
-    // Stop // spinner
-    // spiner.stop();
     if (encodeURIComponent(sessionStorage.getItem('address')).toLowerCase() == roomId) {
-      // if (sessionStorage.getItem('loggedIn')) {
-        enterHomeAction();
-      // } else {
-      //   console.log(sessionStorage);
-      //   window.location.reload();
-      // }
+      enterHomeAction();
       $('#volume-icon').remove();
     } else {
       $('.header').hide();
@@ -164,11 +117,9 @@ setupSocket = function () {
     logout();
   });
 
-  // Require password for knock
+  // Stores the user's data
   socket.on('my-info', function (data) {
-
     userInfo = data;
-
   });
 
   // Receive knock
@@ -572,7 +523,7 @@ setupSocket = function () {
     disableAction = false;
 
     // changeLoadingValue(100);
-    stopLoading();
+    //stopLoading();
   });
 
   // Add a player to containerList
