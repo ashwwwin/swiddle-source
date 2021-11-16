@@ -25,3 +25,5 @@ document.getElementById("notification-msg").style.display = "flex";
 $('#close-msg-notification').click(function() {
 closeNotification();
 });
+
+closeNotification();

@@ -75,9 +75,12 @@ $('#mint-og-flat').click(async function () {
       $('#mint-og-flat').text('Minting...');
       await nftTxn.wait();
 
-      console.log(nftTxn);
-      
-      console.log(`Fresh off the press, https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      $('#mint-og-flat').text('Mint again');
+      $('#success-address').text(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      $('#success-address').click(function() {
+        window.open(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      });
+      $('#success-address').css('cursor', 'pointer');
   } else {
     // alert('Please login to MetaMask');
     // $('#metamask-signin').click();
