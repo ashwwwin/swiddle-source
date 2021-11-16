@@ -1084,6 +1084,8 @@ $(function () {
         },
         success: function (result) {
           if (result) {
+            console.log('updated');
+            sessionStorage.setItem('address', address);
             window.location.href = '/' + address;
           } else {
             // spiner.stop();

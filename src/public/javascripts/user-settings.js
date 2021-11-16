@@ -119,6 +119,7 @@ $('#user-settings-profile-save').click(function () {
       },
       success: function (result) {
         if (result) {
+          sessionStorage.setItem('address', address);
           window.location.href = '/' + address;
         } else {
           // spiner.stop();

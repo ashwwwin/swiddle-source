@@ -69,18 +69,23 @@ enterHomeAction = function () {
   // }
   
   $('#coins').text(sessionStorage.getItem('coins'));
+  
 
-  //Checks daily reward status
-  checkDailyReward();
+  //when page has loaded on document ready
+  $(document).ready(function () {
 
-  //Gets friend suggestions
-  loadFriendSuggestions();
+    //Checks daily reward status
+    checkDailyReward();
 
-  //Gets items in the $ shop
-  getShop();
+    //Gets friend suggestions
+    loadFriendSuggestions();
 
-  //Loads events
-  loadMyEvents();
+    //Gets items in the $ shop
+    getShop();
+
+    //Loads events
+    loadMyEvents();
+  });
 }
 
 visitHomeAction = function () {
