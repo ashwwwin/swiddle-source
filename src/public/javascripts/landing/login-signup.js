@@ -89,7 +89,7 @@ $('#btn-signin').click(function () {
 
 $('#signup-form').submit(function() {
   displayName = $('#signup-name').val();
-  displayName = 'Subito';
+  displayName = 'Default';
   email = $('#signup-email').val();
   password = $('#signup-password').val();
   if (!displayName || !email || !password) {
