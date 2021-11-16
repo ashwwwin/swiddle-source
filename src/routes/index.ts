@@ -672,9 +672,13 @@ router.post('/login', async function (req, res) {
 router.post('/set-address', async function (req, res) {
   let result = false
   const address = req.body.address
+
+  //Checks if the address is taken
   const addressExist = await userModel.findOne({
     address: new RegExp(`^${address}$`, 'i'),
   })
+
+  //If the address is not taken then update it
   if (!addressExist) {
     const user = await userModel.findOneAndUpdate({
       _id: req.body.id,

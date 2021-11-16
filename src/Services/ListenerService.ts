@@ -435,7 +435,7 @@ class ListenerService {
         var playerInfo = await userModel.findOne({ 
           _id: ownId
         }, { 
-          name: 1, address: 1, avatar: 1, email: 1, bio: 1
+          name: 1, address: 1, avatar: 1, email: 1, bio: 1, guideState: 1, roomName: 1, roomDesc: 1, roomImage: 1, maxUsers: 1, lockedRoom: 1, verified: 1
         })
 
         socket.emit('my-info', playerInfo)
