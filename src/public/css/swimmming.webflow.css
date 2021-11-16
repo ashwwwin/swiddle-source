@@ -1855,10 +1855,7 @@
   top: auto;
   right: 0%;
   bottom: 10%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -2015,6 +2012,7 @@
   color: #00a706;
   font-weight: 700;
   text-align: center;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 991px) {
