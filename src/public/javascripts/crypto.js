@@ -1,5 +1,5 @@
-var NFT_ADDRESS = '0x03B32AD65fc51F5e8E4471D5610D95Fc7e2E2800';
-var CONTRACT_ADDRESS = '0x92A82ab229eBD221A2e4dFBF46d5903d0796c83c';
+var NFT_ADDRESS = '0x6fdD6bda3b3F06187141D02523dE8be33E7bDF6f';
+var CONTRACT_ADDRESS = '0x6E1a4F1bfd4B01348696261048a6deA43FC48eA5';
 
 // Import the contract file
 var ogFlatsNFT;
@@ -66,7 +66,7 @@ $('#mint-og-flat').click(async function () {
       const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsNFT.abi, signer);
 
       $('#mint-og-flat').text('Waiting for ether');
-      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.175") });
+      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.75") });
 
       console.log(connectedContract);
 
@@ -74,6 +74,8 @@ $('#mint-og-flat').click(async function () {
       await nftTxn.wait();
 
       $('#mint-og-flat').text('Mint again');
+
+      console.log(nftTxn);
 
       $('#success-address').show();
       $('#success-address').text(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);

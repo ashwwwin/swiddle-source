@@ -1,5 +1,4 @@
 var notifyLocationTimer;
-var userInfo; 
 console.log('Socket.js start', userInfo);
 // Emoji text
 var emojiTexts = {
@@ -51,6 +50,12 @@ enterHomeAction = function () {
   //when page has loaded on document ready
   $(document).ready(function () {
 
+    while (!userInfo) {
+      sendMessage({
+        type: 'my-info'
+      });
+    }
+
     //Checks daily reward status
     checkDailyReward();
 
@@ -98,10 +103,6 @@ setupSocket = function () {
         visitHomeAction();
       // }
     }
-
-    sendMessage({
-      type: 'my-info'
-    });
   });
 
   socket.on('disconnect', function () {

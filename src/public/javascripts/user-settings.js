@@ -92,6 +92,9 @@ $('#user-settings-profile-save').click(function () {
       bio: $('#user-settings-profile-bio').val(),
     },
     success: function () {
+      userInfo.name = $('#user-settings-profile-name').val();
+      userInfo.bio = $('#user-settings-profile-bio').val();
+
       $.notify('Profile successfully updated', {
         type: 'success',
       });
