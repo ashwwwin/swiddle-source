@@ -26,11 +26,20 @@ var renderedScene = true;
 // When move to another scene, disable all actions
 var disableAction = false;
 
+
+function getUserInfo() {
+  if (!userInfo) {
+    sendMessage({
+      type: 'my-info'
+    });
+
+    setTimeout(getUserInfo, 3000);
+  }
+}
+
+
 enterHomeAction = function () {
   startLoading();
-
-  console.log('UserInfo is', userInfo);
-
 
   var password = generateRandomString(passwordLength);
   $('#owner-address').val(siteUrl + '/' + roomId);
@@ -49,12 +58,6 @@ enterHomeAction = function () {
 
   //when page has loaded on document ready
   $(document).ready(function () {
-
-    while (!userInfo) {
-      sendMessage({
-        type: 'my-info'
-      });
-    }
 
     //Checks daily reward status
     checkDailyReward();
@@ -86,6 +89,7 @@ visitHomeAction = function () {
 
 setupSocket = function () {
   socket.on('connect', function () {
+
     if (encodeURIComponent(sessionStorage.getItem('address')).toLowerCase() == roomId) {
       enterHomeAction();
       $('#volume-icon').remove();
@@ -120,6 +124,7 @@ setupSocket = function () {
 
   // Stores the user's data
   socket.on('my-info', function (data) {
+    console.log('my-info', data);
     userInfo = data;
   });
 

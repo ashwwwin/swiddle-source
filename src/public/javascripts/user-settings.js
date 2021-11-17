@@ -180,6 +180,10 @@ $('#btn-invite').click(function () {
 
 
 function loadSettingsPage() {
+
+  // while (!userInfo) {
+  //   sendMessage({type: 'my-info'});
+  // }
   //Gets avatar
   var settings_menu_avatar = userInfo.avatar;
 

@@ -283,6 +283,18 @@ class ListenerService {
             this.roomList.set(`${playerInfo.roomId}-design`, copyRoom)
           }
 
+
+          // Gets the user's information and sends it to the client
+          var userInfo = await userModel.findOne({ 
+            _id: playerId
+          }, { 
+            name: 1, address: 1, avatar: 1, email: 1, bio: 1, guideState: 1, roomName: 1, roomDesc: 1, roomImage: 1, maxUsers: 1, lockedRoom: 1, verified: 1
+          })
+
+          socket.emit('my-info', userInfo)
+
+
+          
           // Generate twilio token and send it
           const twilioToken = this.generateTwilioToken(playerId)
           client.twilioToken = twilioToken
@@ -430,16 +442,16 @@ class ListenerService {
         }
       })
 
-      socket.on('my-info', async () => {
-        const ownId = client.playerId;
-        var playerInfo = await userModel.findOne({ 
-          _id: ownId
-        }, { 
-          name: 1, address: 1, avatar: 1, email: 1, bio: 1, guideState: 1, roomName: 1, roomDesc: 1, roomImage: 1, maxUsers: 1, lockedRoom: 1, verified: 1
-        })
+      // socket.on('my-info', async () => {
+      //   const ownId = client.playerId;
+      //   var playerInfo = await userModel.findOne({ 
+      //     _id: ownId
+      //   }, { 
+      //     name: 1, address: 1, avatar: 1, email: 1, bio: 1, guideState: 1, roomName: 1, roomDesc: 1, roomImage: 1, maxUsers: 1, lockedRoom: 1, verified: 1
+      //   })
 
-        socket.emit('my-info', playerInfo)
-      });
+      //   socket.emit('my-info', playerInfo)
+      // });
 
       socket.on('visit-home', async (roomId: string) => {
         try {

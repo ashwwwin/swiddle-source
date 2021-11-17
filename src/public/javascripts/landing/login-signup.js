@@ -1,7 +1,7 @@
 var email;
 var displayName;
-var userInfo = {};
-var personData = {};
+var userInfo;
+var personData;
 var avatar;
 var homeOwner;
 
