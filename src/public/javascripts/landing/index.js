@@ -6,41 +6,6 @@ var emailValidator = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 
 var timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-// $(function () {
-//   //Added tooltip
-//   $('body').tooltip({
-//     selector: '[data-toggle="tooltip"]'
-//   });
-
-//   $.notifyDefaults({
-//     allow_dismiss: false,
-//     delay: 5000,
-//     placement: {
-//       from: 'bottom',
-//       align: 'center'
-//     },
-//     offset: {
-//       y: 50
-//     },
-//     z_index: 1400,
-//     onClick: function (e) {
-//       $.notifyClose(e.$ele);
-//     },
-//     template: `
-//       <div data-notify="container" class="col-xs-11 col-sm-4 col-md-3 text-center alert alert-{0}" role="alert">
-//         <button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>
-//         <span data-notify="icon"></span>
-//         <span data-notify="title">{1}</span>
-//         <span data-notify="message">{2}</span>
-//         <div class="progress" data-notify="progressbar">
-//           <div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-//         </div>
-//         <a href="{3}" target="{4}" data-notify="url"></a>
-//       </div>
-//     `
-//   });
-// });
-
 $('.toggle-password-display').click(function () {
   if ($(this).hasClass('fa-eye')) {
     $('.fa-eye').removeClass('fa-eye').addClass('fa-eye-slash');

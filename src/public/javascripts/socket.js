@@ -98,7 +98,7 @@ setupSocket = function () {
         visitHomeAction();
       // }
     }
-    
+
     sendMessage({
       type: 'my-info'
     });
@@ -523,7 +523,7 @@ setupSocket = function () {
     disableAction = false;
 
     // changeLoadingValue(100);
-    //stopLoading();
+    stopLoading();
   });
 
   // Add a player to containerList

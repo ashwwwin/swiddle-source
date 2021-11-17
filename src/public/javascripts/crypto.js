@@ -1,10 +1,10 @@
+var CONTRACT_ADDRESS = '0x03b32ad65fc51f5e8e4471d5610d95fc7e2e2800';
+
 // Import the contract file
 var ogFlatsNFT;
-$.getJSON("/libs/OGFlatsNFT.json", function(json) {
+$.getJSON("/libs/OGFlatFactory.json", function(json) {
   ogFlatsNFT = json; 
 });
-
-// const nftContractFactory =  ethers.getContractFactory("ogFlatsNFT");
 
 
 var metamaskDetected = false;
@@ -20,57 +20,55 @@ $(document).ready(function() {
 
 
 $('#metamask-signin').click(async function() {
-  if (metamaskDetected) {
-    console.log('MetaMask is detected');
-    $.ajax({
-      url: 'metamask-login',
-      type: 'post',
-      dataType: 'json',
-      data: {
-        ethId: (await ethereum.request({ method: 'eth_requestAccounts' }))[0]
-      },
-      success: async function (data) {
-        if (data) {
-          console.log(data);
-          var accounts = await ethereum.request({ method: 'eth_accounts' });
+  // if (metamaskDetected) {
+  //   console.log('MetaMask is detected');
+  //   $.ajax({
+  //     url: 'metamask-login',
+  //     type: 'post',
+  //     dataType: 'json',
+  //     data: {
+  //       ethId: (await ethereum.request({ method: 'eth_requestAccounts' }))[0]
+  //     },
+  //     success: async function (data) {
+  //       if (data) {
+  //         console.log(data);
+  //         var accounts = await ethereum.request({ method: 'eth_accounts' });
           
-          console.log(accounts[0]);
-        }
-      }
-    });
-  } else {
-    console.log('MetaMask could not be detected');
-  }
+  //         console.log(accounts[0]);
+  //       }
+  //     }
+  //   });
+  // } else {
+  //   console.log('MetaMask could not be detected');
+  // }
 })
 
-
+function updateMintCounter(){
+  var url = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${CONTRACT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
+  $.getJSON(url, function(data) {
+    $('#mint-counter').text(`Total minted: ${data.result}/10,000 Flats`);
+    console.log(data);
+  });
+}
 
 $('#mint-og-flat').click(async function () {
   
   $('#mint-og-flat').css('cursor', 'not-allowed');
   $('#mint-og-flat').css('user-events', 'none');
 
-
   //Checking if user is logged in 
   accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  var CONTRACT_ADDRESS = '0x34e1b0846146Faaef5C98eFc34818F74061037D9';
+  console.log("accounts", accounts);
   if (metamaskDetected && accounts[0]) {
-    // $.ajax({
-    //   url: 'mint-nft',
-    //   type: 'post',
-    //   dataType: 'json',
-    //   data: {
-    //     ethereum: ethereum,
-    //     ownAddress: accounts[0],
-    //   },
-    // });
-
+    try {
       const provider = await new ethers.providers.Web3Provider(ethereum);
       const signer = await provider.getSigner();
       const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsNFT.abi, signer);
 
       $('#mint-og-flat').text('Waiting for ether');
-      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.75") });
+      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.175") });
+
+      console.log(connectedContract);
 
       $('#mint-og-flat').text('Minting...');
       await nftTxn.wait();
@@ -84,9 +82,13 @@ $('#mint-og-flat').click(async function () {
       });
 
       $('#success-address').css('cursor', 'pointer');
+    } catch (error) {
+      console.log(error);
+      $('#metamask-signin').click();
+    }
   } else {
-    // alert('Please login to MetaMask');
-    // $('#metamask-signin').click();
+      alert('Please login to MetaMask');
+      $('#metamask-signin').click();
   }
 
 
@@ -94,3 +96,5 @@ $('#mint-og-flat').click(async function () {
   $('#mint-og-flat').css('cursor', 'pointer');
   $('#mint-og-flat').css('user-events', 'allow');
 });
+
+updateMintCounter();

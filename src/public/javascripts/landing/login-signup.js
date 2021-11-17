@@ -128,56 +128,32 @@ $('#signup-form').submit(function() {
   return false;
 });
 
-// $('#signin-form').submit(function() {
-//   email = $('#email').val();
-//   password = $('#password').val();
-//   if (!email || !password) {
-//     showNotification('error','Please fill in all the fields');
-//     return false;
-//   }
-//   if (!emailValidator.test(email)) {
-//     showNotification('error','Invalid email');
-//     return false;
-//   }
-//   $.ajax({
-//     url: '/login',
-//     type: 'post',
-//     dataType: 'json',
-//     data: {
-//       email: email,
-//       password: password,
-//       timeZone: timeZone
-//     },
-//     success: function (data) {
-//       if (data.success) {
-//         Cookies.set('swiddle_email', data.user.email, { expires: 5 });
-//         Cookies.set('swiddle_token', data.user.token, { expires: 5 });
-//         mixpanel.identify(data.user.email);
-//         if (data.user.access || data.user.invitedBy) {
-//           // sessionStorage.setItem('loggedIn', true);
-//           sessionStorage.setItem('id', data.user._id);
-//           sessionStorage.setItem('name', data.user.name);
-//           sessionStorage.setItem('avatar', data.user.avatar);
-//           sessionStorage.setItem('address', data.user.address);
-//           sessionStorage.setItem('coins', data.user.coins);
-//           console.log(sessionStorage);
-//           window.location.href = '/' + data.user.address;
-//         } else if (data.user.name) {
-//           if (data.user.emailActivated) {
-//             $('#email-validation-msg').text('Your spot has been reserved.');
-//           }
-//           window.location.reload();
-//           $('#waitlist-step').addClass('d-flex').removeClass('d-none');
-//         } else {
-//           $('#name-input-step').addClass('d-flex').removeClass('d-none');
-//         }
-//       } else if (data.fail_email) {
-//         showNotification('error','Incorrect email');
-//       }
-//       else if (data.fail_password) {
-//         showNotification('error','Incorrect password');
-//       }
-//     }
-//   });
-//   return false;
-// });
+$('#btn-reset-password').click(function () {
+  if (!$('#password').val()) {
+    return;
+  }
+  $.ajax({
+    url: window.location.href,
+    type: 'post',
+    dataType: 'json',
+    data: {
+      password: $('#password').val()
+    },
+    success: function (data) {
+      if (data.success) {
+        Cookies.set('swiddle_email', data.user.email, { expires: 5 });
+        Cookies.set('swiddle_token', data.user.token, { expires: 5 });
+        if (data.user.access || data.user.invitedBy) {
+          // sessionStorage.setItem('loggedIn', true);
+          sessionStorage.setItem('id', data.user._id);
+          sessionStorage.setItem('name', data.user.name);
+          sessionStorage.setItem('avatar', data.user.avatar);
+          sessionStorage.setItem('address', data.user.address);
+          sessionStorage.setItem('coins', data.user.coins);
+          window.location.href = '/' + data.user.address;
+        }
+      }
+      window.location.href = '/'
+    }
+  });
+});
