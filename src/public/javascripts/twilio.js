@@ -115,6 +115,10 @@ function trackPublished(publication, participant) {
  * @param connectOptions - the ConnectOptions used to join a Room
  */
 async function joinTwilioRoom(token, connectOptions) {
+  if (sceneName != 'home') {
+    return;
+  }
+  
   if (!token || videoRoomNames[connectOptions.name]) {
     return;
   }

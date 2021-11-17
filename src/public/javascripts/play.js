@@ -963,7 +963,7 @@ $(function () {
   $('#btn-knock').click(function () {
     //If the person is a guest
     //Checks if user is logged in based on whether they have a username
-    if (personData.name == null) {
+    if (personData.name == null && sentKnock == false) {
       if ($('#guest-name').val() == '') {
         personData.name = 'Guest';
       } else {
@@ -988,7 +988,7 @@ $(function () {
 
       ring.play();
 
-    } else if (personData.name) {
+    } else if (personData.name && sentKnock == false) {
 
       sentKnock = true;
       sendMessage({
