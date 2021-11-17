@@ -130,7 +130,6 @@ async function joinTwilioRoom(token, connectOptions) {
 
   // Join to the Room with the given AccessToken and ConnectOptions.
   const room = await Video.connect(token, connectOptions);
-
   if (remainDisconnects.includes(room.name)) {
     const index = remainDisconnects.indexOf(room.name);
     if (index != -1) remainDisconnects.splice(index, 1);
@@ -165,6 +164,7 @@ async function joinTwilioRoom(token, connectOptions) {
 
   // Subscribe to the media published by RemoteParticipants joining the Room later.
   room.on('participantConnected', participant => {
+
     mixpanel.track('Video Connected', {
       'ownId': ownId,
       'videoRoomName': room.sid

@@ -977,6 +977,8 @@ $(function () {
       $('#coins-container').remove();
       $('#allow-guest-play-container').remove();
       $('#show-settings-button').remove();
+      roomSetting.setVisible(false);
+      
 
       sentKnock = true;
       sendMessage({

@@ -27,17 +27,6 @@ var renderedScene = true;
 var disableAction = false;
 
 
-function getUserInfo() {
-  if (!userInfo) {
-    sendMessage({
-      type: 'my-info'
-    });
-
-    setTimeout(getUserInfo, 3000);
-  }
-}
-
-
 enterHomeAction = function () {
   startLoading();
 
@@ -70,10 +59,6 @@ enterHomeAction = function () {
 
     //Loads events
     loadMyEvents();
-
-    setTimeout(function () {
-      stopLoading();
-    }, 1000);
   });
 }
 
@@ -126,6 +111,8 @@ setupSocket = function () {
   socket.on('my-info', function (data) {
     console.log('my-info', data);
     userInfo = data;
+
+    stopLoading();
   });
 
   // Receive knock

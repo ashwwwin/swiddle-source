@@ -21,5 +21,7 @@ function startLoading() {
 }
 
 function stopLoading() {
-  $loadingScene.hide();
+  setTimeout(function (){
+    $loadingScene.hide();
+  }, 3000);
 }

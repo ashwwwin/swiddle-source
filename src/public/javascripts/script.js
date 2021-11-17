@@ -203,8 +203,13 @@ disableMyVideo = function() {
 }
 
 function connectVideoRoom(roomName) {
+  if (sceneName != 'home') {
+    return;
+  }
+
   pioneerAnalytics.active();
   roomName = `${serverId}-${roomId}-${roomName}`;
+
   if (videoRoomNames.includes(roomName)) {
     return;
   }
@@ -222,6 +227,7 @@ function connectVideoRoom(roomName) {
 
 function disconnectVideoRoom(roomName) {
   roomName = `${serverId}-${roomId}-${roomName}`;
+
   const index = videoRoomNames.indexOf(roomName);
   if (index != -1) videoRoomNames.splice(index, 1);
 
