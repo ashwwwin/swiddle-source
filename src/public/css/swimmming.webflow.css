@@ -358,6 +358,7 @@
 .image {
   max-width: 300px;
   margin-top: 0px;
+  margin-bottom: 20px;
   border-radius: 20px;
   box-shadow: 0 0 20px -17px #000;
   cursor: default;
@@ -370,7 +371,7 @@
 }
 
 .text-block-5 {
-  margin-top: 20px;
+  margin-top: 0px;
   font-family: Inconsolata, monospace;
   font-size: 16px;
   font-weight: 700;
@@ -2013,6 +2014,10 @@
   font-weight: 700;
   text-align: center;
   cursor: pointer;
+}
+
+.text-block-44 {
+  text-align: center;
 }
 
 @media screen and (max-width: 991px) {
