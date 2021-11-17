@@ -66,7 +66,7 @@ div.header {
   display: block;
   min-width: 200px; }
   .dark-input-box::placeholder {
-    color: white; }
+    color: #b6b6b6; }
   .dark-input-box:-internal-autofill-selected {
     font-size: 14px;
     background-color: black;
@@ -229,6 +229,54 @@ div.header {
 
 #choose-color-guess-input-container {
   border-radius: 30px; }
+
+#guest-name {
+  height: 45px;
+  margin-bottom: 10px;
+  border: 2px solid #40b4ee;
+  background-color: #fff;
+  opacity: 1;
+  color: #333;
+  border-radius: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: left;
+  cursor: auto;
+  appearance: auto; }
+  #guest-name ::placeholder {
+    color: #afafaf;
+    opacity: 100; }
+
+#btn-knock {
+  position: relative;
+  z-index: 5;
+  margin-left: 5px;
+  margin-top: 3px;
+  padding-right: 17px;
+  padding-left: 17px;
+  float: right;
+  clear: none;
+  border-radius: 20px;
+  opacity: 1;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  padding: 9px 15px;
+  background-color: #0fbd0f;
+  color: white;
+  border: 0;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 100ms ease-in-out;
+  animation: fade-in 100ms ease-in;
+  outline: none; }
+  #btn-knock:hover {
+    background-color: #0fb30f; }
 
 #doodly-answer-container {
   font-size: 20px; }
@@ -1109,11 +1157,6 @@ div.header {
   border: 1px solid #b3b3b3;
   font-size: 20px;
   font-weight: bold; }
-
-#login-container {
-  position: fixed;
-  bottom: 0;
-  right: 20px; }
 
 .white-card-clone,
 .review-card-clone {

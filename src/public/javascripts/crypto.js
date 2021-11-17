@@ -55,6 +55,7 @@ $('#mint-og-flat').click(async function () {
   
   $('#mint-og-flat').css('cursor', 'not-allowed');
   $('#mint-og-flat').css('user-events', 'none');
+  $('#mint-og-flat').prop('disabled', true);
 
   //Checking if user is logged in 
   accounts = await ethereum.request({ method: 'eth_requestAccounts' });
@@ -95,9 +96,10 @@ $('#mint-og-flat').click(async function () {
 
   updateMintCounter();
 
-  $('#mint-og-flat').text('Mint');
-  $('#mint-og-flat').css('cursor', 'pointer');
-  $('#mint-og-flat').css('user-events', 'allow');
+  // $('#mint-og-flat').text('Mint');
+  // $('#mint-og-flat').css('cursor', 'pointer');
+  // $('#mint-og-flat').css('user-events', 'allow');
+  // $('#mint-og-flat').prop('disabled', false);
 });
 
 updateMintCounter();

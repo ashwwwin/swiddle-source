@@ -92,17 +92,8 @@ block content
         span() #{ owner.name }'s Home
 
     div(id="knock-container")
-      input(type="text" id="guest-name" class="dark-input-box mt-5" autocomplete="off" placeholder="Your name goes here")
-      button(class="btn btn-success btn-sm mt-2 px-3" id="btn-knock") Ring
-
-    div(id="login-container")
-      h5(class="text-center text-primary mb-2 font-weight-bold") If you have an account
-      div(class="bg-white px-4 py-3 d-flex flex-column align-items-center" style="border-top-right-radius: 16px; border-top-left-radius: 16px;")
-        input(type="text" id="email" class="dark-input-box" placeholder="Your email goes here")
-        div(class="position-relative password-container w-100 mt-2")
-          input(type="password" id="password" class="dark-input-box" placeholder="and password here" class="w-100")
-          i(class="fa fa-eye-slash toggle-password-display")
-        button(class="btn btn-sm btn-primary mt-2 px-4" id="btn-login") Log in
+      input(type="text" id="guest-name" class="dark-input-box mt-5 mb-0" placeholder=" Your name" required)
+      button(id="btn-knock") Ring
 
     div(id="empty-home" class="d-none flex-column align-items-center")
       script.

@@ -65,10 +65,6 @@ enterHomeAction = function () {
 visitHomeAction = function () {
   startLoading();
 
-  $('#guest-name')
-    .add('#login-container')
-    .hide();
-
   $('#coins').text(sessionStorage.getItem('coins'));
 }
 
@@ -156,7 +152,6 @@ setupSocket = function () {
       .add('#password-input')
       .add('#welcome-avatar')
       .add('#welcome-msg')
-      .add('#login-container')
       .hide();
     $('.header').hide();
     $('#message-box-container').removeClass('d-flex').addClass('d-none');
@@ -169,7 +164,6 @@ setupSocket = function () {
   socket.on('empty-home', function () {
     // spiner.stop();
     $('#knock-container')
-      .add('#login-container')
       .add('#password-input')
       .add('#welcome-avatar')
       .add('#welcome-msg')
@@ -185,7 +179,6 @@ setupSocket = function () {
   // Require password for knock
   socket.on('enter-password', function () {
     $('#knock-container')
-      .add('#login-container')
       .add('#welcome-avatar')
       .add('#welcome-msg')
       .hide();
@@ -199,7 +192,6 @@ setupSocket = function () {
     $('#bunny-avatar').hide();
     $('#password-container').addClass('d-none').removeClass('d-flex');
     $('#knock-container')
-      .add('#login-container')
       .add('#welcome-avatar')
       .add('#welcome-msg')
       .show();
