@@ -9,7 +9,7 @@ var messageTipsLoader = ["Invite friends home", "Leave no stone unturned", "Righ
 window.addEventListener('load', function () {
   setTimeout(function (){
     $loadingScene.hide();
-  }, 500);
+  }, 3000);
 });
 
 function changeMsgTip() {
@@ -21,7 +21,5 @@ function startLoading() {
 }
 
 function stopLoading() {
-  setTimeout(function (){
-    $loadingScene.hide();
-  }, 3000);
+  $loadingScene.hide();
 }

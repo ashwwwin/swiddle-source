@@ -516,7 +516,9 @@ setupSocket = function () {
     disableAction = false;
 
     // changeLoadingValue(100);
-    stopLoading();
+    setTimeout(() => {
+      stopLoading();
+    }, 1000);
   });
 
   // Add a player to containerList
