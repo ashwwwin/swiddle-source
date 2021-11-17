@@ -112,6 +112,8 @@ setupSocket = function () {
     console.log('my-info', data);
     userInfo = data;
 
+    updateCoins();
+
     stopLoading();
   });
 

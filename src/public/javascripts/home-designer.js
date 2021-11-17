@@ -365,52 +365,41 @@ $('#furniture-shop').on('click', '.item-container', function () {
 });
 
 $('#furniture-shop').on('click', '#furniture-buy', function () {
-  var successfulPurchase = false;
+  sendMessage({
+    type: 'buy-furniture',
+    data: selectedFurnitureName
+  });
 
-  //Getting furniture price
-  var furniturePrice = furnitureList[selectedFurnitureName].price;
-  var furnitureName = furnitureList[selectedFurnitureName].title;
-
-  //Checks if the user can afford the item (solves the negative coins bug)
-  if (coins >= furniturePrice) {
-
-    //Tells the backend to update the inventory & coins
-    sendMessage({
-      type: 'buy-furniture',
-      data: selectedFurnitureName
-    });
-
-    //Calculating new balance
-    coins -= furniturePrice;
-
-    //Notifies the user of a successful purchase
-    $.notify((furnitureName + ' purchased 💸 '), {
-      type: 'success'
-    });
-    successfulPurchase = true;
-  } else {
-    $.notify(('Not enough coins for ' + furnitureName), {
-      type: 'danger'
-    });
-  }
-
-  mixpanel.track('Furniture Purchase', {
+  mixpanel.track('Attempt Purchase', {
     'ownId': ownId,
     'furnitureName': furnitureName,
-    'furniturePrice': furniturePrice,
-    'success': successfulPurchase
+    'furniturePrice': furniturePrice
   });
 
 });
 
 function purchaseItem(data) {
-  //Visually animate coins
-  animateValue(coinsBalanceVisual, userInfo.coins, data.coins);
+  if (data.success) {
+    //Visually animate coins
+    animateValue(coinsBalanceVisual, userInfo.coins, data.coins);
 
-  //Storing new coins amount on client side
-  userInfo.coins = data.coins;
-  coins = data.coins;
+    //Storing new coins amount on client side
+    coins = data.coins;
+    userInfo.coins = coins;
 
-  addInventoryItem(data.name);
-  userInfo.coins = data.coins;
+    addInventoryItem(data.name);
+    userInfo.coins = data.coins;
+
+    //Notifies the user of a successful purchase
+    $.notify((data.itemTitle + ' purchased'), {
+      type: 'success'
+    });
+    
+    updateCoins();
+  } else {
+    $.notify('Not enough coins for ' + (data.itemTitle), {
+      type: 'danger'
+    });
+    coinsBalanceVisual.text(data.coins);
+  }
 }

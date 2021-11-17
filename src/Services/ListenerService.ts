@@ -288,13 +288,13 @@ class ListenerService {
           var userInfo = await userModel.findOne({ 
             _id: playerId
           }, { 
-            name: 1, address: 1, avatar: 1, email: 1, bio: 1, guideState: 1, roomName: 1, roomDesc: 1, roomImage: 1, maxUsers: 1, lockedRoom: 1, verified: 1
+            name: 1, address: 1, avatar: 1, email: 1, bio: 1, guideState: 1, roomName: 1, roomDesc: 1, roomImage: 1, maxUsers: 1, lockedRoom: 1, verified: 1, coins: 1
           })
 
           socket.emit('my-info', userInfo)
 
 
-          
+
           // Generate twilio token and send it
           const twilioToken = this.generateTwilioToken(playerId)
           client.twilioToken = twilioToken
@@ -2564,43 +2564,42 @@ class ListenerService {
       })
 
       socket.on('buy-furniture', async (name: string) => {
-        try {
-          const playerId = client.playerId || ''
-          if (!mongoose.Types.ObjectId.isValid(playerId)) {
-            return
-          }
-          const user = await userModel.findOne({
-            _id: playerId
-          })
-          if (furnitureList[name] && furnitureList[name].price <= user.coins) {
-            const roomInfo = this.roomList.get(client.address)
-            const ownFurnitureList: any = roomInfo?.furnitureList
+        var success = false;
+        var itemTitle;
 
-            //Updating the user's inventory and coins
-            if (ownFurnitureList[name]) {
-              ownFurnitureList[name]++
-            } else {
-              ownFurnitureList[name] = 1
-            }
-            user.furnitureList = ownFurnitureList
-            user.coins -= furnitureList[name].price
-            user.save()
-
-            //Sending tracking data to mixpanel
-            // mixpanel.track('Buy Furniture', {
-            //   'email': client.email,
-            //   'itemName': name,
-            //   'coinBalance': user.coins
-            // })
-
-            socket.emit('buy-furniture', {
-              coins: user.coins,
-              name,
-            })
-          }
-        } catch (err) {
-          console.log(err)
+        const playerId = client.playerId || ''
+        if (!mongoose.Types.ObjectId.isValid(playerId)) {
+          return
         }
+        const user = await userModel.findOne({
+          _id: playerId
+        })
+
+        if (furnitureList[name] && furnitureList[name].price <= user.coins) {
+          const roomInfo = this.roomList.get(client.address)
+          const ownFurnitureList: any = roomInfo?.furnitureList
+
+          //Updating the user's inventory and coins
+          if (ownFurnitureList[name]) {
+            ownFurnitureList[name]++
+          } else {
+            ownFurnitureList[name] = 1
+          }
+          user.furnitureList = ownFurnitureList
+          user.coins -= furnitureList[name].price
+          itemTitle = furnitureList[name].title
+          user.save()
+
+          success = true
+        } else {
+          success = false
+        }
+
+        socket.emit('buy-furniture', {
+          coins: user.coins,
+          itemTitle,
+          success
+        })
       })
 
       //Gets the user's profile for the right click menu - currently only for number of friends (verified, bio in the future)

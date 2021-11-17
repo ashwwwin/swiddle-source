@@ -1,6 +1,3 @@
-//Gets coin div
-var coinsBalanceVisual = document.getElementById('coins');
-
 //Checks with the backend when the user last claimed
 function checkDailyReward() {
     if (userInfo.guideState == "finish") {
@@ -111,20 +108,3 @@ function userDailyRewardGet(data) {
         $('#daily-rewards-instructions').css('color', '#e80f00');
     }
 }
-
-//Animates the number going up/down
-function animateValue(obj, start, end) {
-    //Calculating the time from the amount of coins being changed (this allows consistent increases & decreases)
-    var animateTime = Math.abs((end - start) * 10);
-
-    let startTimestamp = null;
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / animateTime, 1);
-      obj.innerHTML = Math.floor(progress * (end - start) + start);
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    window.requestAnimationFrame(step);
-  }
