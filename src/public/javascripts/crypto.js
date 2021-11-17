@@ -1,4 +1,5 @@
-var CONTRACT_ADDRESS = '0x03b32ad65fc51f5e8e4471d5610d95fc7e2e2800';
+var NFT_ADDRESS = '0x03B32AD65fc51F5e8E4471D5610D95Fc7e2E2800';
+var CONTRACT_ADDRESS = '0x92A82ab229eBD221A2e4dFBF46d5903d0796c83c';
 
 // Import the contract file
 var ogFlatsNFT;
@@ -44,10 +45,9 @@ $('#metamask-signin').click(async function() {
 })
 
 function updateMintCounter(){
-  var url = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${CONTRACT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
+  var url = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
   $.getJSON(url, function(data) {
     $('#mint-counter').text(`Total minted: ${data.result}/10,000 Flats`);
-    console.log(data);
   });
 }
 
@@ -91,6 +91,7 @@ $('#mint-og-flat').click(async function () {
       $('#metamask-signin').click();
   }
 
+  updateMintCounter();
 
   $('#mint-og-flat').text('Mint');
   $('#mint-og-flat').css('cursor', 'pointer');
