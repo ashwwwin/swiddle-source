@@ -1,4 +1,10 @@
 function welcomeGuide() {
+  if (!userInfo.guideState) {
+    setTimeout(function() {
+      welcomeGuide();
+    }, 1000);
+    return;
+  }
   if (userInfo.guideState == 'enable-video-mic') {
     $('#welcome-guide-modal [data-step=enable-video-mic] .btn-next').removeClass('d-none');
   }
@@ -11,7 +17,7 @@ function welcomeGuide() {
     $('#welcome-guide-modal [data-step=' + userInfo.guideState + ']').addClass('d-flex').removeClass('d-none');
   }
 
-  // $('#welcome-guide-modal').modal('show');
+  $('#welcome-guide-modal').modal('show');
 }
 
 $('#welcome-guide-modal .btn-next').click(function () {
