@@ -1,5 +1,9 @@
+//Adjust these settings
+const pricePerFlat = "0.175";
+var decimalPlaces = 4;
 var NFT_ADDRESS = '0x92C06D6da6AB14aC961BD982DFd5f49Cb5059372';
 var CONTRACT_ADDRESS = '0x699D81667B2e0C582618b00b8aC7Ba270Faa7206';
+var ETHERSCAN_URL = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
 
 // Import the contract file
 var ogFlatsNFT;
@@ -7,7 +11,7 @@ $.getJSON("/libs/OGFlatFactory.json", function(json) {
   ogFlatsNFT = json; 
 });
 
-
+var totalPrice = pricePerFlat;
 var metamaskDetected = false;
 var accounts;
 
@@ -17,39 +21,79 @@ $(document).ready(function() {
   } else {
     metamaskDetected = false;
   }
+
+  updateMintCounter();
 });
 
 
 $('#metamask-signin').click(async function() {
-  // if (metamaskDetected) {
-  //   console.log('MetaMask is detected');
-  //   $.ajax({
-  //     url: 'metamask-login',
-  //     type: 'post',
-  //     dataType: 'json',
-  //     data: {
-  //       ethId: (await ethereum.request({ method: 'eth_requestAccounts' }))[0]
-  //     },
-  //     success: async function (data) {
-  //       if (data) {
-  //         console.log(data);
-  //         var accounts = await ethereum.request({ method: 'eth_accounts' });
+  if (metamaskDetected) {
+    console.log('MetaMask is detected');
+    $.ajax({
+      url: 'metamask-login',
+      type: 'post',
+      dataType: 'json',
+      data: {
+        ethId: (await ethereum.request({ method: 'eth_requestAccounts' }))[0]
+      },
+      success: async function (data) {
+        if (data) {
+          console.log(data);
+          var accounts = await ethereum.request({ method: 'eth_accounts' });
           
-  //         console.log(accounts[0]);
-  //       }
-  //     }
-  //   });
-  // } else {
-  //   console.log('MetaMask could not be detected');
-  // }
+          console.log(accounts[0]);
+        }
+      }
+    });
+  } else {
+    console.log('MetaMask could not be detected');
+  }
 })
 
 function updateMintCounter(){
-  var url = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
-  $.getJSON(url, function(data) {
-    $('#mint-counter').text(`Total minted: ${data.result}/10,000 Flats`);
+  $.getJSON(ETHERSCAN_URL, function(data) {
+    $('#mint-counter').text(`Total minted: ${(data.result).toLocaleString("en-US")}/10,000 Flats`);
   });
+
+  //Checks mint number every 15 seconds
+  setTimeout(function(){
+    updateMintCounter();
+  }, 15000);
 }
+
+
+function calculateTotalPrice() {
+  var mintQuantity = parseInt($('#mint-quantity').val());
+  console.log(mintQuantity);
+
+  if (!mintQuantity) {
+    $('#mint-quantity').val("1");
+    mintQuantity = 1;
+  }
+
+  console.log(mintQuantity);
+
+  var total = mintQuantity * pricePerFlat;
+
+  //Just to make it gramatically correct
+  var thePluraler;
+  if (mintQuantity > 1) {
+    thePluraler = 's';
+  } else {
+    thePluraler = '';
+  }
+
+  totalPrice = (parseFloat(total).toPrecision(decimalPlaces)).toString();
+
+  //Removing insignificant zeros (Checks if decimal, if so, removes insignificant zeros)
+  while (totalPrice.endsWith('0') & !!(totalPrice % 1)) {
+    totalPrice = totalPrice.slice(0, -1);
+  }
+
+  //And finally showing the total price
+  $('#total-price').text(`Total is ${totalPrice.toLocaleString("en-US")} ETH for ${mintQuantity.toLocaleString("en-US")} Flat${thePluraler}`)
+}
+
 
 $('#mint-og-flat').click(async function () {
   
@@ -64,8 +108,8 @@ $('#mint-og-flat').click(async function () {
       const signer = await provider.getSigner();
       const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsNFT.abi, signer);
       console.log(connectedContract);
-
-      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther("0.875") });
+      console.log(totalPrice);
+      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther(totalPrice) });
       $('#mint-og-flat').text('Waiting for ether');
 
       $('#mint-og-flat').text('Minting...');
@@ -75,9 +119,10 @@ $('#mint-og-flat').click(async function () {
       $('#success-address').show();
       $('#success-address').css('cursor', 'pointer');
       $('#success-address').text(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-      $('#success-address').click(function() {
-        window.open(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-      });
+      // $('#success-address').click(function() {
+      //   window.open(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      // });
+      $('#success-address').attr('href', `https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
 
       $('#mint-og-flat').text('Mint again');
       $('#mint-og-flat').css('cursor', 'pointer');
@@ -86,7 +131,7 @@ $('#mint-og-flat').click(async function () {
       $('#mint-og-flat').text('Mint');
       $('#mint-og-flat').css('cursor', 'pointer');
       $('#mint-og-flat').css('pointer-events', 'auto');
-      console.log(error);
+      console.log(error.message);
     }
   } else {
       alert('Please login to MetaMask');
@@ -100,5 +145,3 @@ $('#mint-og-flat').click(async function () {
   // $('#mint-og-flat').css('user-events', 'allow');
   // $('#mint-og-flat').prop('disabled', false);
 });
-
-updateMintCounter();
