@@ -427,11 +427,16 @@ setupSocket = function () {
       player.posY *= scale;
       console.log(player.seatTableId, player.seatPos)
       if (player.seatTableId && player.seatPos) {
-        seatList[player.seatTableId][player.seatPos].empty = false;
-        seatStates[playerId] = {
-          tableId: player.seatTableId,
-          pos: player.seatPos
-        };
+        try {
+          seatList[player.seatTableId][player.seatPos].empty = false;
+          seatStates[playerId] = {
+            tableId: player.seatTableId,
+            pos: player.seatPos
+          };
+        } catch (error) {
+          console.log(error);
+
+        }
       }
       playerInfoList[playerId] = player;
       scene.createContainer(player);

@@ -659,7 +659,11 @@ function createContainer(personInfo) {
   avatar.setScale(avatarHeight / avatar.height);
   if (personInfo.seatPos != null) {
     avatar.setCrop(0, 0, avatar.width, avatar.height / 2);
-    container.setPosition(seatList[personInfo.seatTableId][personInfo.seatPos]?.posX, seatList[personInfo.seatTableId][personInfo.seatPos]?.posY).setDepth(seatList[personInfo.seatTableId][personInfo.seatPos]?.posY);
+    try {
+      container.setPosition(seatList[personInfo.seatTableId][personInfo.seatPos]?.posX, seatList[personInfo.seatTableId][personInfo.seatPos]?.posY).setDepth(seatList[personInfo.seatTableId][personInfo.seatPos]?.posY);
+    } catch (error) {
+      console.error();
+    }
   }
   bindRightClick(personInfo.id, avatar);
   var speaker = this.add.image(0, 0, 'speaker');
