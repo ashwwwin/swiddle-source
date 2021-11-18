@@ -1,8 +1,8 @@
 //Adjust these settings
 const pricePerFlat = "0.175";
 var decimalPlaces = 4;
-var NFT_ADDRESS = '0x92C06D6da6AB14aC961BD982DFd5f49Cb5059372';
-var CONTRACT_ADDRESS = '0x699D81667B2e0C582618b00b8aC7Ba270Faa7206';
+var NFT_ADDRESS = '0xd01C7265Bf42ea04dCE3586d411940093fB3ABda';
+var CONTRACT_ADDRESS = '0x22D5fA6f120F9bbb381303c65F37C9F768510055';
 var ETHERSCAN_URL = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
 
 // Import the contract file
@@ -119,10 +119,11 @@ $('#mint-og-flat').click(async function () {
       $('#success-address').show();
       $('#success-address').css('cursor', 'pointer');
       $('#success-address').text(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-      // $('#success-address').click(function() {
-      //   window.open(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-      // });
-      $('#success-address').attr('href', `https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      $('#success-address').unbind('click');
+      $('#success-address').click(function() {
+        window.open(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      });
+
 
       $('#mint-og-flat').text('Mint again');
       $('#mint-og-flat').css('cursor', 'pointer');

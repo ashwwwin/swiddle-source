@@ -1343,10 +1343,12 @@ $(function () {
       $(this).find('img').attr('src', '/images/fullscreen.svg');
       $('.header').addClass('dark');
       $('#full-cameras-container').addClass('d-flex');
+      $('#coins-container').addClass('d-none');
     } else {
       $(this).find('img').attr('src', '/images/extend.svg');
       $('.header').removeClass('dark');
       $('#full-cameras-container').removeClass('d-flex');
+      $('#coins-container').removeClass('d-none');
     }
     initFullScreenVideoMode();
   });
