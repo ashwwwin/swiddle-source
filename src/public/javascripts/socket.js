@@ -44,21 +44,32 @@ enterHomeAction = function () {
 
   $('#coins').text(sessionStorage.getItem('coins'));
   
+  function initializeStuff() {
+    if (!userInfo) {
+      //If userInfo has not loaded yet then check again after 1 second
+      setTimeout(function() {
+        initializeStuff();
+      }, 1000);
+      return;
+    } else {
+      //Checks daily reward status
+      checkDailyReward();
 
-  //when page has loaded on document ready
+      //Gets friend suggestions
+      loadFriendSuggestions();
+
+      //Gets items in the $ shop
+      getShop();
+
+      //Loads events
+      loadMyEvents();
+    }
+  }
+
+  //when page has loaded
   $(document).ready(function () {
-
-    //Checks daily reward status
-    checkDailyReward();
-
-    //Gets friend suggestions
-    loadFriendSuggestions();
-
-    //Gets items in the $ shop
-    getShop();
-
-    //Loads events
-    loadMyEvents();
+    //Initialize rewards, friend suggestions, etc.
+    initializeStuff();
   });
 }
 
