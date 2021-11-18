@@ -2597,6 +2597,7 @@ class ListenerService {
 
         socket.emit('buy-furniture', {
           coins: user.coins,
+          name,
           itemTitle,
           success
         })

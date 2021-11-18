@@ -369,13 +369,6 @@ $('#furniture-shop').on('click', '#furniture-buy', function () {
     type: 'buy-furniture',
     data: selectedFurnitureName
   });
-
-  mixpanel.track('Attempt Purchase', {
-    'ownId': ownId,
-    'furnitureName': furnitureName,
-    'furniturePrice': furniturePrice
-  });
-
 });
 
 function purchaseItem(data) {
