@@ -1072,6 +1072,12 @@ div.header {
       padding: 5px 0; }
       .dropdown-menu:not(.dropdown-menu-center).popup-menu .dropdown-item:not(:last-child) {
         border-bottom: 1px solid #cacaca; }
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu .dropdown-item:hover {
+        color: #6fb4f1;
+        background-color: white; }
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu .dropdown-item:active {
+        color: #6fb4f1;
+        background-color: white; }
     .dropdown-menu:not(.dropdown-menu-center).popup-menu #eject-player {
       color: #9d9d9d; }
     .dropdown-menu:not(.dropdown-menu-center).popup-menu #mute-player {
@@ -1081,6 +1087,16 @@ div.header {
     .dropdown-menu:not(.dropdown-menu-center).popup-menu #sit-down,
     .dropdown-menu:not(.dropdown-menu-center).popup-menu #move-to-scene {
       color: #6fb4f1; }
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #add-friend:hover,
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #invite-player:hover,
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #sit-down:hover,
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #move-to-scene:hover {
+        color: #57a4e7; }
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #add-friend:active,
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #invite-player:active,
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #sit-down:active,
+      .dropdown-menu:not(.dropdown-menu-center).popup-menu #move-to-scene:active {
+        color: #1d86e2; }
   .dropdown-menu:not(.dropdown-menu-center).dropdown-menu-right {
     top: -10px !important; }
 

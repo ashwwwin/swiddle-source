@@ -1363,6 +1363,17 @@ div.header {
       &:not(:last-child) {
         border-bottom: 1px solid rgb(202, 202, 202);
       }
+      
+      &:hover {
+        color: #6fb4f1;
+        background-color: white;
+
+      }
+
+      &:active {
+        color: #6fb4f1;
+        background-color: white;
+      }
     }
 
     #eject-player {
@@ -1378,6 +1389,14 @@ div.header {
     #sit-down,
     #move-to-scene {
       color: rgb(111, 180, 241);
+
+      &:hover {
+        color: rgb(87, 164, 231);
+      }
+
+      &:active {
+        color: rgb(29, 134, 226);
+      }
     }
   }
 
