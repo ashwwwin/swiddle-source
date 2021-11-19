@@ -10,18 +10,23 @@ var addressValidator = /^[a-zA-Z0-9]+$/i;
 var timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone);
 
 $('#forgot-password').click(function () {
+  email = $('#email').val()
+  if (!emailValidator.test(email) || !email) {
+    showNotification('error', 'Invalid email');
+    return
+  }
   $.ajax({
     url: 'forgot-password',
     type: 'post',
     dataType: 'json',
     data: {
-      email: $('#signin-email').val()
+      email: email
     },
     success: function (data) {
       if (data.success) {
-        $.notify('Check your email', {
-          type: 'success'
-        });
+        showNotification('success', 'Check your inbox');
+      } else {
+        showNotification('error', 'Could not reset your password');
       }
     }
   });
