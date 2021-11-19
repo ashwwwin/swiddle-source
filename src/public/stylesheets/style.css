@@ -1088,24 +1088,25 @@ div.header {
   color: #c23434 !important; }
 
 [data-notify="container"] {
-  border-radius: 25px;
+  border-radius: 12px;
   border: none;
   font-size: 14px;
+  font-weight: 600;
   display: inline;
   cursor: pointer;
-  opacity: 0.85;
-  padding: 13px 48px;
+  opacity: 1;
+  padding: 13px 20px;
   display: inline-block;
-  white-space: wrap; }
+  white-space: wrap;
+  box-shadow: rgba(2, 3, 3, 0.5); }
 
 .alert-danger {
-  border-radius: 25px;
+  border-radius: 12px;
   border: none;
   font-size: 14px;
   display: inline-block;
   cursor: pointer;
-  background-color: #ea9b8d;
-  opacity: 0.85;
+  background-color: #ffbcbc;
   color: #b82626;
   white-space: wrap; }
 

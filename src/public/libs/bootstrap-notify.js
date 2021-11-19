@@ -33,9 +33,9 @@
 			from: "top",
 			align: "right"
 		},
-		offset: 70,
 		spacing: 5,
-		z_index: 1031,
+		offset: 70,
+		z_index: 9999,
 		delay: 5000,
 		timer: 1000,
 		url_target: '_blank',
@@ -50,7 +50,10 @@
 		onClosed: null,
         onClick: null,
 		icon_type: 'class',
-		template: '<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"><span data-notify="icon"></span> <span data-notify="title">{1}</span> <span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>'
+		template: `<div data-notify="container" style="margin-right: -25px;" class="alert alert-{0}" onclick="$.notifyClose(this)" role="alert"> 
+			<span data-notify="title">{1}</span> 
+			<span data-notify="message">{2}</span>
+			</div>`
 	};
 
 	String.format = function () {
@@ -240,7 +243,7 @@
 					display: 'inline-block',
 					margin: '0px auto',
 					position: this.settings.position ? this.settings.position : (this.settings.element === 'body' ? 'fixed' : 'absolute'),
-					transition: 'all .5s ease-in-out',
+					transition: 'all .2s ease-in-out',
 					zIndex: this.settings.z_index
 				},
 				hasAnimation = false,
@@ -257,8 +260,10 @@
 			switch (this.settings.placement.align) {
 				case "left":
 				case "right":
-					css[this.settings.placement.align] = this.settings.offset.x + 'px';
+					css.right = 8;
 					break;
+					// css[this.settings.placement.align] = this.settings.offset.x + 'px';
+					// break;
 				case "center":
 					css.left = 0;
 					css.right = 0;
@@ -389,17 +394,7 @@
 	};
 
 	$.notifyClose = function (selector) {
-
-		if (typeof selector === "undefined" || selector === "all") {
-			$('[data-notify]').find('[data-notify="dismiss"]').trigger('click');
-		}else if(selector === 'success' || selector === 'info' || selector === 'warning' || selector === 'danger'){
-			$('.alert-' + selector + '[data-notify]').find('[data-notify="dismiss"]').trigger('click');
-		} else if(selector){
-			$(selector + '[data-notify]').find('[data-notify="dismiss"]').trigger('click');
-		}
-		else {
-			$('[data-notify-position="' + selector + '"]').find('[data-notify="dismiss"]').trigger('click');
-		}
+		selector.remove();
 	};
 
 	$.notifyCloseExcept = function (selector) {
