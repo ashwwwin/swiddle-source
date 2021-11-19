@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;600;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 html {
   user-select: none;
@@ -2203,15 +2203,6 @@ div.header {
   object-fit: cover;
 }
 
-.h1-color {
-  font-family: 'Lobster', sans serif;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  background: -webkit-linear-gradient(#8fe6ff, #1aa4ec);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .blue-text-gradient-inter {
   font-style: Inter;
   background: -webkit-linear-gradient(135deg,#5ddcff, #34b8ff);
@@ -2357,16 +2348,6 @@ section {
   justify-content: center;
   border-radius: 20px;
   margin-bottom: 25;
-}
-
-.footer-describe {
-  font-family: 'Lobster';
-  font-weight: 400;
-  letter-spacing: 1px;
-  background: -webkit-linear-gradient(#ffffff, #e6f7ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 25px;
 }
 
 .footer-download-btn {

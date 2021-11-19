@@ -729,25 +729,33 @@ router.get('/:address', async function (req, res) {
     maxUsers: 1,
     lockedRoom: 1,
   })
-  if (owner) {
-    if (!owner.maxUsers) {
-      owner.maxUsers = 10
-      owner.save()
-    }
-    const data = {
-      title: 'Swiddle',
-      siteUrl: process.env.SITE_URL,
-      roomId: encodeURIComponent(req.params.address).toLowerCase(),
-      isProd,
-      snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
-      gameList,
-      owner,
-      intercomAppId: process.env.INTERCOM_APP_ID,
-      furnitureList,
-      serverId
-    }
-    res.render('play.pug', data)
+
+  // If the address is not found redirect the user
+  if (!owner) {
+    res.redirect('/sign-in')
+    return
   }
+
+  if (!owner.maxUsers) {
+    owner.maxUsers = 10
+    owner.save()
+  }
+
+  const data = {
+    title: 'Swiddle',
+    siteUrl: process.env.SITE_URL,
+    roomId: encodeURIComponent(req.params.address).toLowerCase(),
+    isProd,
+    snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
+    gameList,
+    owner,
+    intercomAppId: process.env.INTERCOM_APP_ID,
+    furnitureList,
+    serverId
+  }
+  
+  res.render('play.pug', data)
+
 })
 
 /* Feedback */

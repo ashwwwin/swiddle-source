@@ -26,6 +26,19 @@ var renderedScene = true;
 // When move to another scene, disable all actions
 var disableAction = false;
 
+// When user hits a dead end page on the desktop app, then what?
+// Example of a dead end would be when they get ejected
+// This solves that problem
+function redirectDesktopDeadend() {
+  if (desktopApp == true) {
+    if (!personData.guest && userInfo.address) {
+      window.location.pathname = `/${userInfo.address}`;
+    } else {
+      window.location.pathname = '/sign-in';
+    }
+  }
+}
+
 
 enterHomeAction = function () {
   startLoading();
@@ -142,7 +155,8 @@ setupSocket = function () {
 
   // Ignore your knock
   socket.on('ignore-knock', function () {
-    // spiner.stop();
+    redirectDesktopDeadend();
+
     $('#knock-container')
       .add('#password-input')
       .add('#welcome-avatar')
@@ -159,6 +173,8 @@ setupSocket = function () {
 
   // Ejected by home owner
   socket.on('eject-player', function () {
+    redirectDesktopDeadend();
+
     $('#knock-container')
       .add('#password-input')
       .add('#welcome-avatar')
@@ -169,11 +185,13 @@ setupSocket = function () {
     $('#knock-screen').show();
     $('#empty-home').addClass('d-flex').removeClass('d-none');
     $('#container').hide();
+
   });
 
   // Owner isn't home
   socket.on('empty-home', function () {
-    // spiner.stop();
+    redirectDesktopDeadend();
+
     $('#knock-container')
       .add('#password-input')
       .add('#welcome-avatar')
@@ -225,14 +243,17 @@ setupSocket = function () {
     $('#owner-password').val(psw);
   });
 
-  // Set reuqiring password for knock
+  // Set requiring password for knock
   socket.on('require-password', function (flag) {
     $('#require-password').val(flag);
   });
 
   socket.on('wrong-address', function () {
-    // Redirect to home page
-    window.location.href = '/';
+    if (userInfo.address) {
+      window.location.pathname = '/' + userInfo.address;
+    } else {
+      window.location.pathname = '/sign-in';
+    }
   });
 
   // Get available player list and store it
