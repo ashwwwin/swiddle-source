@@ -132,10 +132,26 @@ $('#signup-form').submit(function() {
   return false;
 });
 
+
+
 $('#btn-reset-password').click(function () {
   if (!$('#password').val()) {
+    // showNotification('error', 'Fill in the field');
+    $.notify('Please enter your new password', {
+      type: 'danger',
+     });
     return;
   }
+
+  if ($('#password').val() != $('#password-confirm').val()) {
+    // showNotification('error', 'Passwords do not match');
+    $.notify('Make sure your passwords match', {
+      type: 'danger',
+    });
+    return;
+  }
+
+
   $.ajax({
     url: window.location.href,
     type: 'post',
