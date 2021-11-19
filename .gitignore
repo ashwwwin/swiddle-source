@@ -19,3 +19,7 @@ src/public/images/room-images/*
 
 !src/public/images/room-images/roomIcon.png
 
+src/public/downloads/windows/Swiddle.exe
+src/public/downloads/mac/Swiddle.dmg
+src/public/downloads/mac-arm/Swiddle.dmg
+src/public/downloads/linux/Swiddle.AppImage

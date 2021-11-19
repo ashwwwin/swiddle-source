@@ -6,8 +6,6 @@ document.addEventListener('contextmenu', event => {
   }
 });
 
-console.log('Play.js line 9', userInfo);
-
 // Body width, it's for resize window event
 var bodyWidth;
 
@@ -390,8 +388,7 @@ function create() {
   isHomeOwner = (homeOwner._id == ownId);
 
   //Identifying the userId for analytics & ignoring development mode
-  if (window.location.host != 'onlyfriends.io') {
-    console.log('Pioneer in development mode');
+  if (window.location.host != 'swiddle.io') {
     pioneerAnalytics.identify("Development");
   } else {
     pioneerAnalytics.identify(ownId);
@@ -1090,7 +1087,6 @@ $(function () {
         },
         success: function (result) {
           if (result) {
-            console.log('updated');
             sessionStorage.setItem('address', address);
             window.location.href = '/' + address;
           } else {
@@ -1296,7 +1292,6 @@ $(function () {
         password: password
       },
       success: function (data) {
-        console.log('this has been run');
         // spiner.stop();
         if (data.success) {
           userInfo = data.user;
