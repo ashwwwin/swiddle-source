@@ -60,7 +60,7 @@ function startRichUp() {
       
   
       //Missing check for duplicate username is required on the backend: is there another user with a different user id but has the same name playing?
-      iframeURL = 'https://richup.io/' + richupGameId + '?username=' + richupUsername + '&referrer=onlyfriends.io';
+      iframeURL = 'https://richup.io/' + richupGameId + '?username=' + richupUsername + '&referrer=swiddle.io';
 
   
       $('#richup-iframe').attr('src', iframeURL);

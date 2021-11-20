@@ -1072,15 +1072,16 @@ setupSocket = function () {
   socket.on('desktop-badge-update', function (data) {
     var unreadMsgsNum = data.unreadMsgs;
 
-    if (unreadMsgsNum > 0) {
-      //Updates desktop badge
-      if (desktopApp) {
-        //Checks if mac since app badges only exist on mac
-        if (navigator.platform == 'MacIntel') {
-          var strUnreadMsgsNum = unreadMsgsNum.toString();
-          window.todesktop.app.dock.setBadge(strUnreadMsgsNum);
-        }
+    //Updates desktop badge
+    if (desktopApp) {
+      //Checks if mac since app badges only exist on mac
+      if (navigator.platform == 'MacIntel') {
+        var strUnreadMsgsNum = unreadMsgsNum.toString();
+        window.todesktop.app.dock.setBadge(strUnreadMsgsNum);
       }
+    }
+
+    if (unreadMsgsNum > 0) {
       $('#circle-notify-friend').removeClass('d-none');
     } else {
       $('#circle-notify-friend').addClass('d-none');

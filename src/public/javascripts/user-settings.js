@@ -204,6 +204,6 @@ function loadSettingsPage() {
   //Loads user data
   $('#user-settings-profile-name').val(userInfo.name);
   $('#user-settings-profile-username').val(userInfo.address);
-  $('#user-settings-profile-input-example-username').text("ONLYFRIENDS.IO/" + (userInfo.address.toUpperCase()));
+  $('#user-settings-profile-input-example-username').text("swiddle.io/" + (userInfo.address.toUpperCase()));
   $('#user-settings-profile-bio').val(userInfo.bio);
 }

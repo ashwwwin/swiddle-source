@@ -7,7 +7,7 @@ module.exports = {
     debugProtection: false,
     debugProtectionInterval: false,
     disableConsoleOutput: true,
-    domainLock: ["onlyfriends.io", ".onlyfriends.io"],
+    domainLock: ["swiddle.io", ".swiddle.io"],
     identifierNamesGenerator: 'hexadecimal',
     log: false,
     numbersToExpressions: true,

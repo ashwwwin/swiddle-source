@@ -806,12 +806,13 @@
 
 .div-block-19 {
   width: 600px;
-  height: 360px;
+  height: 338px;
   margin-top: 0px;
   border-radius: 20px;
 }
 
 .youtube {
+  overflow: hidden;
   height: 100%;
   border-radius: 20px;
   box-shadow: 0 0 20px -17px #000;
@@ -870,22 +871,26 @@
 .heading-7 {
   width: 100%;
   margin: 0px;
-  padding: 0px 20px 12px;
+  padding: 0px 20px;
   border-radius: 20px;
   font-family: Ubuntu, Helvetica, sans-serif;
   color: #000;
   font-size: 30px;
   font-weight: 500;
+  text-decoration: none;
   cursor: pointer;
 }
 
 .link-block-2 {
   width: 100%;
   height: auto;
+  text-decoration: none;
 }
 
 .link-block-3 {
   width: 100%;
+  margin-top: -10px;
+  text-decoration: none;
 }
 
 .link-block-4 {
@@ -1055,6 +1060,7 @@
   border-radius: 12px;
   background-color: #fff;
   box-shadow: 0 0 20px -12px #000;
+  opacity: 0;
 }
 
 .dropdown-link {
@@ -1226,6 +1232,7 @@
 .submit-button {
   position: relative;
   z-index: 5;
+  display: none;
   margin-left: 5px;
   padding-right: 17px;
   padding-left: 17px;
@@ -2024,6 +2031,10 @@
 
 .text-block-44 {
   text-align: center;
+}
+
+.div-block-46 {
+  height: 2px;
 }
 
 .div-block-47 {

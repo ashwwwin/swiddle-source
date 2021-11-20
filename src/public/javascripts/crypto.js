@@ -46,7 +46,7 @@ $('#metamask-signin').click(async function() {
       }
     });
   } else {
-    console.log('MetaMask could not be detected');
+    alert('MetaMask could not be detected');
   }
 })
 
