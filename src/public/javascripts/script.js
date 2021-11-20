@@ -77,7 +77,8 @@ $('#switch-audio').click(function() {
 });
 
 $('#switch-video').click(function() {
-  if (!enableVideo) {
+  if (!enableVideo & sceneName == 'home') {
+
     Video.createLocalVideoTrack({
       height: 720,
       frameRate: 24,

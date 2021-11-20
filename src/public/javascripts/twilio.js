@@ -24,6 +24,10 @@ function setVideoPriority(participant, priority) {
  * @param participant - the Participant which published the Track
  */
 function attachTrack(track, participant) {
+  if (sceneName != 'home') {
+    return;
+  }
+  
   // Attach the Participant's Track to the thumbnail.
   const $media = $(`#${participant.identity} ${track.kind}`);
   track.attach($media.get(0));
@@ -115,11 +119,7 @@ function trackPublished(publication, participant) {
  * @param connectOptions - the ConnectOptions used to join a Room
  */
 async function joinTwilioRoom(token, connectOptions) {
-  if (sceneName != 'home') {
-    return;
-  }
-  
-  if (!token || videoRoomNames[connectOptions.name]) {
+  if (!token || videoRoomNames[connectOptions.name] || sceneName != 'home') {
     return;
   }
 

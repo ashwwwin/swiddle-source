@@ -263,7 +263,7 @@ function create() {
     if (pointer.button != 0) {
       $('#go-to-another-scene').siblings('.popup-menu').css({ 'top': pointer.event.y, 'left': pointer.event.x });
       $('#go-to-another-scene').dropdown('show');
-      $('#move-to-scene').text('Go to Home').off().click(goPlazaToHome);
+      $('#move-to-scene').text('Go Home').off().click(goPlazaToHome);
       return
     }
 
@@ -307,7 +307,7 @@ function create() {
     if (pointer.button != 0) {
       $('#go-to-another-scene').siblings('.popup-menu').css({ 'top': pointer.event.y, 'left': pointer.event.x });
       $('#go-to-another-scene').dropdown('show');
-      $('#move-to-scene').text('Enter to Shop').off().click(goPlazaToCoffeeShop);
+      $('#move-to-scene').text('Enter the Coffee Shop').off().click(goPlazaToCoffeeShop);
       return
     }
 
@@ -329,7 +329,7 @@ function create() {
     if (pointer.button != 0) {
       $('#go-to-another-scene').siblings('.popup-menu').css({ 'top': pointer.event.y, 'left': pointer.event.x });
       $('#go-to-another-scene').dropdown('show');
-      $('#move-to-scene').text('Enter to Pizzeria').off().click(goPlazaToPizza);
+      $('#move-to-scene').text('Enter The Pizzeria').off().click(goPlazaToPizza);
       return
     }
 
@@ -355,7 +355,7 @@ function create() {
     if (pointer.button != 0) {
       $('#go-to-another-scene').siblings('.popup-menu').css({ 'top': pointer.event.y, 'left': pointer.event.x });
       $('#go-to-another-scene').dropdown('show');
-      $('#move-to-scene').text('Go to Plaza').off().click(goPizzaToPlaza);
+      $('#move-to-scene').text('Go to The Plaza').off().click(goPizzaToPlaza);
       return
     }
 
