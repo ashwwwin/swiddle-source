@@ -381,6 +381,12 @@ router.get('/blog/the-future', async function (req, res) {
   })
 })
 
+router.get('/blog/original-flat-nfts', async function (req, res) {
+  res.render('landing/blog-posts/original-flat-nfts.pug', {
+    title: 'Swiddle'
+  })
+})
+
 
 
 
@@ -753,7 +759,7 @@ router.get('/:address', async function (req, res) {
     furnitureList,
     serverId
   }
-  
+
   res.render('play.pug', data)
 
 })
