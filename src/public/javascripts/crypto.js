@@ -22,7 +22,7 @@ $(document).ready(function() {
     metamaskDetected = false;
   }
 
-  if (!metamaskDetected && desktopApp && window.location.pathname == '/sign-in') {
+  if (!metamaskDetected && window.todesktop && window.location.pathname == '/sign-in') {
     $('#metamask-login-container').hide();
   }
 

@@ -40,26 +40,26 @@ if (window.location.pathname == '/' || window.location.pathname == '/simple') {
 //   })
 // }
 
-// window.snapKitInit = function () {
-//   // Mount Login Button
-//   snap.loginkit.mountButton("snapkit-login-button-target", {
-//     clientId: snapkitClientId,
-//     redirectURI: siteUrl,
-//     scopeList: [
-//       "user.display_name",
-//       "user.bitmoji.avatar",
-//       "user.external_id",
-//     ],
-//     handleResponseCallback: function () {
-//       snap.loginkit.fetchUserInfo().then(
-//         snapkitLogin,
-//         function (err) {
-//           console.log(err); // Error
-//         }
-//       );
-//     },
-//   });
-// };
+window.snapKitInit = function () {
+  // Mount Login Button
+  snap.loginkit.mountButton("snapkit-login-button-target", {
+    clientId: snapkitClientId,
+    redirectURI: siteUrl,
+    scopeList: [
+      "user.display_name",
+      "user.bitmoji.avatar",
+      "user.external_id",
+    ],
+    handleResponseCallback: function () {
+      snap.loginkit.fetchUserInfo().then(
+        snapkitLogin,
+        function (err) {
+          console.log(err); // Error
+        }
+      );
+    },
+  });
+};
 
 function snapkitLogin(result) {
   if (window.location.pathname == '/' || window.location.pathname == '/simple') {
