@@ -10,6 +10,7 @@ html
     script(src="https://browser.sentry-cdn.com/6.11.0/bundle.tracing.min.js" integrity="sha384-XuDodOP4mgLWA8eRlqZJWs+mtmznHF6ES/nOotK0fE7SHjj0Ec3YMVIzjh5ytsKH" crossorigin="anonymous")
     script(src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0-rc.1/dist/js.cookie.min.js")
     script(src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript")
+    script(async src="https://www.googletagmanager.com/gtag/js?id=G-GW8FPKH4NK")
     
     script.
       Sentry.init({
@@ -32,5 +33,11 @@ html
       // Enabling the debug mode flag is useful during implementation,
       // but it's recommended you remove it for production
       mixpanel.init('8359a66c45b1c542a0a82c94cd3b468f', {ignore_dnt: true}); //debug: true,
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-GW8FPKH4NK');
 
     block scripts

@@ -1,3 +1,5 @@
+var personData;
+
 if (window.location.pathname == 'sign-in') {
   autoLogin();
 }
@@ -52,7 +54,7 @@ function autoLogin() {
             sessionStorage.setItem('avatar', data.user.avatar || '');
             sessionStorage.setItem('address', data.user.address);
             sessionStorage.setItem('coins', data.user.coins);
-            if (window.location.pathname == '/sign-in') {
+            if (window.location.pathname == '/sign-in' || window.location.pathname == '/sign-up') {
               window.location.href = '/' + data.user.address;
             } else {
               personData.id = sessionStorage.getItem('id');

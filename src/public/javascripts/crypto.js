@@ -55,9 +55,11 @@ $('#metamask-signin').click(async function() {
 })
 
 function updateMintCounter(){
-  $.getJSON(ETHERSCAN_URL, function(data) {
-    $('#mint-counter').text(`Total minted: ${(data.result).toLocaleString("en-US")}/10,000 Flats`);
-  });
+  // $.getJSON(ETHERSCAN_URL, function(data) {
+  //   $('#mint-counter').text(`Total minted: ${(data.result).toLocaleString("en-US")}/10,000 Flats`);
+  // });
+
+  $('#mint-counter').text(`Total minted: 0/10,000 Flats`);
 
   //Checks mint number every 15 seconds
   setTimeout(function(){

@@ -121,6 +121,7 @@ $('#signup-form').submit(function() {
       if (data.exist) {
         showNotification('error','Email is taken');
       } else {
+        showNotification('success', 'Please verify your email');
         userInfo = data;
         mixpanel.alias(data.email);
         Cookies.set('swiddle_email', data.email, { expires: 5 });

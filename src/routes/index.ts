@@ -45,7 +45,7 @@ const emailTemplate = new Email({
     }
   },
   message: {
-    from: `Only Friends <${process.env.DEFAULT_FROM_EMAIL}>`,
+    from: `Swiddle <${process.env.DEFAULT_FROM_EMAIL}>`,
   }
 })
 
@@ -233,7 +233,7 @@ router.get('/', async function (req, res) {
   //       res.redirect(`/${user.address}`)
   //     } else {
   //       res.render('landing/index.pug', {
-  //         title: 'Only Friends',
+  //         title: 'Swiddle',
   //         siteUrl: process.env.SITE_URL,
   //         snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
   //         activated: true,
@@ -243,7 +243,7 @@ router.get('/', async function (req, res) {
   //   }
   // } else {
   //   res.render('landing/index.pug', {
-  //     title: 'Only Friends',
+  //     title: 'Swiddle',
   //     siteUrl: process.env.SITE_URL,
   //     snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
   //     activated: false,
@@ -329,7 +329,7 @@ router.get('/sign-up', async function (req, res) {
   //       res.redirect(`/${user.address}`)
   //     } else {
   //       res.render('landing/index.pug', {
-  //         title: 'Only Friends',
+  //         title: 'Swiddle',
   //         siteUrl: process.env.SITE_URL,
   //         snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
   //         activated: true,
@@ -339,7 +339,7 @@ router.get('/sign-up', async function (req, res) {
   //   }
   // } else {
   //   res.render('landing/index.pug', {
-  //     title: 'Only Friends',
+  //     title: 'Swiddle',
   //     siteUrl: process.env.SITE_URL,
   //     snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
   //     activated: false,
@@ -418,7 +418,7 @@ router.get('/blog/original-flat-nfts', async function (req, res) {
 //         res.redirect(`/${user.address}`)
 //       } else {
 //         res.render('simple-login.pug', {
-//           title: 'Only Friends',
+//           title: 'Swiddle',
 //           siteUrl: process.env.SITE_URL,
 //           snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
 //           activated: true,
@@ -428,7 +428,7 @@ router.get('/blog/original-flat-nfts', async function (req, res) {
 //     }
 //   } else {
 //     res.render('simple-login.pug', {
-//       title: 'Only Friends',
+//       title: 'Swiddle',
 //       siteUrl: process.env.SITE_URL,
 //       snapkitClientId: process.env.SNAPKIT_CLIENT_ID,
 //       activated: false,
@@ -440,19 +440,19 @@ router.get('/blog/original-flat-nfts', async function (req, res) {
 //   }
 // })
 
-/* GET privacy page. */
-router.get('/privacy', function (_req, res) {
-  res.render('privacy.pug', {
-    title: 'Only Friends'
-  })
-})
+// /* GET privacy page. */
+// router.get('/privacy', function (_req, res) {
+//   res.render('privacy.pug', {
+//     title: 'Swiddle'
+//   })
+// })
 
-/* GET terms page. */
-router.get('/terms', function (_req, res) {
-  res.render('terms.pug', {
-    title: 'Only Friends'
-  })
-})
+// /* GET terms page. */
+// router.get('/terms', function (_req, res) {
+//   res.render('terms.pug', {
+//     title: 'Swiddle'
+//   })
+// })
 
 /* Get reset password page */
 router.get('/reset-password', async function (req, res) {
@@ -469,7 +469,7 @@ router.get('/reset-password', async function (req, res) {
         return
       }
       res.render('reset-password.pug', {
-        title: 'Only Friends',
+        title: 'Swiddle',
         name: user.name,
         email,
         token
@@ -527,7 +527,7 @@ router.get('/event-invite', async function (req, res) {
       invite.save()
 
       res.render('event-invite-decision.pug', {
-        title: 'Only Friends',
+        title: 'Swiddle',
         decision,
         token
       })
