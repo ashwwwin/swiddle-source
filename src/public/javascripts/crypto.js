@@ -50,9 +50,14 @@ $('#metamask-signin').click(async function() {
       success: async function (data) {
         if (data) {
           console.log(data);
-          var accounts = await ethereum.request({ method: 'eth_accounts' });
+          sessionStorage.setItem('id', data.user._id);
+          sessionStorage.setItem('name', data.user.name);
+          sessionStorage.setItem('avatar', data.user.avatar);
+          sessionStorage.setItem('address', data.user.address);
+          sessionStorage.setItem('coins', data.user.coins);
+          window.location.href = '/' + data.user.address;
           
-          console.log(accounts[0]);
+          autoLogin();
         }
       }
     });

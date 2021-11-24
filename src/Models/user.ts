@@ -9,6 +9,7 @@ const userSchema = new Schema({
   sleepAvatar: String,
   address: { type: String, unique: true },
   email: { type: String, unique: true },
+  ethAddress: { type: String, unique: true },
   password: String,
   emailActivated: Boolean,
   access: Boolean,

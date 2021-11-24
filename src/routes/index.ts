@@ -616,9 +616,36 @@ router.post('/auto-login', async function (req, res) {
 
 /* Auto login */
 router.post('/metamask-login', async function (req, res) {
-  console.log(req.body.ethId)
+  var user = await userModel.findOne({
+    ethAddress: req.body.ethId,
+  }) 
+
+  console.log(user)
+
+  //If no Ethereum address is found, create an account
+  if (!user) {
+    var user = await new userModel({
+      name: req.body.ethId,
+      ethAddress: req.body.ethId,
+      token: uuidv4(),
+      coins: 500,
+      access: true,
+      furnitureList: freeFurnitures,
+      inventories: initialInventories,
+      timeZone: req.body.timeZone
+    })
+
+    user.address = user._id
+    user.save()
+  }
+    
+  //Checks if the user owns any flats
+  var flatsOwned = await flatLedgerModel.find({ flatOwner: { $regex : new RegExp(req.body.ethId, "i") } } )
+    
   res.json({
-    success: false
+    success: true,
+    user: user,
+    flatsOwned: flatsOwned
   })
 })
 
