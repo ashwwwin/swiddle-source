@@ -644,7 +644,7 @@ function createContainer(personInfo) {
 
   if (!personInfo.avatar || personInfo.avatar == 'undefined') {
     avatarKey = 'default_avatar';
-  } else if (this.textures.exists(personInfo.id)) {
+  } if (this.textures.exists(personInfo.id)) {
     avatarKey = personInfo.id;
   } else {
     avatarKey = 'default_avatar';
@@ -725,8 +725,13 @@ function bindRightClick(playerId, avatar) {
     event.stopPropagation();
     pointer.event.stopPropagation();
     pointer.event.preventDefault();
-    var playerInfo = playerInfoList[playerId];
 
+    //Resets any previously loaded data
+    $('#right-menu-verified-badge').addClass("d-none");
+    $('#right-menu-friends-bio').text("");
+    $('#right-menu-friends-number').text("");
+
+    var playerInfo = playerInfoList[playerId];
     //Check if player is right clicking on themselves
     if (playerId == ownId) {
       //Sets the name
@@ -746,16 +751,7 @@ function bindRightClick(playerId, avatar) {
     }
 
     //Sets the avatar
-    if (playerInfo.avatar) {
-      $('#show-player-settings').siblings('.popup-menu').find('.friend-avatar').css('background-image', `url(${playerInfo.avatar})`);
-    } else {
-      $('#show-player-settings').siblings('.popup-menu').find('.friend-avatar').css('background-image', 'url(/images/default_avatar.png)');
-    }
-
-    //Resets any previously loaded data
-    $('#right-menu-verified-badge').addClass("d-none");
-    $('#right-menu-friends-bio').text("");
-    $('#right-menu-friends-number').text("");
+    $('#show-player-settings').siblings('.popup-menu').find('.friend-avatar').css('background-image', `url(${playerInfo.avatar})`);
 
     $('#show-player-settings').siblings('.popup-menu').data('playerId', playerId).css({ 'top': pointer.event.y, 'left': pointer.event.x });
 
@@ -1107,10 +1103,6 @@ $(function () {
     $('.header').removeClass('dark');
     $('#full-cameras-container').removeClass('d-flex');
     initFullScreenVideoMode();
-    // sendMessage({
-    //   type: 'choose-game',
-    //   data: playerSeatTableId
-    // });
 
     $('.camera-item').filter(function () {
       return seatStates[$(this).attr('id')] && seatStates[$(this).attr('id')].tableId == playerSeatTableId;
@@ -1273,55 +1265,6 @@ $(function () {
       }
     });
     $('#suggest-game-modal').modal('hide');
-  });
-
-  $('#btn-login').click(function () {
-    var email = $('#email').val();
-    var password = $('#password').val();
-    if (!email || !password) {
-      return;
-    }
-
-    //// spiner.spin(document.body);
-    $.ajax({
-      url: '/login',
-      type: 'post',
-      dataType: 'json',
-      data: {
-        email: email,
-        password: password
-      },
-      success: function (data) {
-        // spiner.stop();
-        if (data.success) {
-          userInfo = data.user;
-          Cookies.set('swiddle_email', data.user.email, { expires: 5 });
-          Cookies.set('swiddle_token', data.user.token, { expires: 5 });
-          mixpanel.identify(data.user.email);
-          if (data.user.access || data.user.invitedBy) {
-            // sessionStorage.setItem('loggedIn', true);
-            sessionStorage.setItem('id', data.user._id);
-            sessionStorage.setItem('name', data.user.name);
-            sessionStorage.setItem('avatar', data.user.avatar);
-            sessionStorage.setItem('coins', data.user.coins);
-            personData.id = sessionStorage.getItem('id');
-            personData.name = sessionStorage.getItem('name');
-            personData.avatar = sessionStorage.getItem('avatar');
-            ownId = personData.id;
-            isHomeOwner = (homeOwner._id == ownId);
-            visitHomeAction();
-          } else {
-            $.notify("Your account doesn't access", {
-              type: 'danger'
-            });
-          }
-        } else {
-          $.notify('Please enter correct information.', {
-            type: 'danger'
-          });
-        }
-      }
-    });
   });
 
   $('#sit-down').click(function () {

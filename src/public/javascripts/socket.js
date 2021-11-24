@@ -2,9 +2,9 @@ var notifyLocationTimer;
 console.log('Socket.js start', userInfo);
 // Emoji text
 var emojiTexts = {
-  "o\\.o": "👀",
+  "o.o": "👀",
   ":D": "😀",
-  ">\\.<": "😆",
+  ">.<": "😆",
   ":\\)": "🙂",
   ";\\)": "😉",
   ":P": "🤪",
@@ -1113,6 +1113,7 @@ setupSocket = function () {
     if (data.id == ownId) {
       //Updates the user info
       userInfo.avatar = data.avatar;
+      userInfo.name = data.name;
       personData.avatar = data.avatar;
       personData.name = data.name;
 

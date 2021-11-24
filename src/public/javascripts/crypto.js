@@ -109,7 +109,7 @@ function calculateTotalPrice() {
   }
 
   //And finally showing the total price
-  $('#total-price').text(`Total is ${totalPrice.toLocaleString("en-US")} ETH for ${mintQuantity.toLocaleString("en-US")} Flat${thePluraler}`)
+  $('#total-price').text(`${totalPrice.toLocaleString("en-US")} ETH for ${mintQuantity.toLocaleString("en-US")} Flat${thePluraler}`)
 }
 
 

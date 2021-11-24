@@ -323,7 +323,7 @@ router.get('/sign-up', async function (req, res) {
   //     if (user.access) {
   //       if (!user.activatedAt) {
   //         user.activatedAt = new Date()
-  //         user.save()
+  //         user.save(
   //       }
   //       res.redirect(`/${user.address}`)
   //     } else {
@@ -585,6 +585,10 @@ router.post('/auto-login', async function (req, res) {
     if (!user.roomImage) {
       user.roomImage = 'roomIcon.png'
     }
+    
+    if (!user.avatar) {
+      user.avatar = '/images/default_avatar.png'
+    }
 
     user.token = uuidv4()
 
@@ -597,6 +601,7 @@ router.post('/auto-login', async function (req, res) {
     if (user.access && !user.activatedAt) {
       user.activatedAt = currentTime
     }
+
     user.userLastActive = currentTime
     user.timeZone = req.body.timeZone
     user.save()
@@ -667,6 +672,11 @@ router.post('/login', async function (req, res) {
       user.token = uuidv4()
       user.save()
     }
+
+    if (!user.avatar) {
+      user.avatar = '/images/default_avatar.png'
+    }
+    
     const check = await passwordHash.compare(req.body.password, user.password)
     if (check) {
       res.json({
@@ -803,106 +813,6 @@ router.post('/feedback', async function (req, res) {
   res.json('success')
 })
 
-// /* Check email if it's exist */
-// router.post('/check-email', async function (req, res) {
-//   const user = await userModel.findOne({
-//     email: new RegExp(`^${req.body.email}$`, 'i'),
-//   })
-
-
-//   //This is a big security flaw, I can get all user data with just an email
-
-//   res.json({
-//     user
-//   })
-// })
-
-router.post('/check-password', async function (req, res) {
-  const user = await userModel.findOne({
-    _id: req.body.id,
-  })
-
-  if (!user.token) {
-    const token = uuidv4()
-    user.token = token
-  }
-
-  if (user.coins === undefined) {
-    user.coins = 500
-  }
-
-
-  if (user.access === undefined && waitlistEnabled == false) {
-    user.access = true
-  }
-
-  if (user.roomName === undefined) {
-    var firstName = (user.name).split(" ", 1)
-    user.roomName = (firstName) + "'s home"
-  }
-
-  user.save()
-
-  const result = await passwordHash.compare(req.body.password, user.password)
-  res.json({
-    success: result,
-    user: user
-  })
-})
-
-router.post('/sign-up', async function (req, res) {
-  const exist = await userModel.findOne({
-    email: new RegExp(`^${req.body.email}$`, 'i'),
-  })
-
-  if (exist) {
-    res.json({
-      exist: true
-    })
-    return
-  }
-
-  //Check if user has been sent access by another user
-  const access = await shareAccessModel.findOne({
-    email: new RegExp(`^${req.body.email}$`, 'i')
-  })
-
-
-  //If user has been invited then give them coins as the reward
-  if (access.userId){
-    const inviter = await userModel.findOne({
-      _id: access.userId
-    })
-
-    //Give coins to the user that invited them
-    if (inviter != null){
-      inviter.coins += 500
-      await inviter.save()
-    }
-
-  }
-
-  const user = new userModel({
-    email: (req.body.email).toLowerCase(),
-    password: await passwordHash.hash(req.body.password),
-    invitedBy: (access ? access.userId : ''),
-    token: uuidv4(),
-    furnitureList: freeFurnitures,
-    inventories: initialInventories,
-    timeZone: req.body.timeZone
-  })
-  await user.save()
-
-  user.address = user._id
-  user.coins = 500
-  if (waitlistEnabled == false) {
-    user.access = true
-  }
-  await user.save()
-
-  res.json(user)
-})
-
 router.post('/new-sign-up', async function (req, res) {
   const exist = await userModel.findOne({
     email: new RegExp(`^${req.body.email}$`, 'i'),
@@ -915,12 +825,6 @@ router.post('/new-sign-up', async function (req, res) {
     return
   }
 
-  // const bitmoji = req.body.avatar || ''
-  // const avatar = generate_libmoji(bitmoji, '10214650')
-  // const welcomeAvatar = generate_libmoji(bitmoji, '10214354')
-  // const bunnyAvatar = generate_libmoji(bitmoji, '20018934')
-  // const sleepAvatar = generate_libmoji(bitmoji, '20045113')
-
   const access = await shareAccessModel.findOne({
     email: new RegExp(`^${req.body.email}$`, 'i')
   })
@@ -941,35 +845,22 @@ router.post('/new-sign-up', async function (req, res) {
   const user = new userModel({
     name: req.body.name,
     email: (req.body.email).toLowerCase(),
-    // avatar,
-    // welcomeAvatar,
-    // bunnyAvatar,
-    // sleepAvatar,
     password: await passwordHash.hash(req.body.password),
     invitedBy: (access ? access.userId : ''),
+    avatar: '/images/default_avatar.png',
     token: uuidv4(),
+    coins: 500,
+    access: true,
     furnitureList: freeFurnitures,
     inventories: initialInventories,
     timeZone: req.body.timeZone
   })
-  await user.save()
 
   user.address = user._id
-  user.coins = 500
-  if (waitlistEnabled == false) {
-    user.access = true
-  }
+
   await user.save()
 
   if (user && !user.emailActivated) {
-    // mixpanel.track('Registration', {
-    //   'email': user.email,
-    //   'username': user.name,
-    //   'access': user.access,
-    //   'avatarType': 'default'
-    // })
-    // //Only call alias once
-    // mixpanel.alias(user.email);
     await emailTemplate.send({
       template: 'activate',
       message: {
@@ -985,84 +876,84 @@ router.post('/new-sign-up', async function (req, res) {
   res.json(user)
 })
 
-router.post('/finish-signup', async function (req, res) {
-  const exist = await userModel.findOne({
-    email: new RegExp(`^${req.body.email}$`, 'i'),
-  })
+// router.post('/finish-signup', async function (req, res) {
+//   const exist = await userModel.findOne({
+//     email: new RegExp(`^${req.body.email}$`, 'i'),
+//   })
 
-  if (exist) {
-    res.json({
-      exist: true
-    })
-    return
-  }
+//   if (exist) {
+//     res.json({
+//       exist: true
+//     })
+//     return
+//   }
 
-  const bitmoji = req.body.avatar || ''
-  const avatar = generate_libmoji(bitmoji, '10214650')
-  const welcomeAvatar = generate_libmoji(bitmoji, '10214354')
-  const bunnyAvatar = generate_libmoji(bitmoji, '20018934')
-  const sleepAvatar = generate_libmoji(bitmoji, '20045113')
+//   const bitmoji = req.body.avatar || ''
+//   const avatar = generate_libmoji(bitmoji, '10214650')
+//   const welcomeAvatar = generate_libmoji(bitmoji, '10214354')
+//   const bunnyAvatar = generate_libmoji(bitmoji, '20018934')
+//   const sleepAvatar = generate_libmoji(bitmoji, '20045113')
 
-  const access = await shareAccessModel.findOne({
-    email: new RegExp(`^${req.body.email}$`, 'i')
-  })
+//   const access = await shareAccessModel.findOne({
+//     email: new RegExp(`^${req.body.email}$`, 'i')
+//   })
 
-  //If user has been invited then give them coins as the reward
-  if (access?.userId){
-    const inviter = await userModel.findOne({
-      _id: access.userId
-    })
+//   //If user has been invited then give them coins as the reward
+//   if (access?.userId){
+//     const inviter = await userModel.findOne({
+//       _id: access.userId
+//     })
 
-    //Give coins to the user that invited them
-    if (inviter != null) {
-      inviter.coins += 500
-      await inviter.save()
-    }
-  }
+//     //Give coins to the user that invited them
+//     if (inviter != null) {
+//       inviter.coins += 500
+//       await inviter.save()
+//     }
+//   }
 
-  const user = new userModel({
-    name: req.body.name,
-    email: (req.body.email).toLowerCase(),
-    avatar,
-    welcomeAvatar,
-    bunnyAvatar,
-    sleepAvatar,
-    password: await passwordHash.hash(req.body.password),
-    invitedBy: (access ? access.userId : ''),
-    token: uuidv4(),
-    furnitureList: freeFurnitures,
-    inventories: initialInventories,
-    timeZone: req.body.timeZone
-  })
-  await user.save()
+//   const user = new userModel({
+//     name: req.body.name,
+//     email: (req.body.email).toLowerCase(),
+//     avatar,
+//     welcomeAvatar,
+//     bunnyAvatar,
+//     sleepAvatar,
+//     password: await passwordHash.hash(req.body.password),
+//     invitedBy: (access ? access.userId : ''),
+//     token: uuidv4(),
+//     furnitureList: freeFurnitures,
+//     inventories: initialInventories,
+//     timeZone: req.body.timeZone
+//   })
+//   await user.save()
 
-  user.address = user._id
-  user.coins = 500
-  if (waitlistEnabled == false) {
-    user.access = true
-  }
-  await user.save()
+//   user.address = user._id
+//   user.coins = 500
+//   if (waitlistEnabled == false) {
+//     user.access = true
+//   }
+//   await user.save()
 
-  if (user && !user.emailActivated) {
-    // mixpanel.track('Registration', {
-    //   'email': user.email,
-    //   'username': user.name,
-    //   'access': user.access,
-    //   'avatarType': 'default'
-    // })
-    await emailTemplate.send({
-      template: 'activate',
-      message: {
-        to: user.email,
-      },
-      locals: {
-        NAME: req.body.name,
-        LINK: `${process.env.SITE_URL}${req.body.path}?email=${user.email}&token=${user.token}`
-      }
-    })
-  }
-  res.json(user)
-})
+//   if (user && !user.emailActivated) {
+//     // mixpanel.track('Registration', {
+//     //   'email': user.email,
+//     //   'username': user.name,
+//     //   'access': user.access,
+//     //   'avatarType': 'default'
+//     // })
+//     await emailTemplate.send({
+//       template: 'activate',
+//       message: {
+//         to: user.email,
+//       },
+//       locals: {
+//         NAME: req.body.name,
+//         LINK: `${process.env.SITE_URL}${req.body.path}?email=${user.email}&token=${user.token}`
+//       }
+//     })
+//   }
+//   res.json(user)
+// })
 
 router.post('/share-access', async function (req, res) {
   const user = await userModel.findOne({
@@ -1588,7 +1479,7 @@ async function updateFlatLedger () {
       //Gets the owner of the current NFT through the tokenId
       var nftOwner = await nft_contract.methods.ownerOf(counter).call()
 
-      console.log(`[${counter}] ${nftOwner}`)
+      // console.log(`[${counter}] ${nftOwner}`)
 
       //Updates the database
       await flatLedgerModel.findOneAndUpdate({
