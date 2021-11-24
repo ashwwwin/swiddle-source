@@ -1,10 +1,7 @@
 import { Router } from 'express'
 import mongoose from 'mongoose'
-import { any } from 'underscore';
 import { v4 as uuidv4 } from 'uuid'
 
-const stripe = require('stripe')(process.env.STRIPE_KEY);
-const libmoji = require('libmoji')
 const userModel = require('@/Models/user')
 const feedbackModel = require('@/Models/feedback')
 const signInLogModel = require('@/Models/signInLog')
@@ -13,16 +10,18 @@ const furnitureList = require('@/Models/furniture')
 const shopModel = require('@/Models/shop')
 const eventsModel = require('@/Models/events')
 const eventInviteResponsesModel = require('@/Models/eventInviteResponses')
+const flatLedgerModel = require('@/Models/flatLedger')
 
 const nodemailer = require('nodemailer')
 const Email = require('email-templates')
 const passwordHash = require('pbkdf2-password-hash')
 const formidable = require('formidable');
 const fs = require('fs');
+const stripe = require('stripe')(process.env.STRIPE_KEY)
+const libmoji = require('libmoji')
+const Web3 = require('web3')
 
-// const mixpanelToken = 'IncorrectToken' //process.env.MIXPANEL_TOKEN
-// const Mixpanel = require('mixpanel')
-// const mixpanel = Mixpanel.init(mixpanelToken)
+
 
 //Controls whether new users are put in the waitlist
 const waitlistEnabled = false
@@ -1038,73 +1037,6 @@ router.post('/finish-signup', async function (req, res) {
   res.json(user)
 })
 
-router.post('/snap-login', async function (req, res) {
-  const bitmoji = req.body.avatar || ''
-  const avatar = generate_libmoji(bitmoji, '10214650')
-  const welcomeAvatar = generate_libmoji(bitmoji, '10214354')
-  const bunnyAvatar = generate_libmoji(bitmoji, '20018934')
-  const sleepAvatar = generate_libmoji(bitmoji, '20045113')
-
-  const user = await userModel.findOneAndUpdate({
-    _id: req.body.id
-  }, {
-    name: req.body.name,
-    avatar,
-    welcomeAvatar,
-    bunnyAvatar,
-    sleepAvatar,
-  })
-
-  if (!user.token) {
-    const token = uuidv4()
-    user.token = token
-  }
-
-  if (!user.address) {
-    user.address = user._id
-  }
-
-  if (user.shareAccessCount === undefined) {
-    user.shareAccessCount = 3
-  }
-
-  if (user.coins === undefined) {
-    user.coins = 500
-  }
-
-  if (user.access === undefined && waitlistEnabled == false) {
-    user.access = true
-  }
-
-  if (user.roomName === undefined) {
-    var firstName = (user.name).split(" ", 1)
-    user.roomName = (firstName) + "'s home"
-  }
-
-  await user.save()
-
-  if (user && !user.emailActivated) {
-    // mixpanel.track('Registration', {
-    //   'email': user.email,
-    //   'username': user.name,
-    //   'access': user.access,
-    //   'avatarType': 'snap'
-    // })
-    await emailTemplate.send({
-      template: 'activate',
-      message: {
-        to: user.email,
-      },
-      locals: {
-        NAME: req.body.name,
-        LINK: `${process.env.SITE_URL}${req.body.path}?email=${user.email}&token=${user.token}`
-      }
-    })
-  }
-
-  res.json(user)
-})
-
 router.post('/share-access', async function (req, res) {
   const user = await userModel.findOne({
     _id: req.body.id
@@ -1474,7 +1406,7 @@ export default router
 
 
 
-
+// Event Notification System
 var eventRunner = false
 function checkEventStatus () {
   //Checks if there is already an instance running, this assures only one instance is running at a time
@@ -1593,3 +1525,60 @@ function checkEventStatus () {
 }
 
 checkEventStatus();
+
+
+
+
+//Keeps track of NFT Ownership
+//Checks if the contract has been initialized
+const web3 = new Web3(process.env.WEB3_NETWORK)
+var abi: any
+
+//Initializes the nft contract
+var OGFlat = fs.readFileSync(process.env.NFT_PATH)
+abi = JSON.parse(OGFlat).abi
+var nft_contract = new web3.eth.Contract(abi)
+nft_contract.options.address = process.env.NFT_ADDRESS
+// console.log(nft_contract)
+
+//Initializes the factory contract
+var OGFlatFactory = fs.readFileSync(process.env.FACTORY_PATH)
+abi = JSON.parse(OGFlatFactory).abi
+var factory_contract = new web3.eth.Contract(abi)
+factory_contract.options.address = process.env.FACTORY_ADDRESS
+// console.log(factory_contract)
+
+// Flat NFT Owner Ledger
+var flatLedgerRunner = false
+async function updateFlatLedger () {
+
+  //Checks if there is already an instance running, this assures only one instance is running at a time
+  if (flatLedgerRunner == false) {
+    //Gets the total supply
+    var nftSupply = await factory_contract.methods.getSupply().call()
+
+    for (var counter = 1; counter <= nftSupply; counter++) {
+      //Gets the owner of the current NFT through the tokenId
+      var nftOwner = await nft_contract.methods.ownerOf(counter).call()
+
+      console.log(`[${counter}] ${nftOwner}`)
+
+      //Updates the database
+      await flatLedgerModel.findOneAndUpdate({
+        tokenId: counter
+      }, {
+        flatOwner: nftOwner
+      },
+      {
+        upsert: true
+      })
+    }
+
+    flatLedgerRunner = false
+  }
+
+  //Schedules it to run again in 55 minutes
+  setTimeout(updateFlatLedger, 3300000)
+}
+    
+updateFlatLedger()

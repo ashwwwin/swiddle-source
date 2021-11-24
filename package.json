@@ -25,6 +25,7 @@
         "dotenv": "^8.2.0",
         "ejs": "^3.1.6",
         "email-templates": "^8.0.4",
+        "ethers": "^5.5.1",
         "express": "^4.17.1",
         "express-async-errors": "^3.1.1",
         "express-winston": "^4.1.0",
@@ -47,6 +48,7 @@
         "twilio": "^3.57.0",
         "underscore": "^1.13.1",
         "uuid": "^8.3.2",
+        "web3": "^1.6.1",
         "winston": "^3.3.3",
         "winston-loggly-bulk": "^3.2.1",
         "ytsr": "^3.5.0"

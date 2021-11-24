@@ -1,15 +1,22 @@
 //Adjust these settings
 const pricePerFlat = "0.175";
 var decimalPlaces = 4;
-var NFT_ADDRESS = '0xd01C7265Bf42ea04dCE3586d411940093fB3ABda';
-var CONTRACT_ADDRESS = '0x22D5fA6f120F9bbb381303c65F37C9F768510055';
+var NFT_ADDRESS = '0x048FD9afe7b02D6efc2A81F3bB77CB859697b692';
+var CONTRACT_ADDRESS = '0xd20F24AfFeC62079c4c660d82835D63895DdD1AF';
 var ETHERSCAN_URL = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
 
 // Import the contract file
-var ogFlatsNFT;
-$.getJSON("/libs/OGFlatFactory.json", function(json) {
-  ogFlatsNFT = json; 
+var ogFlatsFactory;
+$.getJSON("/contracts/OGFlatFactory.json", function(json) {
+  ogFlatsFactory = json; 
 });
+
+var ogFlats;
+$.getJSON("/contracts/OGFlat.json", function(json) {
+  ogFlats = json; 
+});
+
+
 
 var totalPrice = pricePerFlat;
 var metamaskDetected = false;
@@ -55,11 +62,11 @@ $('#metamask-signin').click(async function() {
 })
 
 function updateMintCounter(){
-  // $.getJSON(ETHERSCAN_URL, function(data) {
-  //   $('#mint-counter').text(`Total minted: ${(data.result).toLocaleString("en-US")}/10,000 Flats`);
-  // });
+  $.getJSON(ETHERSCAN_URL, function(data) {
+    $('#mint-counter').text(`Total minted: ${(data.result).toLocaleString("en-US")}/10,000 Flats`);
+  });
 
-  $('#mint-counter').text(`Total minted: 0/10,000 Flats`);
+  // $('#mint-counter').text(`Total minted: 0/10,000 Flats`);
 
   //Checks mint number every 15 seconds
   setTimeout(function(){
@@ -112,14 +119,19 @@ $('#mint-og-flat').click(async function () {
     try {
       const provider = await new ethers.providers.Web3Provider(ethereum);
       const signer = await provider.getSigner();
-      const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsNFT.abi, signer);
+      const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsFactory.abi, signer);
       console.log(connectedContract);
       console.log(totalPrice);
+
+      // let nftTxn = await connectedContract.ownerOf(100);
+      // let nftTxn = await connectedContract.getSupply();
       let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther(totalPrice) });
       $('#mint-og-flat').text('Waiting for ether');
 
       $('#mint-og-flat').text('Minting...');
       await nftTxn.wait();
+
+      // console.log((BigInt(nftTxn._hex)).toString());
       console.log(nftTxn);
 
       $('#success-address').show();
@@ -152,3 +164,13 @@ $('#mint-og-flat').click(async function () {
   // $('#mint-og-flat').css('user-events', 'allow');
   // $('#mint-og-flat').prop('disabled', false);
 });
+
+async function getOwner(tokenId) {
+  const provider = await new ethers.providers.Web3Provider(ethereum);
+  const signer = await provider.getSigner();
+  const connectedContract = await new ethers.Contract(NFT_ADDRESS, ogFlats.abi, signer);
+
+  let nftTxn = await connectedContract.ownerOf(tokenId);
+
+  console.log(nftTxn);
+}
