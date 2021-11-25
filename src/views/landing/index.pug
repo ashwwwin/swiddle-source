@@ -39,6 +39,10 @@ block scripts
       os = 'Linux';
       osDownloadUrl = '/downloads/linux/Swiddle.AppImg'
     }
+
+    if (os == null) {
+      document.querySelector('#download-for-os-btn').style.display = 'none';
+    }
     
    document.querySelector('#download-for-os-btn').innerText = 'Download for ' + os;
    document.querySelector('#download-for-os-btn').href = osDownloadUrl;
