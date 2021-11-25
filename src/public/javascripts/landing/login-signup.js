@@ -178,3 +178,9 @@ $('#btn-reset-password').click(function () {
     }
   });
 });
+
+el.onkeyup = function(event) {
+  if (event.keyCode == 13) {
+    $('#btn-login').click();
+  }
+}
