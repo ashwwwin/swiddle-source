@@ -644,7 +644,7 @@ function createContainer(personInfo) {
 
   if (!personInfo.avatar || personInfo.avatar == 'undefined') {
     avatarKey = 'default_avatar';
-  } if (this.textures.exists(personInfo.id)) {
+  } else if (this.textures.exists(personInfo.id)) {
     avatarKey = personInfo.id;
   } else {
     avatarKey = 'default_avatar';
