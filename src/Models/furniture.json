@@ -460,5 +460,13 @@
     "description": "It's in blue",
     "price": 300,
     "visible": false
+  },
+  "fratdao_poster": {
+    "type": "deco",
+    "imageUrl": "fratdao_poster.png",
+    "title": "Frat Dao Poster",
+    "description": "In the bonds of brotherhood",
+    "price": 500,
+    "visible": false
   }
 }
