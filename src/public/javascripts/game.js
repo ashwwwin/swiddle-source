@@ -69,7 +69,7 @@ var startGame = function (data) {
     initRichUpGame();
   }
 
-  if (gameType != ('lipoker' || 'richup')) {
+  if (gameType != 'lipoker' && gameType != 'richup') {
     // If gameType is lipoker, don't show game chat
     $('.game-chat-container .msg-container').remove();
     if (leftGameChat.includes(gameType)) {
