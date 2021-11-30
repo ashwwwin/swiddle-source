@@ -3,7 +3,7 @@ const pricePerFlat = "0.175";
 var decimalPlaces = 4;
 var NFT_ADDRESS = '0x048FD9afe7b02D6efc2A81F3bB77CB859697b692';
 var CONTRACT_ADDRESS = '0xd20F24AfFeC62079c4c660d82835D63895DdD1AF';
-var ETHERSCAN_URL = `https://api-rinkeby.etherscan.io/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=6FZA8XJVT9J6G5SCJUUC27UGU16DR29S51`;
+var ETHERSCAN_URL = `https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=MG95HNKIC3E7P8FNC3D3CH3PB4GFE6XG79`;
 
 // Import the contract file
 var ogFlatsFactory;
@@ -141,10 +141,10 @@ $('#mint-og-flat').click(async function () {
 
       $('#success-address').show();
       $('#success-address').css('cursor', 'pointer');
-      $('#success-address').text(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+      $('#success-address').text(`https://polygonscan.com/tx/${nftTxn.hash}`);
       $('#success-address').unbind('click');
       $('#success-address').click(function() {
-        window.open(`https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+        window.open(`https://polygonscan.com/tx/${nftTxn.hash}`);
       });
 
 

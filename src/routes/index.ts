@@ -633,6 +633,7 @@ router.post('/metamask-login', async function (req, res) {
       name: req.body.ethId,
       ethAddress: req.body.ethId,
       token: uuidv4(),
+      email: uuidv4() + '@swiddle.com',
       coins: 500,
       access: true,
       furnitureList: freeFurnitures,
