@@ -1,8 +1,8 @@
 //Adjust these settings
-const pricePerFlat = "0.175";
+const pricePerFlat = "0.08";
 var decimalPlaces = 4;
-var NFT_ADDRESS = '0x048FD9afe7b02D6efc2A81F3bB77CB859697b692';
-var CONTRACT_ADDRESS = '0xd20F24AfFeC62079c4c660d82835D63895DdD1AF';
+var NFT_ADDRESS = '0xE64bE7CF1f83474Ad98e5334Dda931bC1A5BdEBB';
+var CONTRACT_ADDRESS = '0x8A44529f068bE5A0564969601eaFbb31571C15D0';
 var ETHERSCAN_URL = `https://api.polygonscan.com/api?module=stats&action=tokensupply&contractaddress=${NFT_ADDRESS}&apikey=MG95HNKIC3E7P8FNC3D3CH3PB4GFE6XG79`;
 
 // Import the contract file
@@ -122,15 +122,15 @@ $('#mint-og-flat').click(async function () {
   console.log("accounts", accounts);
   if (metamaskDetected && accounts[0]) {
     try {
-      const provider = await new ethers.providers.Web3Provider(ethereum);
-      const signer = await provider.getSigner();
+      const provider = await new ethers.providers.Web3Provider(window.ethereum);
+      const signer = await provider.getSigner(accounts[0]);
       const connectedContract = await new ethers.Contract(CONTRACT_ADDRESS, ogFlatsFactory.abi, signer);
       console.log(connectedContract);
       console.log(totalPrice);
 
       // let nftTxn = await connectedContract.ownerOf(100);
       // let nftTxn = await connectedContract.getSupply();
-      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther(totalPrice) });
+      let nftTxn = await connectedContract.mint('0', accounts[0], { value: ethers.utils.parseEther(totalPrice), gasLimit: 1000000 });
       $('#mint-og-flat').text('Waiting for ether');
 
       $('#mint-og-flat').text('Minting...');
