@@ -869,7 +869,7 @@ router.post('/new-sign-up', async function (req, res) {
       },
       locals: {
         NAME: req.body.name,
-        LINK: `${process.env.SITE_URL}sign-in?email=${user.email}&token=${user.token}`
+        LINK: `${process.env.SITE_URL}/sign-in?email=${user.email}&token=${user.token}`
       }
     })
   }
