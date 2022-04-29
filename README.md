@@ -1,6 +1,17 @@
 # Swiddle
-### A Web3 metaverse inspired by a generation of Flash games
-Built primarily with Node, Phaser, Socket.io, JS & TS
+### A metaverse inspired by Club Penguin
+
+"We're creating a new phone"
+"Cool! What's different?"
+"It's revolutionary, we're adding another camera"
+
+Hey, welcome to Swiddle's open source code. It feels like everyone in the space is building a version of this, with rather minor differences. I think it would benefit us all if we spent money exploring different ideas instead of funding the same thing. 
+
+Special thank you to Philip Lim (Eng), Gamchawizzy (Art), Alex Ronay (Art) and Ipsum (for porting https://richup.io for us).
+
+Shoutout to Club Penguin, the game that was way ahead of it's time and made mine and countless others childhood's memorable.
+
+
 
 ## Setting it up
 
@@ -9,9 +20,6 @@ Built primarily with Node, Phaser, Socket.io, JS & TS
 ```bash
 npm i -g google-closure-compiler
 npm install
-
-npm install --global yarn
-yarn install
 
 ```
 ##### Set up the .env files
