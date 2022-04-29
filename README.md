@@ -1,15 +1,18 @@
-# Swiddle
-### A metaverse inspired by Club Penguin
+# MeTaVeRsE
 
 "We're creating a new phone"
+
 "Cool! What's different?"
+
 "It's revolutionary, we're adding another camera"
 
-Hey, welcome to Swiddle's open source code. It feels like everyone in the space is building a version of this, with rather minor differences. I think it would benefit us all if we spent money exploring different ideas instead of funding the same thing. 
+## Intro
+
+Hey, welcome to Swiddle's open source code. It feels like everyone in the space is building this, with rather minor differences. I think it would benefit us all if we spent money exploring different ideas instead of funding the same thing. 
 
 Special thank you to Philip Lim (Eng), Gamchawizzy (Art), Alex Ronay (Art) and Ipsum (for porting https://richup.io for us).
 
-Shoutout to Club Penguin, the game that was way ahead of it's time and made mine and countless others childhood's memorable.
+Shoutout to Club Penguin, the inspiration behind Swiddle, it was way ahead of it's time. It made mine and and countless others childhood's so memorable. 
 
 
 
