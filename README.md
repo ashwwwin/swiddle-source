@@ -8,11 +8,12 @@
 
 ## Intro
 
-Hey, welcome to Swiddle's open source code. It feels like everyone in the space is building this, with rather minor differences. I think it would benefit us all if we spent money exploring different ideas instead of funding the same thing. 
+Hey, welcome to Swiddle's open source code - https://swiddle.io. It feels like everyone in the space is building this, with rather minor differences. I think it would benefit us all if we spent money exploring different ideas instead of funding the same thing. 
 
-Special thank you to Philip Lim (Eng), Gamchawizzy (Art), Alex Ronay (Art) and Ipsum (for porting https://richup.io for us).
 
-Shoutout to Club Penguin, the inspiration behind Swiddle, it was way ahead of it's time. It made mine and and countless others childhood's so memorable. 
+Thanks to Philip Lim (Eng), Gamchawizzy (Art), Alex Ronay (Art) and Ipsum (for porting https://richup.io for us).
+
+Shoutout to Club Penguin, the inspiration behind Swiddle, it set the stage for a lot of what we see today and will see in the future. It made mine and and countless others childhood's so memorable. 
 
 
 
