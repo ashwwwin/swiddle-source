@@ -13,7 +13,7 @@ Hey, welcome to Swiddle's open source code - https://swiddle.io. It feels like e
 
 Thanks to Philip Lim (Eng), Gamchawizzy (Art), Alex Ronay (Art) and Ipsum (for porting https://richup.io for us).
 
-Shoutout to Club Penguin, the inspiration behind Swiddle, it made so many childhoods memorable and set the stage for a lot of what we see today and will see in the future.'\
+Shoutout to Club Penguin, the inspiration behind Swiddle, it made so many childhoods memorable and set the stage for a lot of what we see today and will see in the future.
 
 
 ## Setting it up
