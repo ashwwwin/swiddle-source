@@ -39,7 +39,7 @@ Shoutout to Club Penguin, the inspiration behind Swiddle, it made so many childh
 
 ![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-20-at-16.36.41.png?raw=true)
 ![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-20-at-17.27.42.png?raw=true)
-![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-22-at-07.06.06-p-500.png?raw=true)
+![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-22-at-07.06.06.png?raw=true)
 
 
 ## Setting it up
