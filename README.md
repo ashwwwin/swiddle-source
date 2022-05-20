@@ -15,6 +15,22 @@ Thanks to Philip Lim (Eng), Gamchawizzy (Art), Alex Ronay (Art) and Ipsum (for p
 
 Shoutout to Club Penguin, the inspiration behind Swiddle, it made so many childhoods memorable and set the stage for a lot of what we see today and will see in the future.
 
+Features:
+-> Homes
+-> Locations
+-> Max user handling (each world instance has a max of X users before a new virtual instance is created. The mechanism is a little more complex.)
+-> Multiplayer games (6 custom, 2 imported)
+-> Voice and Video when you walk near someone
+-> Friends system (with a simple friend reccomendation algo, by mutual friends)
+-> Open up your home for an event (with a map to see open events)
+-> Decorate your home (with a furniture shop)
+-> A currency system (earn coins from games)
+
+
+![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-20-at-16.36.41.png?raw=true)
+![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-20-at-17.27.42.png?raw=true)
+![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-22-at-07.06.06-p-500.png?raw=true)
+
 
 ## Setting it up
 
