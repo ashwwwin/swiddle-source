@@ -35,6 +35,8 @@ Shoutout to Club Penguin, the inspiration behind Swiddle, it made so many childh
 
 -> A currency system (earn coins from games)
 
+-> Profile cards (with num of friends, bio)
+
 ## Images
 
 ![alt text](https://github.com/ashwwwin/swiddle-source/blob/main/src/public/images/Screen-Shot-2021-11-20-at-16.36.41.png?raw=true)
